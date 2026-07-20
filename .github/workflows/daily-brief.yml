@@ -38,7 +38,7 @@ jobs:
           from urllib.request import Request, urlopen
           if Path('gemini-error.txt').exists():
               content = '**SAIDIO / Daily Gemini brief failed**\n' + Path('gemini-error.txt').read_text()[:1800]
-              request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': content}).encode(), headers={'Content-Type': 'application/json'})
+              request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': content}).encode(), headers={'Content-Type': 'application/json', 'User-Agent': 'Saidio-Bot/1.0 (+https://github.com/sssunwl/saidio)'})
               urlopen(request, timeout=30).read()
               raise SystemExit('Gemini daily brief failed; diagnostic sent to Discord')
           content = Path('daily-discord-message.txt').read_text()
@@ -53,7 +53,7 @@ jobs:
           if current:
               chunks.append(current)
           for chunk in chunks:
-              request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': chunk}).encode(), headers={'Content-Type': 'application/json'})
+              request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': chunk}).encode(), headers={'Content-Type': 'application/json', 'User-Agent': 'Saidio-Bot/1.0 (+https://github.com/sssunwl/saidio)'})
               urlopen(request, timeout=30).read()
           PY
       - name: Commit archive

@@ -1,6 +1,12 @@
 name: Daily Saidio music brief
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/dashboard.json'
+      - 'scripts/generate_daily_brief.py'
+      - '.github/workflows/daily-brief.yml'
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
@@ -10,6 +16,7 @@ permissions:
 
 jobs:
   brief:
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -4,34 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#101512" />
-    <title>SAIDIO — Operations Desk</title>
+    <title>SAIDIO — 創作營運台</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="grain"></div>
     <header class="topbar">
       <a class="brand" href="#overview"><span class="mark">S</span><span>SAIDIO</span></a>
-      <p class="strap">Master the craft, not the tool.</p>
-      <div class="live"><i></i> SYSTEM ACTIVE</div>
+      <p class="strap">精進創作，不被工具定義。</p>
+      <div class="live"><i></i> 系統運行中</div>
     </header>
     <main>
       <section class="hero" id="overview">
-        <div><p class="eyebrow">CREATIVE PRODUCTION DESK / 2026</p><h1>Make the next<br><em>useful thing.</em></h1></div>
-        <div class="hero-note"><span>Today’s focus</span><strong id="today-focus">Loading brief…</strong><p id="today-meta"></p></div>
+        <div><p class="eyebrow">創作製作營運台 / 2026</p><h1>做好下一個<br><em>值得看的作品。</em></h1></div>
+        <div class="hero-note"><span>今日焦點</span><strong id="today-focus">載入中…</strong><p id="today-meta"></p></div>
       </section>
-      <nav class="tabs" aria-label="Dashboard sections">
-        <a href="#briefs">Daily brief</a><a href="#calendar">Calendar</a><a href="#projects">Projects</a><a href="#radar">Radar</a>
+      <nav class="tabs" aria-label="營運台章節">
+        <a href="#briefs">每日 brief</a><a href="#calendar">年曆</a><a href="#projects">專案</a><a href="#radar">趨勢雷達</a>
       </nav>
       <section class="metric-row" id="metrics"></section>
       <section class="split" id="briefs">
-        <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow">TODAY’S MUSIC ASSET BRIEF</p><button id="copy-prompt">Copy all prompts</button></div><div id="brief-content" class="brief-content"></div></article>
-        <aside class="panel notification-panel"><p class="eyebrow">NOTIFICATION LOG</p><div id="notifications"></div></aside>
+        <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow">今日音樂素材 brief</p><button id="copy-prompt">複製全部 Prompts</button></div><div id="brief-content" class="brief-content"></div></article>
+        <aside class="panel notification-panel"><p class="eyebrow">通知紀錄</p><div id="notifications"></div></aside>
       </section>
-      <section class="panel calendar-panel" id="calendar"><div class="panel-head"><div><p class="eyebrow">BRIEF ARCHIVE</p><h2>Year at a glance</h2></div><div class="month-controls"><button id="prev-month" aria-label="Previous month">←</button><strong id="month-label"></strong><button id="next-month" aria-label="Next month">→</button></div></div><div class="calendar-wrap"><div class="weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="calendar-grid" class="calendar-grid"></div></div><div id="archive-detail" class="archive-detail">Choose a marked day to inspect its brief.</div></section>
-      <section class="panel projects-panel" id="projects"><div class="panel-head"><div><p class="eyebrow">PRODUCTION PORTFOLIO</p><h2>Projects in motion</h2></div><span class="muted">Source of truth: project_saidio.md</span></div><div id="projects-grid" class="projects-grid"></div></section>
-      <section class="split bottom" id="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>Daily & weekly signals</h2></div><span class="status-chip">IDEA INTAKE</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">OPERATING RULE</p><blockquote>“Master the craft,<br>not the tool.”</blockquote><p class="muted">Each signal becomes a production question, not an automatic video. Verify rights, relevance and audience value before green-lighting.</p></article></section>
+      <section class="panel calendar-panel" id="calendar"><div class="panel-head"><div><p class="eyebrow">brief 歸檔</p><h2>年度總覽</h2></div><div class="month-controls"><button id="prev-month" aria-label="上一個月">←</button><strong id="month-label"></strong><button id="next-month" aria-label="下一個月">→</button></div></div><div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div><div id="archive-detail" class="archive-detail">點選有標記的日子，查看當日 brief。</div></section>
+      <section class="panel projects-panel" id="projects"><div class="panel-head"><div><p class="eyebrow">製作組合</p><h2>進行中的專案</h2></div><span class="muted">資料來源：project_saidio.md</span></div><div id="projects-grid" class="projects-grid"></div></section>
+      <section class="split bottom" id="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>每日與每週訊號</h2></div><span class="status-chip">靈感收集</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">工作原則</p><blockquote>「精進創作，<br>不被工具定義。」</blockquote><p class="muted">每個訊號都要先變成製作問題，而不是自動變成影片：確認權利、關聯性及觀眾真正得到的價值，才進入製作。</p></article></section>
     </main>
-    <footer>SAIDIO / SUNIVERSE CREATIVE LAYER · <span id="updated-at"></span></footer>
+    <footer>SAIDIO / SUNIVERSE 創作層 · <span id="updated-at"></span></footer>
     <script src="app.js"></script>
   </body>
 </html>

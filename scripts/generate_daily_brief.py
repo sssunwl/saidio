@@ -18,29 +18,37 @@ def main():
         sys.exit("GEMINI_API_KEY is required")
     payload = json.loads(DATA.read_text())
     today = date.today().isoformat()
-    if any(item["date"] == today for item in payload["briefs"]):
-        print("Brief already exists for today")
-        return
-    focus = ROTATION[date.today().toordinal() % len(ROTATION)]
-    prompt = f"""You are Saidio's music asset librarian. Create a daily asset brief for {today}.
+    brief = next((item for item in payload["briefs"] if item["date"] == today), None)
+    if brief:
+        print("Brief already exists for today; preparing Discord delivery")
+    else:
+        focus = ROTATION[date.today().toordinal() % len(ROTATION)]
+        prompt = f"""You are Saidio's music asset librarian. Create a daily asset brief for {today}.
 Focus package: {focus}. Saidio currently validates an investment channel first, while building a
 travel Field Notes system and banking assets for AI character drama. Return JSON only with keys:
 title, focus, meta, summary, prompts. prompts must be an array of exactly 6 original music prompts.
 Each prompt must state duration, BPM, instruments, arrangement, no vocals unless clearly labelled
 for AI character drama, no artist references, and a clean ending or loop point. State whether this
 is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing rights."""
-    model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
-    req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json"})
-    response = json.loads(urlopen(req, timeout=90).read())
-    brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
-    if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
-        sys.exit("Gemini response did not contain exactly six prompts")
-    brief["date"] = today
-    payload["briefs"].append(brief)
-    payload["updatedAt"] = f"{today}T09:00:00+09:00"
-    DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    Path("daily-discord-message.txt").write_text("\n".join([f"**SAIDIO / {today}**", f"**{brief['title']}** — {brief['focus']}", brief["summary"], "", *[f"**{i+1}.** {p}" for i,p in enumerate(brief["prompts"])])[:1900])
+        model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+        req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json"})
+        response = json.loads(urlopen(req, timeout=90).read())
+        brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
+        if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
+            sys.exit("Gemini response did not contain exactly six prompts")
+        brief["date"] = today
+        payload["briefs"].append(brief)
+        payload["updatedAt"] = f"{today}T09:00:00+09:00"
+        DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    message = "\n".join([
+        f"**SAIDIO / {today}**",
+        f"**{brief['title']}** — {brief['focus']}",
+        brief["summary"],
+        "",
+        *[f"**{i + 1}.** {item}" for i, item in enumerate(brief["prompts"])],
+    ])
+    Path("daily-discord-message.txt").write_text(message[:1900])
     print(f"Generated brief for {today}")
 
 if __name__ == "__main__":

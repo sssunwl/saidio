@@ -18,8 +18,10 @@ def main():
         sys.exit("GEMINI_API_KEY is required")
     payload = json.loads(DATA.read_text())
     today = date.today().isoformat()
+    force = os.environ.get("FORCE_REGENERATE") == "1"
     brief = next((item for item in payload["briefs"] if item["date"] == today), None)
-    if brief:
+    existing_index = next((i for i, item in enumerate(payload["briefs"]) if item["date"] == today), None)
+    if brief and not force:
         print("Brief already exists for today; preparing Discord delivery")
     else:
         focus = ROTATION[date.today().toordinal() % len(ROTATION)]
@@ -38,7 +40,10 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
             sys.exit("Gemini response did not contain exactly six prompts")
         brief["date"] = today
-        payload["briefs"].append(brief)
+        if existing_index is None:
+            payload["briefs"].append(brief)
+        else:
+            payload["briefs"][existing_index] = brief
         payload["updatedAt"] = f"{today}T09:00:00+09:00"
         DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
     message = "\n".join([

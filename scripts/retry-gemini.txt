@@ -1,0 +1,1 @@
+This file triggers a one-time Gemini brief regeneration after rotating the API key.

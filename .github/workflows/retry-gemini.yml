@@ -1,0 +1,56 @@
+name: Retry Gemini daily brief
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/retry-gemini.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate today's six-prompt brief with Gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-2.5-flash
+          FORCE_REGENERATE: "1"
+        run: python scripts/generate_daily_brief.py
+      - name: Send regenerated brief to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          content = Path('daily-discord-message.txt').read_text()
+          chunks, current = [], ''
+          for block in content.split('\n\n'):
+              candidate = f'{current}\n\n{block}'.strip() if current else block
+              if len(candidate) > 1900 and current:
+                  chunks.append(current)
+                  current = block
+              else:
+                  current = candidate
+          if current:
+              chunks.append(current)
+          for chunk in chunks:
+              request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': chunk}).encode(), headers={'Content-Type': 'application/json'})
+              urlopen(request, timeout=30).read()
+          PY
+      - name: Commit refreshed archive
+        run: |
+          git config user.name "saidio-brief-bot"
+          git config user.email "saidio-brief-bot@users.noreply.github.com"
+          git add data/dashboard.json
+          git diff --cached --quiet || git commit -m "chore: refresh daily music brief"
+          git push

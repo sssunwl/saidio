@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Generate and archive a daily Saidio music-asset brief with Gemini API."""
-import json, os, sys
+import json, os, sys, time
 from datetime import date
 from pathlib import Path
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,13 +36,30 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
         model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json", "x-goog-api-key": key})
-        try:
-            response = json.loads(urlopen(req, timeout=90).read())
-        except HTTPError as error:
-            detail = error.read().decode("utf-8", errors="replace")[:1200]
-            (ROOT / "gemini-error.txt").write_text(f"Gemini API request failed ({error.code}): {detail}")
-            print(f"Gemini request failed ({error.code}) model={model}: {detail}")
-            return
+        attempts, response = 6, None
+        for attempt in range(1, attempts + 1):
+            try:
+                response = json.loads(urlopen(req, timeout=90).read())
+                break
+            except HTTPError as error:
+                detail = error.read().decode("utf-8", errors="replace")[:1200]
+                transient = error.code in (429, 500, 502, 503, 504)
+                if transient and attempt < attempts:
+                    wait = min(60, 5 * 2 ** (attempt - 1))
+                    print(f"Gemini {error.code} (attempt {attempt}/{attempts}); retrying in {wait}s")
+                    time.sleep(wait)
+                    continue
+                (ROOT / "gemini-error.txt").write_text(f"Gemini API request failed ({error.code}): {detail}")
+                print(f"Gemini request failed ({error.code}) model={model}: {detail}")
+                return
+            except URLError as error:
+                if attempt < attempts:
+                    print(f"Gemini network error {error.reason} (attempt {attempt}/{attempts}); retrying")
+                    time.sleep(min(60, 5 * 2 ** (attempt - 1)))
+                    continue
+                (ROOT / "gemini-error.txt").write_text(f"Gemini API network error: {error.reason}")
+                print(f"Gemini network error model={model}: {error.reason}")
+                return
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
             sys.exit("Gemini response did not contain exactly six prompts")

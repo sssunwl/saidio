@@ -41,7 +41,7 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
         except HTTPError as error:
             detail = error.read().decode("utf-8", errors="replace")[:1200]
             (ROOT / "gemini-error.txt").write_text(f"Gemini API request failed ({error.code}): {detail}")
-            print("Gemini request failed; diagnostic file prepared")
+            print(f"Gemini request failed ({error.code}) model={model}: {detail}")
             return
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:

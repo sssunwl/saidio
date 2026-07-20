@@ -1,1 +1,1 @@
-This file triggers a one-time Gemini brief regeneration after rotating the API key (attempt 3, diagnostic enabled).
+This file triggers a one-time Gemini brief regeneration after rotating the API key (attempt 4, Discord webhook rotated).

@@ -40,7 +40,9 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
             response = json.loads(urlopen(req, timeout=90).read())
         except HTTPError as error:
             detail = error.read().decode("utf-8", errors="replace")[:1200]
-            sys.exit(f"Gemini API request failed ({error.code}): {detail}")
+            (ROOT / "gemini-error.txt").write_text(f"Gemini API request failed ({error.code}): {detail}")
+            print("Gemini request failed; diagnostic file prepared")
+            return
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
             sys.exit("Gemini response did not contain exactly six prompts")

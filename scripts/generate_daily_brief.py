@@ -48,7 +48,7 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
         "",
         *[f"**{i + 1}.** {item}" for i, item in enumerate(brief["prompts"])],
     ])
-    Path("daily-discord-message.txt").write_text(message[:1900])
+    (ROOT / "daily-discord-message.txt").write_text(message)
     print(f"Generated brief for {today}")
 
 if __name__ == "__main__":

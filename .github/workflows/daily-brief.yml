@@ -26,7 +26,7 @@ jobs:
       - name: Generate archive entry
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: gemini-2.5-flash
+          GEMINI_MODEL: gemini-3.5-flash
         run: python scripts/generate_daily_brief.py
       - name: Send daily brief to Discord
         env:

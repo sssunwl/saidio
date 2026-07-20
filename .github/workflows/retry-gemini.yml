@@ -21,7 +21,7 @@ jobs:
       - name: Regenerate today's six-prompt brief with Gemini
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: gemini-2.5-flash
+          GEMINI_MODEL: gemini-3.5-flash
           FORCE_REGENERATE: "1"
         run: python scripts/generate_daily_brief.py
       - name: Send regenerated brief to Discord

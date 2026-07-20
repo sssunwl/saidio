@@ -3,6 +3,7 @@
 import json, os, sys
 from datetime import date
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,10 +33,14 @@ title, focus, meta, summary, prompts. prompts must be an array of exactly 6 orig
 Each prompt must state duration, BPM, instruments, arrangement, no vocals unless clearly labelled
 for AI character drama, no artist references, and a clean ending or loop point. State whether this
 is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing rights."""
-        model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
-        req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json"})
-        response = json.loads(urlopen(req, timeout=90).read())
+        model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json", "x-goog-api-key": key})
+        try:
+            response = json.loads(urlopen(req, timeout=90).read())
+        except HTTPError as error:
+            detail = error.read().decode("utf-8", errors="replace")[:1200]
+            sys.exit(f"Gemini API request failed ({error.code}): {detail}")
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
             sys.exit("Gemini response did not contain exactly six prompts")

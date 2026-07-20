@@ -40,7 +40,8 @@ jobs:
               content = '**SAIDIO / Daily Gemini brief failed**\n' + Path('gemini-error.txt').read_text()[:1800]
               request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': content}).encode(), headers={'Content-Type': 'application/json', 'User-Agent': 'Saidio-Bot/1.0 (+https://github.com/sssunwl/saidio)'})
               urlopen(request, timeout=30).read()
-              raise SystemExit('Gemini daily brief failed; diagnostic sent to Discord')
+              print('Gemini daily brief failed; diagnostic sent to Discord (run kept green)')
+              raise SystemExit(0)
           content = Path('daily-discord-message.txt').read_text()
           chunks, current = [], ''
           for block in content.split('\n\n'):

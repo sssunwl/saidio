@@ -1,20 +1,104 @@
 {
-  "updatedAt": "2026-07-20T21:00:00+09:00",
-  "metrics": [{"label":"進行中製作","value":"03"},{"label":"已歸檔 brief","value":"01"},{"label":"待檢視訊號","value":"04"},{"label":"90 天驗證期","value":"12 天"}],
+  "updatedAt": "2026-07-20T09:00:00+09:00",
+  "metrics": [
+    {
+      "label": "進行中製作",
+      "value": "03"
+    },
+    {
+      "label": "已歸檔 brief",
+      "value": "01"
+    },
+    {
+      "label": "待檢視訊號",
+      "value": "04"
+    },
+    {
+      "label": "90 天驗證期",
+      "value": "12 天"
+    }
+  ],
   "projects": [
-    {"name":"投資頻道","state":"進行中","progress":18,"summary":"首個 90 天驗證：建立穩定主持、每週解說形式與可衡量的觀看留存。"},
-    {"name":"SunTravel／PersonalFootage 影片製作","state":"進行中","progress":16,"summary":"以 /Users/sws/PersonalFootage 為影片製作總庫：素材去重、GPS 分組、Gemini 選鏡、直橫剪輯、四語 YouTube 文字軌與攻略式 Reels。"},
-    {"name":"B2B 影片套件","state":"排程中","progress":8,"summary":"SonaSNS 的加購製作服務；Okiblues 為第一個客戶案例。"},
-    {"name":"人才資料庫","state":"建立中","progress":10,"summary":"聲音、視覺身分和出鏡紀錄先由 Saul 管理，達成畢業條件後再獨立。"},
-    {"name":"AI 角色網劇","state":"構思中","progress":4,"summary":"儲備主題、音樂資產與測試場景；目前不獨立開設頻道。"},
-    {"name":"遊戲／電影／亞洲評論","state":"暫緩","progress":0,"summary":"投資頻道驗證期結束後才重新評估；製作前必須完成權利檢查。"}
+    {
+      "name": "投資頻道",
+      "state": "進行中",
+      "progress": 18,
+      "summary": "首個 90 天驗證：建立穩定主持、每週解說形式與可衡量的觀看留存。"
+    },
+    {
+      "name": "SunTravel／PersonalFootage 影片製作",
+      "state": "進行中",
+      "progress": 16,
+      "summary": "以 /Users/sws/PersonalFootage 為影片製作總庫：素材去重、GPS 分組、Gemini 選鏡、直橫剪輯、四語 YouTube 文字軌與攻略式 Reels。"
+    },
+    {
+      "name": "B2B 影片套件",
+      "state": "排程中",
+      "progress": 8,
+      "summary": "SonaSNS 的加購製作服務；Okiblues 為第一個客戶案例。"
+    },
+    {
+      "name": "人才資料庫",
+      "state": "建立中",
+      "progress": 10,
+      "summary": "聲音、視覺身分和出鏡紀錄先由 Saul 管理，達成畢業條件後再獨立。"
+    },
+    {
+      "name": "AI 角色網劇",
+      "state": "構思中",
+      "progress": 4,
+      "summary": "儲備主題、音樂資產與測試場景；目前不獨立開設頻道。"
+    },
+    {
+      "name": "遊戲／電影／亞洲評論",
+      "state": "暫緩",
+      "progress": 0,
+      "summary": "投資頻道驗證期結束後才重新評估；製作前必須完成權利檢查。"
+    }
   ],
   "radar": [
-    {"date":"今日","title":"把每個訊號轉成製作問題","detail":"它是否適合現有頻道、擁有可安全使用的素材，以及是否給觀眾一個具體的停留理由？","tag":"檢視"},
-    {"date":"本週","title":"旅遊素材：第一次參與的攻略","detail":"不做全天流水帳；改用具體問題：要先知道甚麼、怎樣參與、哪些可以跳過。","tag":"SUNTRAVEL"},
-    {"date":"本週","title":"投資頻道：先建立可重複驗證的形式","detail":"在增加頻道數之前，先以穩定主持的解說片測試留存。","tag":"90 天驗證"}
+    {
+      "date": "今日",
+      "title": "把每個訊號轉成製作問題",
+      "detail": "它是否適合現有頻道、擁有可安全使用的素材，以及是否給觀眾一個具體的停留理由？",
+      "tag": "檢視"
+    },
+    {
+      "date": "本週",
+      "title": "旅遊素材：第一次參與的攻略",
+      "detail": "不做全天流水帳；改用具體問題：要先知道甚麼、怎樣參與、哪些可以跳過。",
+      "tag": "SUNTRAVEL"
+    },
+    {
+      "date": "本週",
+      "title": "投資頻道：先建立可重複驗證的形式",
+      "detail": "在增加頻道數之前，先以穩定主持的解說片測試留存。",
+      "tag": "90 天驗證"
+    }
   ],
   "briefs": [
-    {"date":"2026-07-20","title":"日本 Field Notes — 日光","focus":"建立可供文字敘事旅遊片使用的基礎音樂庫。","meta":"研發／Gemini Pro／76–100 BPM","summary":"今日先以純音樂測試 6 個實用剪輯情境；選出最好的兩首，日後再以具商用條款的平台正式重製。","prompts":["Instrumental only. 30 seconds, 90 BPM. Editorial travel score for a quiet Tokyo food-and-walking film. Warm Rhodes, muted nylon guitar, brushed percussion, soft upright bass, natural room tone. First 3 seconds sparse for a map pin, then gentle forward motion. No vocals, no dramatic drop, clean 2-second ending.","Instrumental only. 30 seconds, 88 BPM. Clean urban-morning cue for a practical travel guide. Soft marimba, light bass pulse, minimal hand percussion, no lead melody. Loop-friendly with 1.5 seconds of quiet at the start for a location card. No vocals, no artist references.","Instrumental only. 30 seconds, 92 BPM. Dinner-table travel film cue: subtle electric piano, brushed snare, warm bass and a discreet 8-bar lift after 12 seconds. Keep the food close-up elegant rather than romantic. No vocals, clean 2-second ending.","Instrumental only. 30 seconds, 76 BPM. Winter-night Japan ambience for a moody Reel. Felt piano fragments, distant room tone, soft low synth and one restrained bell texture. Leave negative space for on-screen text; no beat drop, no vocals, loop point at 28 seconds.","Instrumental only. 30 seconds, 100 BPM. Useful city-guide cue for maps, prices and step-by-step tips. Tight muted guitar, clean claps, light analog bass and crisp but restrained percussion. Strong first-second hook, no vocals, no artist references, clean ending.","Instrumental only. 30 seconds, 84 BPM. Neutral travel-planning background for packing, booking and transit information. Airy electric piano, soft plucked strings, minimal percussion and a calm forward pulse. Designed beneath captions and ambient sound; no vocals, no dramatic climax, seamless loop."]}
+    {
+      "title": "Daily Asset Brief: Japan Field Notes — Winter Night",
+      "focus": "Japan Field Notes — Winter Night",
+      "meta": {
+        "date": "2026-07-20",
+        "pipeline_status": "Production (Suno/Eleven)",
+        "target_systems": [
+          "Investment Channel Validation",
+          "Travel Field Notes System",
+          "AI Character Drama Asset Bank"
+        ]
+      },
+      "summary": "This brief outlines the audio asset generation plan for July 20, 2026, focusing on the 'Japan Field Notes — Winter Night' package. Assets are balanced between ambient travel fusions for the Field Notes system and evocative dramatic cues to expand our AI character drama bank, supporting our ongoing investment channel validation.",
+      "prompts": [
+        "Duration: 2:15. BPM: 65. Instruments: Traditional shakuhachi flute, sparse acoustic koto, gentle wind chimes, and ambient winter wind foley. Arrangement: Minimalist and spacious ambient landscape, slowly building with warm sub-bass pads. No vocals. Clean fade-out ending at 2:10.",
+        "Duration: 3:00. BPM: 82. Instruments: Warm Rhodes electric piano, vinyl crackle, subtle snow-crunch foley, and a laid-back boom-bap drum loop. Arrangement: Lo-fi hip-hop track capturing a late-night Tokyo alleyway in the snow. No vocals. Seamless loop point at 2:56.",
+        "Duration: 1:45. BPM: 60. Instruments: Melancholic solo grand piano, cello ensemble, and faint distant train station announcements under wet reverb. Arrangement: Minimalist, neoclassical dramatic cue for reflective AI character dialogue. No vocals. Clean decay ending.",
+        "Duration: 2:00. BPM: 55. Instruments: Bittersweet female hummed vocal (no lyrics, melodic sighing), intimate nylon-string acoustic guitar, and soft analog synthesizer drone. Arrangement: Intimate, close-mic performance for AI character drama emotional climax. Features clear, non-lexical vocal hums. Clean ending.",
+        "Duration: 2:30. BPM: 110. Instruments: Rhythmic shamisen, modern digital synth plucks, and a driving mid-tempo shiko drum beat. Arrangement: Upbeat electronic-traditional fusion representing a neon-lit winter street in Osaka. No vocals. Seamless loop point at 2:24.",
+        "Duration: 1:50. BPM: 75. Instruments: Deep, resonant low taiko drum strikes, tension-building pizzicato strings, and cold metallic sound design drones. Arrangement: Cinematic suspense cue designed for high-stakes AI character confrontation in a winter setting. No vocals. Sharp, sudden stop ending."
+      ],
+      "date": "2026-07-20"
+    }
   ]
 }

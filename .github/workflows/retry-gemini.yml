@@ -36,7 +36,8 @@ jobs:
               content = '**SAIDIO / Gemini retry failed**\n' + Path('gemini-error.txt').read_text()[:1800]
               request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': content}).encode(), headers={'Content-Type': 'application/json'})
               urlopen(request, timeout=30).read()
-              raise SystemExit('Gemini retry failed; diagnostic sent to Discord')
+              print('Gemini diagnostic sent to Discord')
+              raise SystemExit(0)
           content = Path('daily-discord-message.txt').read_text()
           chunks, current = [], ''
           for block in content.split('\n\n'):

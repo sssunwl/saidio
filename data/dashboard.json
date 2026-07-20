@@ -1,0 +1,20 @@
+{
+  "updatedAt": "2026-07-20T21:00:00+09:00",
+  "metrics": [{"label":"Active productions","value":"03"},{"label":"Asset briefs logged","value":"01"},{"label":"Signals awaiting review","value":"04"},{"label":"90-day gate","value":"12 d"}],
+  "projects": [
+    {"name":"Investment channel","state":"ACTIVE","progress":18,"summary":"First 90-day validation. Build a consistent host, weekly explainers and measurable retention."},
+    {"name":"Field Notes / Travel","state":"ACTIVE","progress":12,"summary":"Japan footage pipeline: GPS grouping, text-led edits and four-language YouTube tracks."},
+    {"name":"B2B Video Pack","state":"QUEUED","progress":8,"summary":"SonaSNS add-on. Okiblues is the first client reference."},
+    {"name":"Talent Registry","state":"BUILDING","progress":10,"summary":"Voice, visual identity and appearance history live under Saul until graduation criteria are met."},
+    {"name":"AI character drama","state":"IDEAS","progress":4,"summary":"Bank themes, music assets and test scenes. Do not launch as a channel yet."},
+    {"name":"Games / film / Asia commentary","state":"HOLD","progress":0,"summary":"Keep in ideas until the investment-channel gate closes. Rights review required before production."}
+  ],
+  "radar": [
+    {"date":"TODAY","title":"Turn every signal into a production question","detail":"Does it fit a current channel, have rights-safe footage, and give a viewer a specific reason to stay?","tag":"REVIEW"},
+    {"date":"WEEK","title":"Travel footage: first-time participation guides","detail":"Use specific questions rather than a full-day recap: what to know, how to participate, or what to skip.","tag":"FIELD NOTES"},
+    {"date":"WEEK","title":"Investment channel: build repeatable proof formats","detail":"Prioritise explainers with a stable host and track retention before expanding channel count.","tag":"90-DAY GATE"}
+  ],
+  "briefs": [
+    {"date":"2026-07-20","title":"Japan Field Notes — Daylight","focus":"Create a usable base library for text-led travel films.","meta":"R&D / Gemini Pro / 90 BPM","summary":"Generate calm, instrumental-only editorial cues. Select the best two for future formal recreation under a production license.","prompts":["Instrumental only. 90 BPM. Editorial travel score for a quiet Tokyo food-and-walking film. Warm Rhodes, muted nylon guitar, brushed percussion, soft upright bass, natural room tone. The first 3 seconds are sparse for a map pin, then a gentle forward motion. No vocals or dramatic drop.","Instrumental only. 88 BPM. A clean urban morning cue for a travel guide. Soft marimba, light bass pulse, minimal hand percussion and no lead melody. 30 seconds, loop-friendly, leave 1.5 seconds of quiet at the start for a location card.","Instrumental only. 92 BPM. Dinner-table travel film cue. Subtle electric piano, brushed snare, warm bass and a discreet 8-bar lift after 12 seconds. No vocals, no artist references, clean two-second ending."]}
+  ]
+}

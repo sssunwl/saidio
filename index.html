@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101512" />
+    <title>SAIDIO — Operations Desk</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+    <header class="topbar">
+      <a class="brand" href="#overview"><span class="mark">S</span><span>SAIDIO</span></a>
+      <p class="strap">Master the craft, not the tool.</p>
+      <div class="live"><i></i> SYSTEM ACTIVE</div>
+    </header>
+    <main>
+      <section class="hero" id="overview">
+        <div><p class="eyebrow">CREATIVE PRODUCTION DESK / 2026</p><h1>Make the next<br><em>useful thing.</em></h1></div>
+        <div class="hero-note"><span>Today’s focus</span><strong id="today-focus">Loading brief…</strong><p id="today-meta"></p></div>
+      </section>
+      <nav class="tabs" aria-label="Dashboard sections">
+        <a href="#briefs">Daily brief</a><a href="#calendar">Calendar</a><a href="#projects">Projects</a><a href="#radar">Radar</a>
+      </nav>
+      <section class="metric-row" id="metrics"></section>
+      <section class="split" id="briefs">
+        <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow">TODAY’S MUSIC ASSET BRIEF</p><button id="copy-prompt">Copy all prompts</button></div><div id="brief-content" class="brief-content"></div></article>
+        <aside class="panel notification-panel"><p class="eyebrow">NOTIFICATION LOG</p><div id="notifications"></div></aside>
+      </section>
+      <section class="panel calendar-panel" id="calendar"><div class="panel-head"><div><p class="eyebrow">BRIEF ARCHIVE</p><h2>Year at a glance</h2></div><div class="month-controls"><button id="prev-month" aria-label="Previous month">←</button><strong id="month-label"></strong><button id="next-month" aria-label="Next month">→</button></div></div><div class="calendar-wrap"><div class="weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="calendar-grid" class="calendar-grid"></div></div><div id="archive-detail" class="archive-detail">Choose a marked day to inspect its brief.</div></section>
+      <section class="panel projects-panel" id="projects"><div class="panel-head"><div><p class="eyebrow">PRODUCTION PORTFOLIO</p><h2>Projects in motion</h2></div><span class="muted">Source of truth: project_saidio.md</span></div><div id="projects-grid" class="projects-grid"></div></section>
+      <section class="split bottom" id="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>Daily & weekly signals</h2></div><span class="status-chip">IDEA INTAKE</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">OPERATING RULE</p><blockquote>“Master the craft,<br>not the tool.”</blockquote><p class="muted">Each signal becomes a production question, not an automatic video. Verify rights, relevance and audience value before green-lighting.</p></article></section>
+    </main>
+    <footer>SAIDIO / SUNIVERSE CREATIVE LAYER · <span id="updated-at"></span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>

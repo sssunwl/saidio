@@ -1,6 +1,6 @@
 {
   "stream": "suntravel",
-  "updatedAt": "2026-07-20T09:24:00+09:00",
+  "updatedAt": "2026-07-21T09:24:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -10,19 +10,185 @@
       "meta": "範例 · 6 B-roll + 1 Flow + 3 內容 + 2 字卡",
       "summary": "沖繩海島主題的 B-roll、Flow 主打片與字卡文案，拿去 Veo / Flow / Imagen 生成。",
       "items": [
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Slow aerial push-in over turquoise shallow water meeting white sand, midday sun, gentle waves, cinematic, no on-screen text, no logos, leave room for narration."},
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Low-angle static shot of clear water lapping over smooth coral rocks, golden hour, soft bokeh, no text, no logos."},
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Handheld walking POV along an empty beach path with palm shadows, warm morning light, natural motion, no text."},
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Underwater tracking shot following light rays through clear tropical water, small fish, calm, no text, no logos."},
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Drone orbit around a small rocky islet surrounded by gradients of blue, clear sky, cinematic, no text."},
-        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Close-up of sea foam sliding back over wet sand in slow motion, soft daylight, seamless, no text, no logos."},
-        {"type": "Flow主打片", "purpose": "沖繩海島", "engine": "Flow", "status": "prompt", "text": "A 15-20s cinematic hero clip: sunrise over an Okinawa beach, camera slowly rising from the water surface to reveal the horizon, warm-to-cool light shift, gentle waves, unhurried pacing, film grain, no on-screen text."},
-        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "沖繩的海之所以那麼藍，是因為海底細白珊瑚砂反射陽光——水越淺、顏色越夢幻。"},
-        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "想拍到最透的海，選上午 9–11 點、退潮前後，光線直射水最清。"},
-        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "把腳步放慢，海島不是用來趕行程的，是用來發呆的。"},
-        {"type": "字卡文案", "purpose": "沖繩海島", "engine": "Imagen/Canva", "status": "prompt", "text": "把整片藍留給自己｜沖繩・慢島指南 (background: minimal turquoise ocean gradient, soft light, lots of negative space)"},
-        {"type": "字卡文案", "purpose": "沖繩海島", "engine": "Imagen/Canva", "status": "prompt", "text": "上午的海最誠實｜拍海攻略 (background: clear shallow water texture from above, bright, clean)"}
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Slow aerial push-in over turquoise shallow water meeting white sand, midday sun, gentle waves, cinematic, no on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Low-angle static shot of clear water lapping over smooth coral rocks, golden hour, soft bokeh, no text, no logos."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Handheld walking POV along an empty beach path with palm shadows, warm morning light, natural motion, no text."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Underwater tracking shot following light rays through clear tropical water, small fish, calm, no text, no logos."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Drone orbit around a small rocky islet surrounded by gradients of blue, clear sky, cinematic, no text."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "沖繩海島",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Close-up of sea foam sliding back over wet sand in slow motion, soft daylight, seamless, no text, no logos."
+        },
+        {
+          "type": "Flow主打片",
+          "purpose": "沖繩海島",
+          "engine": "Flow",
+          "status": "prompt",
+          "text": "A 15-20s cinematic hero clip: sunrise over an Okinawa beach, camera slowly rising from the water surface to reveal the horizon, warm-to-cool light shift, gentle waves, unhurried pacing, film grain, no on-screen text."
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "沖繩海島",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "沖繩的海之所以那麼藍，是因為海底細白珊瑚砂反射陽光——水越淺、顏色越夢幻。"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "沖繩海島",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "想拍到最透的海，選上午 9–11 點、退潮前後，光線直射水最清。"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "沖繩海島",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "把腳步放慢，海島不是用來趕行程的，是用來發呆的。"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "沖繩海島",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "把整片藍留給自己｜沖繩・慢島指南 (background: minimal turquoise ocean gradient, soft light, lots of negative space)"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "沖繩海島",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "上午的海最誠實｜拍海攻略 (background: clear shallow water texture from above, bright, clean)"
+        }
       ]
+    },
+    {
+      "title": "夏日感官饗宴：極致美食特寫視覺包",
+      "focus": "美食特寫",
+      "meta": "Gemini R&D · 6 B-roll + 1 Flow + 3 內容 + 2 字卡",
+      "summary": "本素材包專為美食與旅遊社群短影音設計，結合高飽和度、極致細節的特寫鏡頭與質感文案，用視覺與文字瞬間喚醒觀眾的食慾。",
+      "items": [
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Extreme macro shot of a golden-brown, crispy skin of a roast duck being sliced, juices glistening under warm, dramatic spotlight. Slow tracking movement following the knife. Evening restaurant ambiance, cozy and luxurious. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Ultra close-up of fresh, vibrant red strawberry-matcha shaved ice as condensed milk slowly drizzles down the side, creating beautiful patterns. Soft morning natural light, bright and refreshing mood. Slow tilt-up camera movement. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Macro close-up of a perfectly cooked medium-rare wagyu steak being cut open, revealing a tender, pink center with steam gently rising. Low-angle panning shot, moody dark-themed background with warm ambient light. Evening steakhouse atmosphere. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Extreme close-up of hot, steaming soup dumplings (Xiao Long Bao) being lifted with chopsticks, the delicate skin stretching slightly to show the broth inside. Macro lens, slow push-in movement. Warm afternoon sun shining through a window, comforting steam. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Close-up shot of a pastry chef dusting powdered sugar onto a freshly baked raspberry tart, the sugar falling like snow onto the vibrant red berries. Smooth slow-motion tracking shot. Bright, airy bakery kitchen, daytime. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "美食特寫",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "Extreme macro of a rich espresso shot extraction, crema swirling into a beautiful golden-brown pattern inside a ceramic cup. Downward angle, slow rotational movement. Cozy cafe lighting, soft bokeh background, morning. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow主打片",
+          "purpose": "美食特寫",
+          "engine": "Flow",
+          "status": "prompt",
+          "text": "A cinematic 15-20 second sequence of a master chef preparing a signature seafood dish. It starts with a wide shot of a bustling upscale open kitchen in the evening, transitioning to a dynamic zoom-in on the chef searing a giant scallop in a hot pan with leaping flames (slow-motion, 4s). Then, a smooth tracking shot follows the chef's hands delicately plating the dish with colorful edible flowers and a rich reduction sauce (6s). Finally, a super macro, slow rotating shot of the completed dish under warm, elegant spotlighting, with steam gently wafting (5s). Pacing is energetic at first, then slows down to a luxurious, poetic rhythm. No on-screen text, no logos."
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "美食特寫",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "【美食冷知識】你知道嗎？小籠包黃金折數是18折！這不僅是美觀，更是為了讓外皮均勻受熱，鎖住每一滴飽滿的鮮甜湯汁。下次品嚐時不妨數數看吧！"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "美食特寫",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "旅行的意義，有一半寫在菜單裡。透過舌尖的微距探險，我們在厚實的和牛紋理與濃郁的醬汁中，讀懂了一座城市最溫柔、最日常的煙火氣息。"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "美食特寫",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "【在地吃貨指南】品嚐高檔燒肉時，建議由淺入深。先從油脂較少的牛舌開始，再到油花均勻的羽下肉，最後以濃郁醬汁結尾，才能完美體驗層次感！"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "美食特寫",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "舌尖上的微距旅行｜用一道菜，記住一座城市的溫度。(A minimalist, high-end background of dark slate stone with a single, elegant plate of artistic food shot from above, moody lighting, subtle steam)"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "美食特寫",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "尋味盛夏｜喚醒味蕾的極致感官饗宴(A bright, refreshing background featuring vibrant summer fruits and mint leaves with water droplets splash, soft morning sunlight, clean aesthetic)"
+        }
+      ],
+      "date": "2026-07-21",
+      "stream": "suntravel"
     }
   ]
 }

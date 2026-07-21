@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-20T09:18:00+09:00",
+  "updatedAt": "2026-07-21T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -10,13 +10,113 @@
       "meta": "範例 · 4 腳本 + 2 音效 · 聲線 V-CALM",
       "summary": "溫柔女聲的冥想引導腳本，貼進 AI Studio 語音生成即可產出音檔。",
       "items": [
-        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "現在，讓自己坐得舒服一點…（停頓）…把注意力，輕輕放回呼吸上…（停頓）…吸氣，感覺空氣進來…（停頓）…吐氣，讓身體慢慢鬆開。"},
-        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "如果有念頭飄過…（停頓）…沒關係，就讓它像雲一樣經過…（停頓）…你只要，回到這一次呼吸。"},
-        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "感覺雙肩，慢慢往下沉…（停頓）…下巴放鬆…（停頓）…眉心之間，也鬆開了。"},
-        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "接下來的三次呼吸，屬於你自己…（停頓）…慢慢來，不用急。"},
-        {"type": "環境音", "purpose": "冥想引導", "engine": "SFX", "voice": "", "status": "prompt", "text": "Soft continuous rain on a wooden roof, very gentle, distant, 60s seamless loop, no music, no thunder, warm and calming."},
-        {"type": "環境音", "purpose": "冥想引導", "engine": "SFX", "voice": "", "status": "prompt", "text": "Low warm ambient drone with faint wind chimes, 45s loopable, meditative, no melody, no copyrighted material."}
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "現在，讓自己坐得舒服一點…（停頓）…把注意力，輕輕放回呼吸上…（停頓）…吸氣，感覺空氣進來…（停頓）…吐氣，讓身體慢慢鬆開。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "如果有念頭飄過…（停頓）…沒關係，就讓它像雲一樣經過…（停頓）…你只要，回到這一次呼吸。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "感覺雙肩，慢慢往下沉…（停頓）…下巴放鬆…（停頓）…眉心之間，也鬆開了。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "接下來的三次呼吸，屬於你自己…（停頓）…慢慢來，不用急。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Soft continuous rain on a wooden roof, very gentle, distant, 60s seamless loop, no music, no thunder, warm and calming."
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Low warm ambient drone with faint wind chimes, 45s loopable, meditative, no melody, no copyrighted material."
+        }
       ]
+    },
+    {
+      "title": "靜心呼吸：V-CALM 冥想引導聲線包",
+      "focus": "冥想引導",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-CALM",
+      "summary": "本資源包提供四款不同主題的冥想引導腳本與兩款療癒環境音，助您輕鬆營造深夜沉靜或晨間靜心的專屬療癒空間。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "閉上雙眼 …（停頓）… 感受空氣 …（停頓）… 緩緩吸入 …（停頓）… 再慢慢呼出 …（停頓）… 每次呼吸 …（停頓）… 身體都變得更輕 …（停頓）… 留在此刻 …（停頓）… 享受這份寧靜。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "把腦中的思緒 …（停頓）… 想像成飄過的雲 …（停頓）… 不去抓住它 …（停頓）… 就讓它輕輕地 …（停頓）… 飄走 …（停頓）… 找回心中的空隙 …（停頓）… 感受自由。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "感覺你的雙肩 …（停頓）… 慢慢放鬆 …（停頓）… 卸下所有的緊繃 …（停頓）… 溫暖的力量 …（停頓）… 正流向你的指尖 …（停頓）… 很好 …（停頓）… 保持這份平靜。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "這裡很安全 …（停頓）… 沒有人會打擾你 …（停頓）… 傾聽心跳的聲音 …（停頓）… 每一聲 …（停頓）… 都在溫柔地告訴你 …（停頓）… 你已經做得很好 …（停頓）… 睡吧。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "A continuous 45-second loop of a very soft, distant rain falling on broad leaves, accompanied by the occasional gentle, low-pitched chime of a bamboo wind bell. Calm, peaceful, no musical instruments, seamless loop."
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "A 60-second seamless ambient drone loop featuring a deep, resonant Tibetan singing bowl being struck softly once, followed by its long, vibrating decay fading into a quiet, warm forest night hum. Pure white noise hum, high-frequency-reduced, highly relaxing."
+        }
+      ],
+      "date": "2026-07-21",
+      "stream": "voiceover"
     }
   ]
 }

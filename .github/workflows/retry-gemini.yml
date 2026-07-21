@@ -39,16 +39,15 @@ jobs:
               print('Gemini diagnostic sent to Discord')
               raise SystemExit(0)
           content = Path('daily-discord-message.txt').read_text()
-          chunks, current = [], ''
-          for block in content.split('\n\n'):
-              candidate = f'{current}\n\n{block}'.strip() if current else block
-              if len(candidate) > 1900 and current:
-                  chunks.append(current)
-                  current = block
-              else:
-                  current = candidate
-          if current:
-              chunks.append(current)
+          chunks = []
+          while len(content) > 1900:
+              cut = content.rfind('\n', 0, 1900)
+              if cut < 1:
+                  cut = 1900
+              chunks.append(content[:cut].rstrip())
+              content = content[cut:].lstrip()
+          if content:
+              chunks.append(content)
           for chunk in chunks:
               request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': chunk}).encode(), headers={'Content-Type': 'application/json', 'User-Agent': 'Saidio-Bot/1.0 (+https://github.com/sssunwl/saidio)'})
               urlopen(request, timeout=30).read()

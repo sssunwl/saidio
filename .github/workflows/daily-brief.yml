@@ -1,23 +1,20 @@
 name: Daily Saidio music brief
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'data/dashboard.json'
-      - 'scripts/generate_daily_brief.py'
-      - '.github/workflows/daily-brief.yml'
   schedule:
     # 00:12 UTC = 09:12 JST. Avoid the top-of-hour Actions queue spike.
     - cron: "12 0 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: saidio-daily-music-brief
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
   brief:
-    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,16 +48,15 @@ jobs:
               print('Gemini daily brief failed; diagnostic sent to Discord (run kept green)')
               raise SystemExit(0)
           content = Path('daily-discord-message.txt').read_text()
-          chunks, current = [], ''
-          for block in content.split('\n\n'):
-              candidate = f'{current}\n\n{block}'.strip() if current else block
-              if len(candidate) > 1900 and current:
-                  chunks.append(current)
-                  current = block
-              else:
-                  current = candidate
-          if current:
-              chunks.append(current)
+          chunks = []
+          while len(content) > 1900:
+              cut = content.rfind('\n', 0, 1900)
+              if cut < 1:
+                  cut = 1900
+              chunks.append(content[:cut].rstrip())
+              content = content[cut:].lstrip()
+          if content:
+              chunks.append(content)
           for chunk in chunks:
               request = Request(os.environ['DISCORD_WEBHOOK_URL'], data=json.dumps({'content': chunk}).encode(), headers={'Content-Type': 'application/json', 'User-Agent': 'Saidio-Bot/1.0 (+https://github.com/sssunwl/saidio)'})
               urlopen(request, timeout=30).read()

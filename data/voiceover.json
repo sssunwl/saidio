@@ -1,0 +1,22 @@
+{
+  "stream": "voiceover",
+  "updatedAt": "2026-07-21T09:18:00+09:00",
+  "briefs": [
+    {
+      "date": "2026-07-21",
+      "stream": "voiceover",
+      "title": "旁白素材包 — 冥想引導",
+      "focus": "冥想引導",
+      "meta": "範例 · 4 腳本 + 2 音效 · 聲線 V-CALM",
+      "summary": "溫柔女聲的冥想引導腳本，貼進 AI Studio 語音生成即可產出音檔。",
+      "items": [
+        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "現在，讓自己坐得舒服一點…（停頓）…把注意力，輕輕放回呼吸上…（停頓）…吸氣，感覺空氣進來…（停頓）…吐氣，讓身體慢慢鬆開。"},
+        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "如果有念頭飄過…（停頓）…沒關係，就讓它像雲一樣經過…（停頓）…你只要，回到這一次呼吸。"},
+        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "感覺雙肩，慢慢往下沉…（停頓）…下巴放鬆…（停頓）…眉心之間，也鬆開了。"},
+        {"type": "旁白腳本", "purpose": "冥想引導", "engine": "AI Studio TTS", "voice": "V-CALM", "status": "prompt", "text": "接下來的三次呼吸，屬於你自己…（停頓）…慢慢來，不用急。"},
+        {"type": "環境音", "purpose": "冥想引導", "engine": "SFX", "voice": "", "status": "prompt", "text": "Soft continuous rain on a wooden roof, very gentle, distant, 60s seamless loop, no music, no thunder, warm and calming."},
+        {"type": "環境音", "purpose": "冥想引導", "engine": "SFX", "voice": "", "status": "prompt", "text": "Low warm ambient drone with faint wind chimes, 45s loopable, meditative, no melody, no copyrighted material."}
+      ]
+    }
+  ]
+}

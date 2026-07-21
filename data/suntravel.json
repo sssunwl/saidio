@@ -1,0 +1,28 @@
+{
+  "stream": "suntravel",
+  "updatedAt": "2026-07-21T09:24:00+09:00",
+  "briefs": [
+    {
+      "date": "2026-07-21",
+      "stream": "suntravel",
+      "title": "旅遊素材包 — 沖繩海島",
+      "focus": "沖繩海島",
+      "meta": "範例 · 6 B-roll + 1 Flow + 3 內容 + 2 字卡",
+      "summary": "沖繩海島主題的 B-roll、Flow 主打片與字卡文案，拿去 Veo / Flow / Imagen 生成。",
+      "items": [
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Slow aerial push-in over turquoise shallow water meeting white sand, midday sun, gentle waves, cinematic, no on-screen text, no logos, leave room for narration."},
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Low-angle static shot of clear water lapping over smooth coral rocks, golden hour, soft bokeh, no text, no logos."},
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Handheld walking POV along an empty beach path with palm shadows, warm morning light, natural motion, no text."},
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Underwater tracking shot following light rays through clear tropical water, small fish, calm, no text, no logos."},
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Drone orbit around a small rocky islet surrounded by gradients of blue, clear sky, cinematic, no text."},
+        {"type": "B-roll", "purpose": "沖繩海島", "engine": "Veo/Flow", "status": "prompt", "text": "Close-up of sea foam sliding back over wet sand in slow motion, soft daylight, seamless, no text, no logos."},
+        {"type": "Flow主打片", "purpose": "沖繩海島", "engine": "Flow", "status": "prompt", "text": "A 15-20s cinematic hero clip: sunrise over an Okinawa beach, camera slowly rising from the water surface to reveal the horizon, warm-to-cool light shift, gentle waves, unhurried pacing, film grain, no on-screen text."},
+        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "沖繩的海之所以那麼藍，是因為海底細白珊瑚砂反射陽光——水越淺、顏色越夢幻。"},
+        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "想拍到最透的海，選上午 9–11 點、退潮前後，光線直射水最清。"},
+        {"type": "旅遊內容", "purpose": "沖繩海島", "engine": "文字", "status": "prompt", "text": "把腳步放慢，海島不是用來趕行程的，是用來發呆的。"},
+        {"type": "字卡文案", "purpose": "沖繩海島", "engine": "Imagen/Canva", "status": "prompt", "text": "把整片藍留給自己｜沖繩・慢島指南 (background: minimal turquoise ocean gradient, soft light, lots of negative space)"},
+        {"type": "字卡文案", "purpose": "沖繩海島", "engine": "Imagen/Canva", "status": "prompt", "text": "上午的海最誠實｜拍海攻略 (background: clear shallow water texture from above, bright, clean)"}
+      ]
+    }
+  ]
+}

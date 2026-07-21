@@ -16,19 +16,50 @@
     </header>
     <main>
       <section class="hero" id="overview">
-        <div><p class="eyebrow">創作製作營運台 / 2026</p><h1>做好下一個<br><em>值得看的作品。</em></h1></div>
-        <div class="hero-note"><span>今日焦點</span><strong id="today-focus">載入中…</strong><p id="today-meta"></p></div>
+        <div><p class="eyebrow">創作素材營運台 / 2026</p><h1>做好下一個<br><em>值得看的作品。</em></h1></div>
+        <div class="hero-note"><span>最新素材</span><strong id="today-focus">載入中…</strong><p id="today-meta"></p></div>
       </section>
+
+      <!-- 生成工具連結列（固定） -->
+      <section class="toolbar" id="tools" aria-label="生成工具">
+        <span class="toolbar-label">生成工具</span>
+        <div class="tool-links">
+          <a href="https://aistudio.google.com" target="_blank" rel="noopener"><b>🎵 音樂</b><span>Gemini / Lyria</span></a>
+          <a href="https://aistudio.google.com" target="_blank" rel="noopener"><b>🗣️ 旁白 TTS</b><span>AI Studio 語音</span></a>
+          <a href="https://elevenlabs.io" target="_blank" rel="noopener"><b>🎙️ 固定聲線</b><span>ElevenLabs</span></a>
+          <a href="https://labs.google/fx/tools/flow" target="_blank" rel="noopener"><b>🎬 B-roll / Flow</b><span>Veo · Google Flow</span></a>
+          <a href="https://labs.google/fx/tools/image-fx" target="_blank" rel="noopener"><b>🖼️ 字卡圖</b><span>ImageFX</span></a>
+          <a href="https://www.canva.com" target="_blank" rel="noopener"><b>🖼️ 字卡排版</b><span>Canva</span></a>
+        </div>
+      </section>
+
       <nav class="tabs" aria-label="營運台章節">
-        <a href="#briefs">每日 brief</a><a href="#calendar">年曆</a><a href="#projects">專案</a><a href="#radar">趨勢雷達</a>
+        <a href="#briefs">每日素材</a><a href="#calendar">年曆</a><a href="#projects">專案</a><a href="#radar">趨勢雷達</a>
       </nav>
+
+      <!-- 生成類型 / 用途過濾 -->
+      <section class="filters" id="filters" aria-label="素材過濾">
+        <div class="chip-row" id="stream-chips"></div>
+      </section>
+
       <section class="metric-row" id="metrics"></section>
+
       <section class="split" id="briefs">
-        <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow">今日音樂素材 brief</p><div class="brief-actions"><button id="toggle-brief" aria-expanded="false">展開今日 brief</button><button id="copy-prompt">複製全部 Prompts</button></div></div><div id="brief-content" class="brief-content"></div></article>
+        <article class="panel brief-panel">
+          <div class="panel-head"><p class="eyebrow" id="briefs-eyebrow">最新一批素材</p></div>
+          <div id="today-cards" class="today-cards"></div>
+        </article>
         <aside class="panel notification-panel"><p class="eyebrow">通知紀錄</p><div id="notifications"></div></aside>
       </section>
-      <section class="panel calendar-panel" id="calendar"><div class="panel-head"><div><p class="eyebrow">brief 歸檔</p><h2>年度總覽</h2></div><div class="month-controls"><button id="prev-month" aria-label="上一個月">←</button><strong id="month-label"></strong><button id="next-month" aria-label="下一個月">→</button></div></div><div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div><div id="archive-detail" class="archive-detail">點選有標記的日子，查看當日 brief。</div></section>
+
+      <section class="panel calendar-panel" id="calendar">
+        <div class="panel-head"><div><p class="eyebrow">素材歸檔</p><h2>年度總覽</h2></div><div class="month-controls"><button id="prev-month" aria-label="上一個月">←</button><strong id="month-label"></strong><button id="next-month" aria-label="下一個月">→</button></div></div>
+        <div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div>
+        <div id="archive-detail" class="archive-detail">點選有色點的日子，查看當日所有素材。</div>
+      </section>
+
       <section class="panel projects-panel" id="projects"><div class="panel-head"><div><p class="eyebrow">製作組合</p><h2>進行中的專案</h2></div><span class="muted">資料來源：project_saidio.md</span></div><div id="projects-grid" class="projects-grid"></div></section>
+
       <section class="split bottom" id="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>每日與每週訊號</h2></div><span class="status-chip">靈感收集</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">工作原則</p><blockquote>「精進創作，<br>不被工具定義。」</blockquote><p class="muted">每個訊號都要先變成製作問題，而不是自動變成影片：確認權利、關聯性及觀眾真正得到的價值，才進入製作。</p></article></section>
     </main>
     <footer>SAIDIO / SUNIVERSE 創作層 · <span id="updated-at"></span></footer>

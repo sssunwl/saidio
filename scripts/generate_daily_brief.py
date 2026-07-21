@@ -29,10 +29,19 @@ def main():
         prompt = f"""You are Saidio's music asset librarian. Create a daily asset brief for {today}.
 Focus package: {focus}. Saidio currently validates an investment channel first, while building a
 travel Field Notes system and banking assets for AI character drama. Return JSON only with keys:
-title, focus, meta, summary, prompts. prompts must be an array of exactly 6 original music prompts.
-Each prompt must state duration, BPM, instruments, arrangement, no vocals unless clearly labelled
-for AI character drama, no artist references, and a clean ending or loop point. State whether this
-is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing rights."""
+title, focus, meta, summary, prompts. prompts must be an array of exactly 10 original music prompts
+that form one reusable asset package:
+- Prompts 1–6: 2:30–3:00 core master tracks with natural edit points near 15, 30, 60, and 90 seconds,
+  a loopable middle section, meaningful development instead of simple repetition, and a clean ending.
+- Prompts 7–8: 90–120 second alternate arrangements with clean edit points and endings.
+- Prompt 9: a dedicated 20–45 second functional cue such as an intro, outro, map transition, bumper,
+  or information-card bed, chosen to suit the focus package.
+- Prompt 10: a 2:30–3:00 experimental master that still has practical editing points and a clean ending.
+Every prompt must explicitly state duration, BPM, mood, instrument constraints, arrangement, edit
+points, and whether the middle is loopable. Leave room for narration and location sound where relevant.
+No vocals unless clearly labelled for AI character drama, no artist or existing-song references, no
+recognizable melodies, and no copyrighted samples. State that all 10 prompts are Gemini R&D in meta;
+do not claim licensing rights or imply that generation has already happened."""
         model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json", "x-goog-api-key": key})
@@ -61,14 +70,14 @@ is R&D (Gemini) or production (Eleven/Suno) in meta. Do not claim licensing righ
                 print(f"Gemini network error model={model}: {error.reason}")
                 return
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
-        if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 6:
-            sys.exit("Gemini response did not contain exactly six prompts")
+        if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 10:
+            sys.exit("Gemini response did not contain exactly ten prompts")
         brief["date"] = today
         if existing_index is None:
             payload["briefs"].append(brief)
         else:
             payload["briefs"][existing_index] = brief
-        payload["updatedAt"] = f"{today}T09:00:00+09:00"
+        payload["updatedAt"] = f"{today}T09:12:00+09:00"
         DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
     message = "\n".join([
         f"**SAIDIO / {today}**",

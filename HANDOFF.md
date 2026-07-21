@@ -7,7 +7,7 @@
 GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳本 → commit 進 repo + POST 到 Discord → 人手動去各工具生成媒體、存本機 `resource/`。網站是可標籤/年曆瀏覽的統一素材庫。
 
 ## 路徑
-- **GitHub repo(雲端排程 + 網站,唯一真相來源）**：`sssunwl/saidio`（`gh repo clone sssunwl/saidio`）
+- **GitHub repo（雲端排程 + 網站文字的真相來源）**：`sssunwl/saidio`（`gh repo clone sssunwl/saidio`）
 - **線上網站**：https://sssunwl.github.io/saidio/
 - **本機工作夾**：`/Users/sws/Sun/Claude/saidio/`
   - `geminimusic/` — 音樂媒體庫（`YYYYMMDD<n>.mp4` + INDEX.md，人手動存）
@@ -15,6 +15,12 @@ GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳
   - `resource/suntravel/` — B-roll / Flow 片 / 字卡圖（人手動存）
   - `VOICES.md` — 語音人物聖經（與 repo 同步一份）
 - **本機夾非 git**；repo 只存「文字」不存媒體（避免 repo 脹大，Footage 教訓）。
+
+## 本機媒體備份／同步策略
+- `geminimusic/` 與 `resource/` 是媒體本體的唯一工作副本，**不進 Git**；每次新增或整理完素材後，至少同步到一個工作區外的雲端硬碟或外接硬碟。
+- 建議以 `YYYYMMDD` 日期資料夾／檔名為單位增量備份，保留 `geminimusic/INDEX.md`，並一併備份 `resource/` 的目錄結構；不要只備份檔案而遺失分類。
+- `VOICES.md` 以 repo 版本為文字真相來源；本機副本修改後，須同步回 repo。媒體若要跨電腦使用，從備份還原到同一路徑即可。
+- 接手前先確認：今天新增的媒體已備份、`INDEX.md` 已更新、`VOICES.md` 本機與 repo 版本一致。
 
 ## repo 內關鍵檔
 - `.github/workflows/daily-brief.yml`（🎵 音樂，00:12 UTC，既有）

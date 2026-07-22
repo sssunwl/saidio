@@ -24,16 +24,17 @@ def build_prompt(today, focus):
 Focus package: {focus}. Return JSON only with keys: title, focus, meta, summary, items.
 - title: a short Traditional-Chinese title mentioning the focus.
 - focus: exactly "{focus}".
-- meta: "Gemini R&D · 6 B-roll + 1 Flow + 3 內容 + 2 字卡".
+- meta: "Flow 每日選片 · 6 Lite + 2 Fast + 2 內容 + 2 字卡".
 - summary: one Traditional-Chinese sentence on how to use this package.
 - items: an array of exactly 12 objects, each with keys: type, purpose, engine, status, text.
   All items set purpose="{focus}" and status="prompt".
-  * Items 1-6: type="B-roll", engine="Veo/Flow". text = an English text-to-video prompt for a
+  * Items 1-6: type="Flow Lite", engine="Veo 3.1 Lite · 10點". text = an English text-to-video prompt for a
     5-8 second cinematic B-roll clip fitting {focus}. Each must state shot type, camera movement,
     lighting/mood, time of day, and "no on-screen text, no logos, leave room for narration".
-  * Item 7: type="Flow主打片", engine="Flow". text = a richer English prompt for one 15-20 second
-    cinematic hero clip for manual refinement in Google Flow (scene, camera, mood, pacing).
-  * Items 8-10: type="旅遊內容", engine="文字". text = a ready-to-post Traditional-Chinese piece —
+  * Items 7-8: type="Flow Fast", engine="Veo 3.1 Fast · 20點". text = a stronger 8-second cinematic
+    candidate with purposeful subject motion, camera movement, lighting, mood and pacing. These are
+    the two premium candidates; make them clearly different from the Lite exploration prompts.
+  * Items 9-10: type="旅遊內容", engine="文字". text = a ready-to-post Traditional-Chinese piece —
     a travel tip, fun fact, or short caption (金句) about the {focus} theme, 40-90 characters.
   * Items 11-12: type="字卡文案", engine="Imagen/Canva". text = Traditional-Chinese card copy as
     "主標｜副標" for an overlay card, plus a short English background-image prompt in parentheses.
@@ -94,7 +95,7 @@ def main():
         payload["updatedAt"] = f"{today}T09:24:00+09:00"
         DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
-    lines = [f"**SUNTRAVEL / 旅遊素材 · {today}**", f"**{brief['title']}** — {brief['focus']}", brief["summary"], ""]
+    lines = [f"**SUNTRAVEL / Flow 每日選片 · {today}**", f"**{brief['title']}** — {brief['focus']}", "每天提供 6 支 Lite＋2 支 Fast 提示詞；建議實際生成 5 Lite＋1 Fast（共 70 點）。", brief["summary"], ""]
     for i, it in enumerate(brief["items"], 1):
         lines.append(f"**{i}.** [{it['type']}·{it['engine']}] {it['text']}")
     (ROOT / "suntravel-discord-message.txt").write_text("\n".join(lines))

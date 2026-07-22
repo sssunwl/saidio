@@ -1,6 +1,6 @@
 {
   "stream": "suntravel",
-  "updatedAt": "2026-07-21T09:24:00+09:00",
+  "updatedAt": "2026-07-22T09:24:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -188,6 +188,100 @@
         }
       ],
       "date": "2026-07-21",
+      "stream": "suntravel"
+    },
+    {
+      "title": "Suntravel 2026-07-22 交通移動視覺資產企劃",
+      "focus": "交通移動",
+      "meta": "Gemini R&D · 6 B-roll + 1 Flow + 3 內容 + 2 字卡",
+      "summary": "本套包聚焦於旅途中的「交通移動」美學，提供高質感的動態畫面與社群文案，協助創作者流暢串聯不同景點間的過渡視覺，打造具備呼吸感的旅遊故事。",
+      "items": [
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic wide shot of a modern sleek high-speed train zooming through lush green countryside in Japan under a soft morning sun. Smooth panning camera tracking the train. Warm, vibrant lighting. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic close-up from inside an airplane window, looking out at the white wing cutting through soft pink and golden clouds during a glorious sunset. Static shot with subtle natural plane vibration. Dreamy, nostalgic mood. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic medium shot following a classic vintage scooter cruising along a winding coastal cliffside road in Italy. Golden hour lighting with sparkling sea reflections. Smooth tracking shot from behind. Breezy, adventurous mood. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic high-angle drone shot of a white passenger ferry carving a clean wake through deep turquoise island waters. Slow push-in camera movement. Bright midday sun, sparkling water textures. Refreshing, expansive mood. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic low-angle shot of a classic steam locomotive chugging through a dense misty pine forest in autumn. Camera is static as steam billows. Moody, mysterious atmosphere with dramatic shafts of morning light. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "B-roll",
+          "purpose": "交通移動",
+          "engine": "Veo/Flow",
+          "status": "prompt",
+          "text": "A cinematic over-the-shoulder medium shot of a traveler looking out of a scenic bus window as it travels through rolling green hills. Soft, diffused overcast daylight. Slow zoom-in on the passenger's reflective expression. Contemplative, poetic mood. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow主打片",
+          "purpose": "交通移動",
+          "engine": "Flow",
+          "status": "prompt",
+          "text": "An epic 15-20 second cinematic hero sequence depicting the ultimate travel transition. It starts with a first-person POV driving a convertible car along a sunny coastal highway at sunrise, transitioning smoothly with a seamless whip-pan to the interior of a luxury glass-domed observation train winding through majestic snow-capped mountains. The mood is exhilarating and awe-inspiring, with cinematic lighting shifting from warm sunrise orange to cool alpine blue. The pacing begins fast and rhythmic, then slows down to a breathtaking, panoramic glide. No text, no logos."
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "交通移動",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "旅行的意義，往往不在於抵達終點的那一刻，而是在搖晃的火車上升起車窗，迎面吹來的那陣異國微風。下一站，你想去哪裡？"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "交通移動",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "試著在旅途中換乘一次當地慢車吧！避開高速鐵路的行色匆匆，用時速四十公里的溫柔視角，重新認識這座城市的日常輪廓。"
+        },
+        {
+          "type": "旅遊內容",
+          "purpose": "交通移動",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "買下一張靠窗的車票，就像買下一整面隨時間變幻的動態美術館。從日出到星夜，每一幀流動的風景都是旅程限定的收藏。"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "交通移動",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "路上的風景，是最好的目的地｜收錄最美移動視角 (A cinematic, clean minimalist background photo of an empty highway stretching towards distant mountains under a pastel sunset sky, shallow depth of field, copy space on top)"
+        },
+        {
+          "type": "字卡文案",
+          "purpose": "交通移動",
+          "engine": "Imagen/Canva",
+          "status": "prompt",
+          "text": "用慢速，抵達靈魂深處｜鐵道迷的夢幻清單 (A clean flat lay photograph of a vintage train ticket next to a camera and a compass on a rustic wooden table, soft window light, plenty of copy space)"
+        }
+      ],
+      "date": "2026-07-22",
       "stream": "suntravel"
     }
   ]

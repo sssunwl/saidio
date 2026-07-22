@@ -45,3 +45,4 @@
 .dot.s-suntravel,.dots i.s-suntravel{background:var(--cyan)}
 #archive-detail .stream-card{margin-top:12px}
 @media(max-width:760px){.toolbar{flex-direction:column;align-items:flex-start}.tool-links a{min-width:0;flex:1}.sc-head{flex-wrap:wrap}}
+.prompt-head{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.55rem}.gen-status{font-size:.68rem;font-weight:750;letter-spacing:.05em;padding:.18rem .45rem;border-radius:99px;background:#27302b;color:#c9d2cc}.gen-ready{background:#173d2b;color:#8cf0b8}.gen-running,.gen-queued{background:#403719;color:#f4d675}.gen-failed{background:#481f23;color:#ff9ba3}.media-link{margin-left:auto;color:#9ee5bc;font-size:.76rem;font-weight:700;text-decoration:none}.media-link:hover{text-decoration:underline}

@@ -1,9 +1,6 @@
 name: Daily Saidio voiceover brief
 
 on:
-  schedule:
-    # 00:18 UTC = 09:18 JST. Staggered after the music brief (00:12).
-    - cron: "18 0 * * *"
   workflow_dispatch:
 
 concurrency:

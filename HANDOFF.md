@@ -1,7 +1,14 @@
 # SAIDIO 多線素材工廠 — 交接檔
 
 > 給接手的 AI:這是 SAIDIO「每日 prompt 工廠 + 統一素材庫網站」。本檔記錄現狀、路徑、待辦。
-> 更新日:2026-07-21。
+> 更新日:2026-07-22。
+
+## 2026-07-22：媒體 API 一步到位
+- 新增 `.github/workflows/daily-production.yml`，每天 09:12 JST 一次產生三條 brief，並可接續生成 1 份 TTS、1 份 Lyria 音樂、1 份 Veo 直式 B-roll。
+- 實際媒體排程有安全鎖：repo variable `SAIDIO_MEDIA_ENABLED=true` 才會啟用；手動 dispatch 可選 all/music/voiceover/video。
+- 生成程式為 `scripts/generate_media.py`，單項保存 ready/failed 狀態，可重跑且已完成項目不重複扣額度。
+- 大型媒體不進 Git，發布到每月 GitHub Release `media-YYYY-MM`；網站顯示狀態及成品連結。這些 Release 資產是公開的，不得放機密客戶素材。
+- 原本三支 daily workflow 保留作手動復原，但已移除 schedule，避免同時寫檔與重複生成。
 
 ## 一句話
 GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳本 → commit 進 repo + POST 到 Discord → 人手動去各工具生成媒體、存本機 `resource/`。網站是可標籤/年曆瀏覽的統一素材庫。

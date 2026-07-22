@@ -1,0 +1,78 @@
+name: Daily Saidio media production
+
+on:
+  schedule:
+    # 00:12 UTC = 09:12 JST
+    - cron: "12 0 * * *"
+  workflow_dispatch:
+    inputs:
+      stream:
+        description: Media type to generate or rerun
+        type: choice
+        options: [all, music, voiceover, video]
+        default: all
+      generate_media:
+        description: Call paid media APIs
+        type: boolean
+        default: true
+
+concurrency:
+  group: saidio-daily-production
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      SAIDIO_VOICE_MAP_JSON: ${{ secrets.SAIDIO_VOICE_MAP_JSON }}
+      TTS_MODEL: gemini-3.1-flash-tts-preview
+      LYRIA_MODEL: lyria-3-clip-preview
+      VEO_MODEL: veo-3.1-fast-generate-preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate today's three creative briefs
+        run: |
+          python scripts/generate_daily_brief.py
+          python scripts/generate_voiceover_brief.py
+          python scripts/generate_suntravel_brief.py
+      - name: Generate media through Gemini APIs
+        if: ${{ (github.event_name == 'schedule' && vars.SAIDIO_MEDIA_ENABLED == 'true') || (github.event_name == 'workflow_dispatch' && inputs.generate_media) }}
+        env:
+          REQUESTED_STREAM: ${{ inputs.stream || 'all' }}
+        run: python scripts/generate_media.py --stream "$REQUESTED_STREAM"
+      - name: Publish media as monthly Release assets
+        if: ${{ hashFiles('outputs/*') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="media-$(date -u +%Y-%m)"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "SAIDIO media $(date -u +%Y-%m)" --notes "Automatically generated SAIDIO media assets."
+          gh release upload "$TAG" outputs/* --clobber
+      - name: Commit briefs and generation status
+        run: |
+          git config user.name "saidio-production-bot"
+          git config user.email "saidio-production-bot@users.noreply.github.com"
+          git add data/dashboard.json data/voiceover.json data/suntravel.json
+          git diff --cached --quiet || git commit -m "chore: run daily media production"
+          git pull --rebase origin main
+          git push
+      - name: Send production summary to Discord
+        if: ${{ always() && env.DISCORD_WEBHOOK_URL != '' }}
+        run: |
+          python scripts/media_summary.py
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          content = Path("media-discord-message.txt").read_text()
+          req = Request(os.environ["DISCORD_WEBHOOK_URL"], data=json.dumps({"content": content}).encode(), headers={"Content-Type": "application/json", "User-Agent": "Saidio-Bot/2.0"})
+          urlopen(req, timeout=30).read()
+          PY

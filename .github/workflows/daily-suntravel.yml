@@ -1,9 +1,6 @@
 name: Daily Suntravel visual brief
 
 on:
-  schedule:
-    # 00:24 UTC = 09:24 JST. Staggered after music (00:12) and voiceover (00:18).
-    - cron: "24 0 * * *"
   workflow_dispatch:
 
 concurrency:

@@ -1,2 +1,5 @@
-daily-discord-message.txt
-gemini-error.txt
+outputs/
+*-discord-message.txt
+*-error.txt
+__pycache__/
+*.pyc

@@ -80,8 +80,15 @@ function renderChips() {
 }
 
 function itemCard(it) {
-  const s = STREAMS[activeStream] || {};
-  return `<div class="prompt"><span class="ptag">${it.type} · ${it.voice || it.engine}</span>${it.text}</div>`;
+  const generation = it.generation || {};
+  const labels = { ready: "已生成", running: "生成中", failed: "失敗", queued: "排隊中" };
+  const media = generation.assetUrl
+    ? `<a class="media-link" href="${generation.assetUrl}" target="_blank" rel="noopener">▶ 開啟成品</a>`
+    : "";
+  const state = generation.status
+    ? `<span class="gen-status gen-${generation.status}" title="${generation.error || ""}">${labels[generation.status] || generation.status}</span>`
+    : `<span class="gen-status gen-prompt">提示詞</span>`;
+  return `<div class="prompt"><div class="prompt-head"><span class="ptag">${it.type} · ${it.voice || it.engine}</span>${state}${media}</div>${it.text}</div>`;
 }
 
 function briefBlock(b) {

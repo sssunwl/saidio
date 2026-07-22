@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-21T09:18:00+09:00",
+  "updatedAt": "2026-07-22T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -116,6 +116,64 @@
         }
       ],
       "date": "2026-07-21",
+      "stream": "voiceover"
+    },
+    {
+      "title": "晚安星空與森林：溫暖安心的睡前故事",
+      "focus": "睡眠故事",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-SLEEP",
+      "summary": "本套件專為全球兒童睡前頻道設計，以極致溫柔平穩的 V-SLEEP 聲線，搭配療癒大自然與星空音效，引導孩子放鬆入眠。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "睡眠故事",
+          "engine": "AI Studio TTS",
+          "voice": "V-SLEEP",
+          "status": "prompt",
+          "text": "深夜的森林裡，小松鼠已經閉上了眼睛。微風輕輕吹過樹梢，搖晃著柔軟的樹葉。小松鼠縮在溫暖的樹洞裡，蓋上蓬鬆的尾巴，沉沉地睡著了。晚安，親愛的小寶貝，你也閉上眼睛，一起做個甜甜的夢吧。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "睡眠故事",
+          "engine": "AI Studio TTS",
+          "voice": "V-SLEEP",
+          "status": "prompt",
+          "text": "你看，夜空中的小星星正在一閃一閃，像是在對你溫柔地微笑。月亮船在銀河裡慢慢地漂流，把銀白色的微光灑在你的枕頭上。現在，閉上雙眼，乘著月亮船，慢慢漂向那片安靜又美麗的夢境星空。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "睡眠故事",
+          "engine": "AI Studio TTS",
+          "voice": "V-SLEEP",
+          "status": "prompt",
+          "text": "吸氣……（停頓）……讓溫暖的空氣填滿身體。呼氣……（停頓）……把所有的疲倦都放鬆下來。吸氣……（停頓）……身體變得好輕好輕。呼氣……（停頓）……像躺在雲朵上一樣，安靜地，睡吧。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "睡眠故事",
+          "engine": "AI Studio TTS",
+          "voice": "V-SLEEP",
+          "status": "prompt",
+          "text": "在安靜的深海裡，有一座發著微光的水晶城堡。小五彩魚在珊瑚床裡慢慢游動，吐著彩色的小泡泡。海水溫柔地包裹著一切，沒有一點聲音。跟著小魚一起，慢慢地，閉上眼睛，在藍色的海洋裡睡著吧。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "睡眠故事",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Loopable gentle forest nighttime ambience, soft rustling leaves, occasional distant slow cricket chirps, very quiet and comforting wind, no sharp noises, 45 seconds, seamless loop."
+        },
+        {
+          "type": "環境音",
+          "purpose": "睡眠故事",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Calm cosmic ambient drone, deep warm soft hum, slow gentle low-frequency pulsations, mimicking a safe and cozy womb or space pod, 60 seconds, seamless loop."
+        }
+      ],
+      "date": "2026-07-22",
       "stream": "voiceover"
     }
   ]

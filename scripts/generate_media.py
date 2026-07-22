@@ -171,7 +171,7 @@ def generate_video(item, key, out_path):
         "instances": [{"prompt": item["text"]}],
         "parameters": {
             "aspectRatio": os.environ.get("VEO_ASPECT_RATIO", "9:16"),
-            "durationSeconds": os.environ.get("VEO_DURATION_SECONDS", "8"),
+            "durationSeconds": int(os.environ.get("VEO_DURATION_SECONDS", "8")),
             "resolution": os.environ.get("VEO_RESOLUTION", "720p"),
             "sampleCount": 1,
         },

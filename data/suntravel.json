@@ -285,94 +285,66 @@
       "stream": "suntravel"
     },
     {
-      "title": "奢華與舒適的交界：精選飯店房景視覺提案",
+      "title": "奢華飯店房景精選：沉浸式旅宿空間美學",
       "focus": "飯店房景",
-      "meta": "Flow 每日選片 · 6 Lite + 2 Fast + 2 內容 + 2 字卡",
-      "summary": "本套組旨在透過細緻的鏡頭語言，呈現奢華飯店客房的靜謐質感與開闊視野，適合作為高質感旅遊影片的開場與氛圍鋪陳。",
+      "meta": "Flow 每日選片 · 6 Lite + 2 Fast",
+      "summary": "本套組提供從晨光到夜幕的多角度客房空鏡，適合用於奢華旅宿開箱影片的旁白鋪墊與情境烘托。",
       "items": [
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Slow tilt-up shot of a luxurious hotel room bed with crisp white linens, warm morning sunlight streaming through sheer curtains, soft and inviting mood, morning, no on-screen text, no logos, leave room for narration."
+          "text": "A wide-angle establishing shot of a luxury hotel room at sunrise. The camera slowly pans across crisp white linens on a king-sized bed, illuminated by soft golden morning light filtering through sheer curtains. Elegant, warm, and serene mood. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Wide tracking shot entering a modern high-rise hotel room, revealing a panoramic floor-to-ceiling city view at sunset, golden hour warm lighting, elegant and peaceful mood, sunset, no on-screen text, no logos, leave room for narration."
+          "text": "Medium shot of a high-end hotel marble bathroom. The camera moves in a smooth, slow push-in towards a modern freestanding bathtub next to a floor-to-ceiling window overlooking a misty forest. Soft, diffused daylight. Luxurious and tranquil atmosphere. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Close-up slow pan of a luxury hotel welcome amenity tray with fresh fruits and a glass of champagne on a wooden table, soft side lighting in the late afternoon, cozy and exclusive mood, late afternoon, no on-screen text, no logos, leave room for narration."
+          "text": "A tracking shot moving from the interior of a chic suite out onto a private balcony. The camera captures a breathtaking view of a coastal city skyline during golden hour. Vibrant warm sunset lighting, sophisticated and aspirational mood. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Medium shot tracking sideways across an elegant hotel bathroom, highlighting a freestanding marble bathtub with steam gently rising, moody dim lighting with candlelight, tranquil and relaxing evening vibe, night, no on-screen text, no logos, leave room for narration."
+          "text": "Close-up shot of exquisite welcome amenities, including a bottle of champagne in an ice bucket and a handwritten welcome card on a rustic wooden table. Slow tilt-up showing the cozy, well-lit hotel living room in the background. Afternoon warm ambient light. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Low-angle dolly shot looking up at a stylish minimalist design hotel room ceiling fan spinning slowly, soft ambient afternoon light, calm and serene mood, afternoon, no on-screen text, no logos, leave room for narration."
+          "text": "An extreme wide shot of a modern penthouse hotel room at night. The camera slowly dollies back, revealing the vast floor-to-ceiling glass windows that frame a sparkling metropolis at night. Moody, intimate, and premium lighting. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Lite",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Lite · 10點",
           "status": "prompt",
-          "text": "Gimbal movement pushing forward towards a private balcony of a resort hotel room, showing ocean waves in the distance under a bright blue morning sky, fresh and breezy mood, morning, no on-screen text, no logos, leave room for narration."
+          "text": "A slow tracking shot across a sleek, modern hotel minibar counter. A high-end espresso machine stands next to neatly arranged designer cups, catching the gentle morning side-light. Clean, minimalist, and upscale vibe. 5-8 seconds cinematic B-roll. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Fast",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Fast · 20點",
           "status": "prompt",
-          "text": "Cinematic, slow-pacing master shot. The camera glides smoothly from a dark, elegantly textured corridor into a sun-drenched penthouse suite. Curtains sway gently in the breeze, revealing an infinity pool on the balcony overlooking a misty mountain range at dawn. Highly detailed, photorealistic, rich warm and cool contrast lighting, cozy yet majestic mood."
+          "text": "An 8-second high-end cinematic shot. The camera follows a guest from behind in a smooth steadicam tracking movement as they enter a sunlit luxury resort suite. The guest walks towards the large balcony doors and gently draws back the sheer curtains to reveal a stunning turquoise ocean view. Bright, airy, and inviting mood with dynamic lighting transitions from shadow to brilliant sunlight. No on-screen text, no logos, leave room for narration."
         },
         {
           "type": "Flow Fast",
           "purpose": "飯店房景",
           "engine": "Veo 3.1 Fast · 20點",
           "status": "prompt",
-          "text": "An exquisite 8-second cinematic tracking shot. Smoothly moving past a designer lounge chair to reveal a stunning reflection of neon city lights on the floor-to-ceiling glass window of a luxury hotel suite at night. Soft moody ambient light inside, dramatic cityscape outside, sophisticated and romantic tone, perfectly balanced slow pacing."
-        },
-        {
-          "type": "旅遊內容",
-          "purpose": "飯店房景",
-          "engine": "文字",
-          "status": "prompt",
-          "text": "打開房門的那一刻，才是旅行真正的開始。挑選一間擁有絕美窗景的飯店，讓城市的霓虹或大自然的晨曦，成為你私人專屬的藝術畫作。今晚，想在哪種風景裡入眠？"
-        },
-        {
-          "type": "旅遊內容",
-          "purpose": "飯店房景",
-          "engine": "文字",
-          "status": "prompt",
-          "text": "旅行的儀式感，從客房的細節開始。蓬鬆的白色羽絨被、剛泡好的熱茶，還有窗外緩緩落下的夕陽。好的飯店房景，能幫疲憊的靈魂充飽電，為明天寫下新故事。"
-        },
-        {
-          "type": "字卡文案",
-          "purpose": "飯店房景",
-          "engine": "Imagen/Canva",
-          "status": "prompt",
-          "text": "晨光序曲｜在看得見風景的房間醒來 (Minimalist modern hotel bedroom with golden morning sun rays shining through a large window)"
-        },
-        {
-          "type": "字卡文案",
-          "purpose": "飯店房景",
-          "engine": "Imagen/Canva",
-          "status": "prompt",
-          "text": "極致私密｜專屬於你的城市天際線 (High-end hotel room interior overlooking a glowing metropolis at night, seen through a clean glass pane)"
+          "text": "An 8-second premium cinematic masterpiece. The camera performs a slow, buttery focus pull from a beautifully lit designer bedside lamp to a cozy, inviting reading nook with a plush armchair and a burning fireplace in the background. Warm, amber glow of twilight. Paced with a calm, slow-motion feel that exudes peace and ultimate comfort. No on-screen text, no logos, leave room for narration."
         }
       ],
       "date": "2026-07-23",

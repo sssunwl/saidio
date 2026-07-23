@@ -154,7 +154,7 @@ def make_brief(day):
         "title": f"CapyChill 每日專輯｜{theme['name']}",
         "focus": "10 首 × 約 3 分鐘＝約 30–35 分鐘",
         "meta": "固定海邊書桌母場景 · 10 音樂＋1 概念圖＋4 影片版本",
-        "summary": "先在 Gemini 生成十首同系列音樂；選定概念圖後，只以同一 reference 製作白天、黃昏、夜晚與雨天微動畫。",
+        "summary": "每日預設：10 首做約 30–35 分鐘。長度換算：30 分鐘＝8–10 首；45 分鐘＝12–14 首；60 分鐘＝15–18 首。選定概念圖後，只以同一 reference 製作白天、黃昏、夜晚與雨天微動畫。",
         "items": items,
     }
 
@@ -165,7 +165,7 @@ def main():
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
     for offset in range(7):
         day = start + timedelta(days=offset)
-        by_date.setdefault(day.isoformat(), make_brief(day))
+        by_date[day.isoformat()] = make_brief(day)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")

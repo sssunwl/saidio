@@ -24,11 +24,14 @@ class ProjectBriefsTest(unittest.TestCase):
         videos = [item for item in brief["items"] if item["type"].startswith("影片 Prompt")]
         self.assertEqual(len(music), 10)
         self.assertEqual(len(videos), 6)
-        self.assertTrue(all("Veo 3.1 Lite" in item["text"] for item in videos))
+        self.assertTrue(all("Veo 3.1 Lite" in item["engine"] for item in videos))
         self.assertTrue(all("do not create rain" in item["text"] for item in videos))
         concept = next(item for item in brief["items"] if item["type"] == "專輯概念圖")
         self.assertIn("DUAL FORMAT", concept["text"])
-        self.assertTrue(all("9:16 portrait crop corridor" in item["text"] for item in videos))
+        self.assertTrue(all("9:16 crop corridor" in item["text"] for item in videos))
+        self.assertTrue(all("MANDATORY BASE ENVIRONMENT MOTION" in item["text"] for item in videos))
+        self.assertTrue(all("ocean is visibly alive" in item["text"] for item in videos))
+        self.assertEqual(videos[0]["type"], "影片 Prompt・基準驗收・海面與呼吸")
         rainy = capychill.make_brief(date(2026, 7, 24))
         rainy_videos = [item for item in rainy["items"] if item["type"].startswith("影片 Prompt")]
         self.assertTrue(all("must never rise" in item["text"] for item in rainy_videos))

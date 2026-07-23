@@ -76,12 +76,12 @@ TRACKS = [
 VIDEO_COUNT_BY_MINUTES = {30: 6, 45: 8, 60: 10}
 
 MOTION_VARIANTS = [
-    ("安靜寫字", "The capybara writes slowly for most of the shot, pauses once, blinks softly, then resumes. Only slight breathing and one tiny ear twitch."),
-    ("望向窗外", "The pencil pauses. The capybara slowly raises its gaze toward the window for two seconds, then returns to the exact writing pose."),
-    ("杯中暖氣", "The capybara remains focused on the notebook. Mug steam makes one gentle continuous upward curl; one nearby leaf sways slightly; the character blinks once."),
-    ("短暫休息", "The capybara stops writing, closes its eyes peacefully for one second, takes one visible slow breath, then returns to the exact starting pose."),
-    ("線香與小夥伴", "The capybara remains nearly still. The incense produces one thin continuous upward smoke trail; the small sleeping companion already visible in the reference takes one slow breath and makes one tiny ear twitch."),
-    ("紙頁與海風", "A single notebook page corner and the curtain edge lift slightly in the same gentle sea breeze, then settle. The capybara holds the pencil still, blinks once, then writes one short line."),
+    ("基準驗收・海面與呼吸", "The capybara stays in the original writing pose without moving the pencil. Only slow breathing and one soft blink. This is the validation clip: prioritize natural ocean motion, stable anatomy and a clean loop."),
+    ("安靜寫字", "The writing paw and pencil make one small, anatomically correct writing cycle covering only one short line. The wrist, claws, pencil and notebook remain clearly separated; the body does not shift."),
+    ("小幅望海", "The pencil remains resting on the notebook. Only the eyes and head rotate a few degrees toward the ocean, without lifting the neck or torso, then return gently to the exact starting angle."),
+    ("杯中蒸氣與窗簾", "The capybara remains almost still with slow breathing. One narrow steam ribbon rises from the mug and dissipates before reaching the character; the curtain edge sways once by only a few centimetres."),
+    ("線香與小夥伴", "The capybara remains still. One thin incense smoke trail rises within its own clear air column and never overlaps the character; the sleeping companion takes one slow breath and makes one tiny ear twitch."),
+    ("紙頁與海風", "The pencil remains still. Only one notebook page corner lifts slightly and settles once; two nearby plant leaves respond to the same gentle breeze. No full page turn."),
     ("輕觸耳機", "One front paw makes a very small, anatomically correct adjustment to the headphone cup, returns to the notebook, and the character resumes writing."),
     ("小寵物呼吸", "If the reference contains a small sleeping pet, only the pet's slow breathing and one ear twitch move while the capybara continues writing. Do not create a pet if absent."),
     ("線香與靜坐", "If the reference contains incense, one thin smoke trail rises continuously while the capybara sits still and breathes. Do not create incense if absent."),
@@ -110,7 +110,7 @@ def image_prompt(theme):
         "Create one high-resolution 16:9 hand-painted storybook master frame for CapyChill, ideally 3840×2160. "
         "Preserve the exact canonical "
         "composition across the entire channel: the same warm-brown capybara sits at the same wooden desk "
-        "with the center of its head at about 68% of the image width, wearing the same cream headphones, facing "
+        "with the center of its head at about 64% of the image width, wearing the same cream headphones, facing "
         "left toward the same notebook; the "
         "same large window, desk lamp, mug, shelves and plants stay in identical positions. Camera is locked, "
         f"eye-level, 35mm-equivalent wide view. Today’s album mood is {theme['name']}; use {theme['palette']} "
@@ -121,9 +121,11 @@ def image_prompt(theme):
         "one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
         "and must never compete with the capybara. COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
         "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
-        "The intended portrait crop spans approximately 52% to 84% of the original image width. Do not draw crop "
-        "guides. Inside that corridor, keep the entire head, headphones, writing paw, pencil, notebook, mug, incense "
-        "holder, and a tiny sleeping companion animal curled in a fixed cushion below or beside the desk. The portrait "
+        "The intended portrait crop spans approximately 44% to 76% of the original image width, centred near 60%. "
+        "Do not draw crop guides. Inside that corridor, keep the entire head, headphones, writing paw, pencil, notebook, "
+        "mug, and a tiny sleeping companion animal curled in a fixed cushion below the desk near the centre. Place the "
+        "incense holder in a separate clear area just left of the notebook, with an unobstructed vertical column of air "
+        "above it that never crosses the capybara silhouette, headphones, paw, mug or lamp. The portrait "
         "crop must still include a narrow slice of the window and sea, one warm light source and plant leaves, so it "
         "feels like a complete environment rather than a close-up cutout. Do not "
         "place essential storytelling details only at the far left and far right edges. Leave useful breathing room "
@@ -142,15 +144,20 @@ def video_prompt(theme, label, motion):
         else "Preserve the clear weather in the reference; do not create rain, snow, storms or new weather effects."
     )
     return (
-        f"MODEL PLAN: generate one 8-second draft with Veo 3.1 Lite; use Veo 3.1 Fast only after the draft "
-        f"preserves the reference correctly. {label}: Image-to-video from the selected CapyChill canonical "
-        f"reference. Lock the camera and preserve every pixel-level layout relationship: same room, same desk, "
-        f"same capybara size and position, same objects, no cuts, no zoom, no pan. Motion only: natural slow "
-        f"breathing plus this clip's distinct action: {motion} {weather_rule} Smoke and steam move "
-        f"continuously upward and never reverse. First and last frame must match for looping. No new objects, no "
-        f"morphing, no extra limbs, no liquid changing volume, no floating pencil, no moving furniture, no camera "
-        f"motion, no sudden lighting pulse, no text, no logos, no sound dialogue. Keep the complete character action "
-        f"and its primary moving prop inside the planned 9:16 portrait crop corridor as well as the full 16:9 frame."
+        f"8-second 16:9 image-to-video from the selected CapyChill master frame. {label}. "
+        "STATIC STRUCTURE: locked camera; window frame, desk, shelves, lamp hardware, furniture, headphones and room "
+        "geometry do not move. Preserve the character's identity, proportions and silhouette. No cut, zoom, pan or "
+        "parallax. MANDATORY BASE ENVIRONMENT MOTION THROUGHOUT THE ENTIRE CLIP: the ocean is visibly alive, not a "
+        "still photograph. Several small wave bands travel naturally toward shore; fine ripples change continuously; "
+        "the golden reflection on the water shimmers softly in response to those ripples. Motion remains slow, subtle "
+        "and physically consistent—never frozen, reversed, pulsing or moving as one flat sheet. Distant clouds drift "
+        "less than one percent of the frame width. CHARACTER/PROP ACTION FOR THIS CLIP ONLY: "
+        f"{motion} {weather_rule} The mug is still unless this clip explicitly mentions steam. The incense is unlit "
+        "and produces no smoke unless this clip explicitly mentions incense. The companion sleeps completely still "
+        "unless this clip explicitly mentions it. End close to the opening pose and ocean phase for a gentle loop; "
+        "a short crossfade will be added in editing, so do not force an abrupt rewind. No new objects, morphing, extra "
+        "limbs, floating pencil, liquid volume change, smoke through objects, moving furniture, sudden light pulse, "
+        "text, logo or dialogue. Keep the action and primary moving prop inside the planned 9:16 crop corridor."
     )
 
 
@@ -187,7 +194,7 @@ def make_brief(day, target_minutes=30):
         "title": f"CapyChill 每日專輯｜{theme['name']}",
         "focus": "10 首 × 約 3 分鐘＝約 30–35 分鐘",
         "meta": f"固定海邊書桌母場景 · 10 音樂＋1 概念圖＋{video_count} 段微動畫",
-        "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。每張專輯維持同一天色與天氣，只變化角色行為及概念圖中預先設計的可動元素。",
+        "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。先只生成第 1 條基準驗收片；確認海浪、倒影、角色結構與循環正常後，才生成其餘項目。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。",
         "items": items,
     }
 

@@ -117,7 +117,13 @@ def image_prompt(theme):
         "not a collage. Design three to five distinct animation opportunities into the still image without clutter: "
         "mug steam, curtain edge, two or three plant leaves, a thin incense stick with a small safe holder, and "
         "optionally one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
-        "and must never compete with the capybara. This image will become an image-to-video reference, so keep clear "
+        "and must never compete with the capybara. COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
+        "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
+        "The character may remain off-center, but keep the entire head, headphones, writing paw, notebook, one warm "
+        "light source and at least one environmental motion element inside the same portrait crop corridor. Do not "
+        "place essential storytelling details only at the far left and far right edges. Leave useful breathing room "
+        "above the head and below the notebook for vertical-platform UI overlays; do not add text. This image will "
+        "become an image-to-video reference, so keep clear "
         "separable layers for capybara, paws, pencil, notebook page, mug steam, incense smoke, pet, curtain, plants, "
         "window, sea, clouds and lights."
     )
@@ -133,7 +139,8 @@ def video_prompt(theme, label, motion):
         f"gravity speed; raindrops must never rise, reverse, freeze, crawl sideways or pulse. Smoke and steam move "
         f"continuously upward and never reverse. First and last frame must match for looping. No new objects, no "
         f"morphing, no extra limbs, no liquid changing volume, no floating pencil, no moving furniture, no camera "
-        f"motion, no sudden lighting pulse, no text, no logos, no sound dialogue."
+        f"motion, no sudden lighting pulse, no text, no logos, no sound dialogue. Keep the complete character action "
+        f"and its primary moving prop inside the planned 9:16 portrait crop corridor as well as the full 16:9 frame."
     )
 
 

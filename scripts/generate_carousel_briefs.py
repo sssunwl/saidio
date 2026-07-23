@@ -134,29 +134,66 @@ CAFE_DAYS = [
 ]
 
 
-def slides_text(slides):
-    return "\n".join(f"{index + 1}. {text}" for index, text in enumerate(slides))
+def nine_slides(slides, industry):
+    """Always return nine useful cards, including a branded closing card."""
+    result = list(slides[:8])
+    while len(result) < 8:
+        result.append(f"內容｜補充一個與{industry}主題直接相關、可實行的重點。")
+    result.append("品牌收尾｜Mori Café · Slow coffee, soft days.｜#MoriCafe #咖啡日常 #慢生活")
+    return result
 
 
-def image_prompt(industry, topic):
+def split_copy(raw, slide_no):
+    if "｜" in raw:
+        lead, body = raw.split("｜", 1)
+    else:
+        lead, body = ("重點", raw)
+    if slide_no == 1:
+        return "TODAY'S PAUSE", body, "讓日常慢一點，也讓選擇更適合自己。"
+    if slide_no == 9:
+        return "MORI CAFÉ", "Slow coffee, soft days.", "收藏這組內容，下次需要休息時再回來。"
+    return lead.upper(), body, "一個小選擇，也能改變今天的節奏。"
+
+
+def image_prompt(industry, topic, slide_no, raw):
+    kicker, headline, body = split_copy(raw, slide_no)
+    layout = [
+        "hero cover: headline in the upper-left, large coffee photograph in the lower-right",
+        "editorial split: photograph on left 42%, text on right 58%",
+        "editorial split: text on left 58%, photograph on right 42%",
+        "number-led layout with a large translucent numeral behind the copy",
+        "centered quote card with a small still-life photograph at the bottom",
+        "three-level information card with a narrow vertical photograph strip",
+        "full-bleed lifestyle photograph with a cream paper text panel",
+        "checklist or conclusion card with a quiet top-right photograph",
+        "brand closing card with centered CTA and small logo lockup",
+    ][slide_no - 1]
     return (
-        f"Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a "
-        f"{industry} content pack. Topic: {topic}. Editorial lifestyle photography mixed with subtle "
-        "paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; "
-        "consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal "
-        "cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 "
-        "is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, "
-        "letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. "
-        "Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        f"Generate exactly ONE standalone Instagram carousel card, slide {slide_no} of 9. "
+        "Do not create a collage, contact sheet, grid, multiple cards, phone mockup or surrounding white canvas. "
+        "Output aspect ratio 4:5, 1080×1350, edge-to-edge. This card belongs to a coordinated nine-card system for "
+        f"{industry}, topic “{topic}”. Visual system: editorial lifestyle photography, warm cream paper texture, "
+        "espresso brown and muted sage, soft morning sunlight, restrained organic shapes, subtle film grain, "
+        "consistent 80px safe margin. Use the same brand world as the other cards but make this composition distinct. "
+        f"Layout: {layout}. Render this Traditional-Chinese sample copy as visible, professionally typeset text:\n"
+        f"LOGO：Mori Café\n小主題／KICKER：{kicker}\n大主題／HEADLINE：{headline}\n"
+        f"內文／BODY：{body}\nMOOD：今天不必很快，也能好好前進。\n"
+        f"CTA：{'收藏・分享・來店坐坐' if slide_no == 9 else '向左滑看下一張 →'}\n"
+        f"HASHTAG：#MoriCafe #咖啡日常 #慢生活\n頁碼：{slide_no}/9\n"
+        "Keep every component visually separable for later rebuilding in Canva: [LOGO], [KICKER], [HEADLINE], "
+        "[BODY], [MOOD], [CTA], [HASHTAG], [PAGE_NO], [PHOTO] and [DECORATIVE_ELEMENT]. Do not print the square-bracket "
+        "labels themselves; they describe layers. Use real legible Traditional Chinese, not random glyphs or fake text. "
+        "No watermark, signature or imitation of an existing brand/designer."
     )
 
 
 def canva_spec():
     return (
-        "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: "
-        "KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. "
-        "Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated "
-        "backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. "
+        "CANVA TEMPLATE SPEC｜1080×1350 px, 9 separate pages. Safe margin 80 px. Rebuild each generated reference "
+        "with named editable layers: LOGO, KICKER, HEADLINE, BODY, MOOD, CTA, HASHTAG, PAGE_NO, PHOTO and "
+        "DECORATIVE_ELEMENT. Use at most two font families and three brand colors. Build page 1 cover, pages 2–8 "
+        "alternating education/story layouts, page 9 CTA. Use the generated cards only as layout references; replace "
+        "their baked text with editable Canva text and replace photography with its own frame. "
         "Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
     )
 
@@ -178,17 +215,26 @@ def make_brief(day, cycle, day_index):
             "提醒｜避免誇大承諾，加入適用條件",
             "結尾｜收藏、分享或預約下一步；替換成品牌真實 CTA",
         ]
+    slides = nine_slides(slides, industry)
+    image_items = [
+        {
+            "type": f"IG 圖組・第 {index + 1} 張",
+            "purpose": topic,
+            "engine": "ChatGPT Images",
+            "status": "prompt",
+            "text": image_prompt(industry, topic, index + 1, slide),
+        }
+        for index, slide in enumerate(slides)
+    ]
     return {
         "date": day.isoformat(),
         "stream": "carousel",
         "title": f"IG Carousel 九日包｜{industry} Day {day_index + 1}",
         "focus": topic,
-        "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
-        "summary": f"本輪 9 天鎖定「{industry}」，每天一款同視覺系統、不同內容目的的客戶模板。",
-        "items": [
-            {"type": "8 張範例文案", "purpose": topic, "engine": "文字", "status": "prompt", "text": slides_text(slides)},
-            {"type": "ChatGPT 生圖 Prompt", "purpose": topic, "engine": "ChatGPT Images", "status": "prompt", "text": image_prompt(industry, topic)},
-            {"type": "Canva 模板規格", "purpose": "可販售模板", "engine": "Canva Pro", "status": "prompt", "text": canva_spec()},
+        "meta": "9 張獨立 4:5 圖卡 · 每張一條 Prompt＋完整範文排版",
+        "summary": f"本輪 9 天鎖定「{industry}」。每一天都有 9 張分開生成、視覺一致但版式不同的完整圖卡，不產生九宮格。",
+        "items": image_items + [
+            {"type": "Canva 拆件規格", "purpose": "可販售模板", "engine": "Canva Pro", "status": "prompt", "text": canva_spec()},
         ],
     }
 
@@ -202,7 +248,7 @@ def main():
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
     for day_index in range(9):
         day = cycle_start + timedelta(days=day_index)
-        by_date.setdefault(day.isoformat(), make_brief(day, cycle, day_index))
+        by_date[day.isoformat()] = make_brief(day, cycle, day_index)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")

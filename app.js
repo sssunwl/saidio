@@ -102,16 +102,51 @@ function renderChips() {
   document.querySelectorAll(".chip").forEach(c => c.onclick = () => { activeStream = c.dataset.stream; render(); });
 }
 
-function itemCard(it) {
+function groupName(stream, it) {
+  if (stream === "capychill") {
+    if (it.type === "專輯音樂") return "🎵 專輯音樂";
+    if (it.type === "專輯概念圖") return "🖼️ 專輯概念圖";
+    return "🎬 影片版本";
+  }
+  if (stream === "carousel") return it.type.startsWith("IG 圖組") ? "🖼️ 9 張獨立圖卡" : "🧩 Canva 拆件";
+  return it.type;
+}
+
+function itemTitle(it, index) {
+  const track = it.text.match(/Track \d+\/\d+ — "([^"]+)"/)?.[1];
+  return track ? `${index + 1}. ${track}` : it.type;
+}
+
+function itemCard(it, b, index) {
   const generation = it.generation || {};
   const labels = { ready: "已生成", running: "生成中", failed: "失敗", queued: "排隊中" };
-  const media = generation.assetUrl
-    ? `<a class="media-link" href="${generation.assetUrl}" target="_blank" rel="noopener">▶ 開啟成品</a>`
-    : "";
+  const media = generation.assetUrl ? `<a class="media-link" href="${generation.assetUrl}" target="_blank" rel="noopener">▶ 開啟成品</a>` : "";
   const state = generation.status
     ? `<span class="gen-status gen-${generation.status}" title="${generation.error || ""}">${labels[generation.status] || generation.status}</span>`
     : `<span class="gen-status gen-prompt">提示詞</span>`;
-  return `<div class="prompt"><div class="prompt-head"><span class="ptag">${it.type} · ${it.voice || it.engine}</span>${state}${media}</div>${it.text}</div>`;
+  return `<article class="prompt-item">
+    <div class="prompt-item-head">
+      <div><span class="ptag">${it.voice || it.engine}</span><strong>${itemTitle(it, index)}</strong><small>${it.purpose || ""}</small></div>
+      <div class="prompt-item-actions">${state}${media}<button class="mini" data-copy-item="${b.id}" data-item-index="${index}">單獨複製</button><button class="mini" data-item-toggle>查看</button></div>
+    </div>
+    <div class="prompt" hidden>${it.text}</div>
+  </article>`;
+}
+
+function groupedItems(b) {
+  const groups = new Map();
+  b.items.forEach((it, index) => {
+    const name = groupName(b.stream, it);
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push({ it, index });
+  });
+  const tabs = [...groups.entries()].map(([name, items], groupIndex) =>
+    `<button class="group-tab" data-group-toggle="${b.id}-${groupIndex}">${name}<b>${items.length}</b></button>`
+  ).join("");
+  const panels = [...groups.entries()].map(([name, items], groupIndex) =>
+    `<section class="item-group" id="group-${b.id}-${groupIndex}" hidden><div class="item-group-title"><strong>${name}</strong><span>選一項查看或複製</span></div>${items.map(({ it, index }) => itemCard(it, b, index)).join("")}</section>`
+  ).join("");
+  return `<div class="group-browser"><nav class="group-tabs">${tabs}</nav><div class="group-content"><div class="group-placeholder">先選擇一個製作分類</div>${panels}</div></div>`;
 }
 
 function briefBlock(b) {
@@ -121,20 +156,17 @@ function briefBlock(b) {
     <div class="sc-head">
       <span class="sc-badge">${s.emoji} ${s.label}</span>
       <div class="sc-title"><strong>${b.title}</strong><span>${b.focus} · ${b.date}</span></div>
-      <div class="sc-actions">
-        <button class="mini" data-copy="${b.id}">複製</button>
-        <button class="mini" data-toggle="${b.id}">${open ? "收起" : `展開 ${b.items.length}`}</button>
-      </div>
+      <div class="sc-actions"><button class="mini" data-toggle="${b.id}">${open ? "收起" : `開啟 ${b.items.length}`}</button></div>
     </div>
     <div class="sc-body" ${open ? "" : "hidden"}>
       <p class="sc-summary">${b.summary || ""}</p>
-      ${b.items.map(itemCard).join("")}
+      ${groupedItems(b)}
     </div>
   </article>`;
 }
 
 function renderTodayCards() {
-  const vis = briefs;
+  const vis = visible();
   const latestDate = currentBatchDate(vis);
   const todays = vis.filter(b => b.date === latestDate);
   $("#briefs-eyebrow").textContent = latestDate ? `最新一批素材 · ${latestDate}` : "尚無素材";
@@ -144,13 +176,29 @@ function renderTodayCards() {
 
 function wireCards() {
   document.querySelectorAll("[data-toggle]").forEach(btn => btn.onclick = () => {
-    const id = btn.dataset.toggle; expanded.has(id) ? expanded.delete(id) : expanded.add(id);
-    renderTodayCards(); renderArchiveDetail();
+    const id = btn.dataset.toggle;
+    const body = btn.closest(".stream-card").querySelector(".sc-body");
+    body.hidden = !body.hidden;
+    body.hidden ? expanded.delete(id) : expanded.add(id);
+    btn.textContent = body.hidden ? `開啟 ${briefs.find(b => b.id === id)?.items.length || ""}` : "收起";
   });
-  document.querySelectorAll("[data-copy]").forEach(btn => btn.onclick = async () => {
-    const b = briefs.find(x => x.id === btn.dataset.copy);
-    await navigator.clipboard.writeText(b.items.map(i => i.text).join("\n\n"));
-    btn.textContent = "已複製"; setTimeout(() => btn.textContent = "複製", 1200);
+  document.querySelectorAll("[data-group-toggle]").forEach(btn => btn.onclick = () => {
+    const browser = btn.closest(".group-browser");
+    browser.querySelectorAll(".group-tab").forEach(x => x.classList.toggle("on", x === btn));
+    browser.querySelectorAll(".item-group").forEach(x => x.hidden = x.id !== `group-${btn.dataset.groupToggle}`);
+    browser.querySelector(".group-placeholder").hidden = true;
+  });
+  document.querySelectorAll("[data-item-toggle]").forEach(btn => btn.onclick = () => {
+    const prompt = btn.closest(".prompt-item").querySelector(".prompt");
+    prompt.hidden = !prompt.hidden;
+    btn.textContent = prompt.hidden ? "查看" : "收起";
+  });
+  document.querySelectorAll("[data-copy-item]").forEach(btn => btn.onclick = async () => {
+    const b = briefs.find(x => x.id === btn.dataset.copyItem);
+    const it = b.items[Number(btn.dataset.itemIndex)];
+    const copy = `日期：${b.date}\n當天主題：${b.title}\n主題重點：${b.focus}\n項目：${it.type}\n用途：${it.purpose || ""}\n使用工具：${it.voice || it.engine || ""}\n\nPROMPT：\n${it.text}`;
+    await navigator.clipboard.writeText(copy);
+    btn.textContent = "已複製"; setTimeout(() => btn.textContent = "單獨複製", 1200);
   });
 }
 
@@ -165,7 +213,7 @@ function renderCalendar() {
   const y = viewed.getFullYear(), mo = viewed.getMonth();
   const first = new Date(y, mo, 1), offset = (first.getDay() + 6) % 7, days = new Date(y, mo + 1, 0).getDate(), today = fmt(new Date());
   $("#month-label").textContent = first.toLocaleString("zh-Hant-TW", { month: "long", year: "numeric" });
-  const vis = visible();
+  const vis = briefs;
   let html = "";
   for (let i = 0; i < offset; i++) html += '<div class="day empty"></div>';
   for (let d = 1; d <= days; d++) {

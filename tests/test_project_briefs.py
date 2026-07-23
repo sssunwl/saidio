@@ -26,11 +26,13 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertEqual(len(videos), 4)
         self.assertTrue(all("Veo 3.1 Lite" in item["text"] for item in videos))
 
-    def test_carousel_has_eight_ready_copy_slides(self):
+    def test_carousel_has_nine_separate_full_copy_prompts(self):
         brief = carousel.make_brief(date(2026, 7, 23), 0, 0)
-        copy = brief["items"][0]["text"].splitlines()
-        self.assertEqual(len(copy), 8)
-        self.assertIn("1080×1350", brief["items"][2]["text"])
+        cards = [item for item in brief["items"] if item["type"].startswith("IG 圖組")]
+        self.assertEqual(len(cards), 9)
+        self.assertTrue(all("exactly ONE" in item["text"] for item in cards))
+        self.assertTrue(all("大主題／HEADLINE" in item["text"] for item in cards))
+        self.assertIn("1080×1350", brief["items"][-1]["text"])
 
 
 if __name__ == "__main__":

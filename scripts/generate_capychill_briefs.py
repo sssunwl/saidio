@@ -80,8 +80,8 @@ MOTION_VARIANTS = [
     ("望向窗外", "The pencil pauses. The capybara slowly raises its gaze toward the window for two seconds, then returns to the exact writing pose."),
     ("杯中暖氣", "The capybara remains focused on the notebook. Mug steam makes one gentle continuous upward curl; one nearby leaf sways slightly; the character blinks once."),
     ("短暫休息", "The capybara stops writing, closes its eyes peacefully for one second, takes one visible slow breath, then returns to the exact starting pose."),
-    ("燈影與遠望", "The capybara pauses and looks slightly toward the rain. The desk lamp changes brightness by less than five percent once; curtain and plant movement remain extremely subtle."),
-    ("紙頁微動", "A single notebook page corner lifts slightly in the breeze and settles without turning. The capybara holds the pencil still, blinks once, then writes one short line."),
+    ("線香與小夥伴", "The capybara remains nearly still. The incense produces one thin continuous upward smoke trail; the small sleeping companion already visible in the reference takes one slow breath and makes one tiny ear twitch."),
+    ("紙頁與海風", "A single notebook page corner and the curtain edge lift slightly in the same gentle sea breeze, then settle. The capybara holds the pencil still, blinks once, then writes one short line."),
     ("輕觸耳機", "One front paw makes a very small, anatomically correct adjustment to the headphone cup, returns to the notebook, and the character resumes writing."),
     ("小寵物呼吸", "If the reference contains a small sleeping pet, only the pet's slow breathing and one ear twitch move while the capybara continues writing. Do not create a pet if absent."),
     ("線香與靜坐", "If the reference contains incense, one thin smoke trail rises continuously while the capybara sits still and breathes. Do not create incense if absent."),
@@ -107,20 +107,25 @@ def music_prompt(theme, index, track):
 
 def image_prompt(theme):
     return (
-        "Create a 16:9 hand-painted storybook master frame for CapyChill. Preserve the exact canonical "
+        "Create one high-resolution 16:9 hand-painted storybook master frame for CapyChill, ideally 3840×2160. "
+        "Preserve the exact canonical "
         "composition across the entire channel: the same warm-brown capybara sits at the same wooden desk "
-        "on the right third, wearing the same cream headphones, facing left toward the same notebook; the "
+        "with the center of its head at about 68% of the image width, wearing the same cream headphones, facing "
+        "left toward the same notebook; the "
         "same large window, desk lamp, mug, shelves and plants stay in identical positions. Camera is locked, "
         f"eye-level, 35mm-equivalent wide view. Today’s album mood is {theme['name']}; use {theme['palette']} "
         f"with {theme['weather']}. Calm original illustration, clean natural capybara anatomy. No text, letters, "
         "numbers, logos, watermark, signature, sparkle icon or fake signage. Output one clean reference image, "
         "not a collage. Design three to five distinct animation opportunities into the still image without clutter: "
         "mug steam, curtain edge, two or three plant leaves, a thin incense stick with a small safe holder, and "
-        "optionally one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
+        "one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
         "and must never compete with the capybara. COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
         "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
-        "The character may remain off-center, but keep the entire head, headphones, writing paw, notebook, one warm "
-        "light source and at least one environmental motion element inside the same portrait crop corridor. Do not "
+        "The intended portrait crop spans approximately 52% to 84% of the original image width. Do not draw crop "
+        "guides. Inside that corridor, keep the entire head, headphones, writing paw, pencil, notebook, mug, incense "
+        "holder, and a tiny sleeping companion animal curled in a fixed cushion below or beside the desk. The portrait "
+        "crop must still include a narrow slice of the window and sea, one warm light source and plant leaves, so it "
+        "feels like a complete environment rather than a close-up cutout. Do not "
         "place essential storytelling details only at the far left and far right edges. Leave useful breathing room "
         "above the head and below the notebook for vertical-platform UI overlays; do not add text. This image will "
         "become an image-to-video reference, so keep clear "
@@ -130,13 +135,18 @@ def image_prompt(theme):
 
 
 def video_prompt(theme, label, motion):
+    weather_rule = (
+        "Keep all rain moving continuously downward at natural gravity speed; raindrops must never rise, reverse, "
+        "freeze, crawl sideways or pulse."
+        if "Rain" in theme["name"]
+        else "Preserve the clear weather in the reference; do not create rain, snow, storms or new weather effects."
+    )
     return (
         f"MODEL PLAN: generate one 8-second draft with Veo 3.1 Lite; use Veo 3.1 Fast only after the draft "
         f"preserves the reference correctly. {label}: Image-to-video from the selected CapyChill canonical "
         f"reference. Lock the camera and preserve every pixel-level layout relationship: same room, same desk, "
         f"same capybara size and position, same objects, no cuts, no zoom, no pan. Motion only: natural slow "
-        f"breathing plus this clip's distinct action: {motion} Keep all rain moving continuously downward at natural "
-        f"gravity speed; raindrops must never rise, reverse, freeze, crawl sideways or pulse. Smoke and steam move "
+        f"breathing plus this clip's distinct action: {motion} {weather_rule} Smoke and steam move "
         f"continuously upward and never reverse. First and last frame must match for looping. No new objects, no "
         f"morphing, no extra limbs, no liquid changing volume, no floating pencil, no moving furniture, no camera "
         f"motion, no sudden lighting pulse, no text, no logos, no sound dialogue. Keep the complete character action "

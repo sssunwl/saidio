@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Maintain a rolling seven-day CapyChill album and fixed-scene production queue."""
 import json
+import os
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -72,11 +73,19 @@ TRACKS = [
     ("See You Tomorrow", "solo felt piano, warm pad and almost no drums", "quiet resolving reprise"),
 ]
 
-TIME_VARIANTS = [
-    ("白天版本", "Veo 3.1 Lite 測試 → Fast 定稿", "soft daylight, slow sea reflections and a light curtain breeze"),
-    ("黃昏版本", "Veo 3.1 Lite 測試 → Fast 定稿", "golden light gradually warming, distant town lights beginning to glow"),
-    ("夜晚版本", "Veo 3.1 Lite 測試 → Fast 定稿", "moonlit bay, steady desk lamp and subtle distant lights"),
-    ("雨天版本", "Veo 3.1 Lite 測試 → Fast 定稿", "rain trails on the window, darker sea and warm sheltered interior"),
+VIDEO_COUNT_BY_MINUTES = {30: 6, 45: 8, 60: 10}
+
+MOTION_VARIANTS = [
+    ("安靜寫字", "The capybara writes slowly for most of the shot, pauses once, blinks softly, then resumes. Only slight breathing and one tiny ear twitch."),
+    ("望向窗外", "The pencil pauses. The capybara slowly raises its gaze toward the window for two seconds, then returns to the exact writing pose."),
+    ("杯中暖氣", "The capybara remains focused on the notebook. Mug steam makes one gentle continuous upward curl; one nearby leaf sways slightly; the character blinks once."),
+    ("短暫休息", "The capybara stops writing, closes its eyes peacefully for one second, takes one visible slow breath, then returns to the exact starting pose."),
+    ("燈影與遠望", "The capybara pauses and looks slightly toward the rain. The desk lamp changes brightness by less than five percent once; curtain and plant movement remain extremely subtle."),
+    ("紙頁微動", "A single notebook page corner lifts slightly in the breeze and settles without turning. The capybara holds the pencil still, blinks once, then writes one short line."),
+    ("輕觸耳機", "One front paw makes a very small, anatomically correct adjustment to the headphone cup, returns to the notebook, and the character resumes writing."),
+    ("小寵物呼吸", "If the reference contains a small sleeping pet, only the pet's slow breathing and one ear twitch move while the capybara continues writing. Do not create a pet if absent."),
+    ("線香與靜坐", "If the reference contains incense, one thin smoke trail rises continuously while the capybara sits still and breathes. Do not create incense if absent."),
+    ("夜色微光", "The character remains almost still. One soft blink, slow breathing, subtle distant light shimmer and very small plant movement create a calm closing loop."),
 ]
 
 
@@ -105,8 +114,12 @@ def image_prompt(theme):
         f"eye-level, 35mm-equivalent wide view. Today’s album mood is {theme['name']}; use {theme['palette']} "
         f"with {theme['weather']}. Calm original illustration, clean natural capybara anatomy. No text, letters, "
         "numbers, logos, watermark, signature, sparkle icon or fake signage. Output one clean reference image, "
-        "not a collage. This image will become an image-to-video reference, so keep clear separable layers for "
-        "capybara, desk objects, curtain, plants, window, sea, clouds and lights."
+        "not a collage. Design three to five distinct animation opportunities into the still image without clutter: "
+        "mug steam, curtain edge, two or three plant leaves, a thin incense stick with a small safe holder, and "
+        "optionally one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
+        "and must never compete with the capybara. This image will become an image-to-video reference, so keep clear "
+        "separable layers for capybara, paws, pencil, notebook page, mug steam, incense smoke, pet, curtain, plants, "
+        "window, sea, clouds and lights."
     )
 
 
@@ -116,14 +129,17 @@ def video_prompt(theme, label, motion):
         f"preserves the reference correctly. {label}: Image-to-video from the selected CapyChill canonical "
         f"reference. Lock the camera and preserve every pixel-level layout relationship: same room, same desk, "
         f"same capybara size and position, same objects, no cuts, no zoom, no pan. Motion only: natural slow "
-        f"breathing, one soft blink, one tiny ear twitch, minimal pencil-writing motion, subtle mug steam; "
-        f"{motion}. Make first and last frame visually compatible for looping. No new objects, no morphing, "
-        f"no extra limbs, no moving furniture, no text, no logos, no sound dialogue."
+        f"breathing plus this clip's distinct action: {motion} Keep all rain moving continuously downward at natural "
+        f"gravity speed; raindrops must never rise, reverse, freeze, crawl sideways or pulse. Smoke and steam move "
+        f"continuously upward and never reverse. First and last frame must match for looping. No new objects, no "
+        f"morphing, no extra limbs, no liquid changing volume, no floating pencil, no moving furniture, no camera "
+        f"motion, no sudden lighting pulse, no text, no logos, no sound dialogue."
     )
 
 
-def make_brief(day):
+def make_brief(day, target_minutes=30):
     theme = THEMES[(day - date(2026, 7, 23)).days % len(THEMES)]
+    video_count = VIDEO_COUNT_BY_MINUTES.get(target_minutes, VIDEO_COUNT_BY_MINUTES[30])
     items = [
         {
             "type": "專輯音樂",
@@ -144,17 +160,17 @@ def make_brief(day):
     items.extend({
         "type": f"影片 Prompt・{label}",
         "purpose": "固定構圖微動畫",
-        "engine": engine,
+        "engine": "Veo 3.1 Lite 測試 → Fast 定稿",
         "status": "prompt",
         "text": video_prompt(theme, label, motion),
-    } for label, engine, motion in TIME_VARIANTS)
+    } for label, motion in MOTION_VARIANTS[:video_count])
     return {
         "date": day.isoformat(),
         "stream": "capychill",
         "title": f"CapyChill 每日專輯｜{theme['name']}",
         "focus": "10 首 × 約 3 分鐘＝約 30–35 分鐘",
-        "meta": "固定海邊書桌母場景 · 10 音樂＋1 概念圖＋4 影片版本",
-        "summary": "每日預設：10 首做約 30–35 分鐘。長度換算：30 分鐘＝8–10 首；45 分鐘＝12–14 首；60 分鐘＝15–18 首。選定概念圖後，只以同一 reference 製作白天、黃昏、夜晚與雨天微動畫。",
+        "meta": f"固定海邊書桌母場景 · 10 音樂＋1 概念圖＋{video_count} 段微動畫",
+        "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。每張專輯維持同一天色與天氣，只變化角色行為及概念圖中預先設計的可動元素。",
         "items": items,
     }
 
@@ -162,14 +178,17 @@ def make_brief(day):
 def main():
     payload = json.loads(DATA.read_text())
     start = date.today()
+    target_minutes = int(os.getenv("CAPY_TARGET_MINUTES", "30"))
+    if target_minutes not in VIDEO_COUNT_BY_MINUTES:
+        raise ValueError("CAPY_TARGET_MINUTES must be 30, 45 or 60")
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
     for offset in range(7):
         day = start + timedelta(days=offset)
-        by_date[day.isoformat()] = make_brief(day)
+        by_date[day.isoformat()] = make_brief(day, target_minutes)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    print(f"CapyChill queue ready: {start} through {start + timedelta(days=6)}")
+    print(f"CapyChill {target_minutes}-minute queue ready: {start} through {start + timedelta(days=6)}")
 
 
 if __name__ == "__main__":

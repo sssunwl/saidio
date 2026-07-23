@@ -23,8 +23,19 @@ class ProjectBriefsTest(unittest.TestCase):
         music = [item for item in brief["items"] if item["type"] == "專輯音樂"]
         videos = [item for item in brief["items"] if item["type"].startswith("影片 Prompt")]
         self.assertEqual(len(music), 10)
-        self.assertEqual(len(videos), 4)
+        self.assertEqual(len(videos), 6)
         self.assertTrue(all("Veo 3.1 Lite" in item["text"] for item in videos))
+        self.assertTrue(all("must never rise" in item["text"] for item in videos))
+
+    def test_capychill_video_count_tracks_target_length(self):
+        self.assertEqual(
+            len([item for item in capychill.make_brief(date(2026, 7, 23), 45)["items"] if item["type"].startswith("影片 Prompt")]),
+            8,
+        )
+        self.assertEqual(
+            len([item for item in capychill.make_brief(date(2026, 7, 23), 60)["items"] if item["type"].startswith("影片 Prompt")]),
+            10,
+        )
 
     def test_carousel_has_nine_separate_full_copy_prompts(self):
         brief = carousel.make_brief(date(2026, 7, 23), 0, 0)

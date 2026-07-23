@@ -38,11 +38,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Generate today's three creative briefs
+      - name: Generate today's creative briefs
         run: |
           python scripts/generate_daily_brief.py
           python scripts/generate_voiceover_brief.py
           python scripts/generate_suntravel_brief.py
+          python scripts/generate_capychill_briefs.py
+          python scripts/generate_carousel_briefs.py
       - name: Generate media through Gemini APIs
         if: ${{ (github.event_name == 'schedule' && vars.SAIDIO_MEDIA_ENABLED == 'true') || (github.event_name == 'workflow_dispatch' && inputs.generate_media) }}
         env:
@@ -60,7 +62,7 @@ jobs:
         run: |
           git config user.name "saidio-production-bot"
           git config user.email "saidio-production-bot@users.noreply.github.com"
-          git add data/dashboard.json data/voiceover.json data/suntravel.json
+          git add data/dashboard.json data/voiceover.json data/suntravel.json data/capychill.json data/carousel.json
           git diff --cached --quiet || git commit -m "chore: run daily media production"
           git pull --rebase origin main
           git push

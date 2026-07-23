@@ -1,0 +1,285 @@
+{
+  "stream": "carousel",
+  "updatedAt": "2026-07-23T11:42:15+00:00",
+  "briefs": [
+    {
+      "date": "2026-07-23",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 1",
+      "focus": "品牌初識｜為什麼我們慢一點",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "品牌初識｜為什麼我們慢一點",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜一杯咖啡，也可以是今天的休息鍵\n2. Mori Café 不追求最快出杯，我們在意每一杯是否剛好適合你。\n3. 豆子每天少量研磨，讓香氣不必在櫃子裡等待。\n4. 牛奶、甜度與濃度都能調整，不需要勉強自己喝『標準答案』。\n5. 我們保留安靜座位，也歡迎只想坐十分鐘的人。\n6. 外帶杯、店內杯，同樣認真完成。\n7. 今天不必完成所有事，先喝完眼前這一杯。\n8. 結尾｜收藏這組，下次需要休息時回來找我們。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "品牌初識｜為什麼我們慢一點",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 品牌初識｜為什麼我們慢一點. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 2",
+      "focus": "招牌商品｜三款咖啡怎麼選",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "招牌商品｜三款咖啡怎麼選",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜第一次來 Mori Café，從這三杯開始\n2. 晨光拿鐵｜柔和、奶香明顯，適合不喜歡苦味的人。\n3. 海風美式｜乾淨清爽，尾韻帶一點柑橘感。\n4. 慢曜日摩卡｜可可感較濃，像一份可以喝的甜點。\n5. 想提神：選海風美式。\n6. 想放鬆：選晨光拿鐵。\n7. 想獎勵自己：選慢曜日摩卡。\n8. 結尾｜留言告訴我們，你今天是哪一杯？"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "招牌商品｜三款咖啡怎麼選",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 招牌商品｜三款咖啡怎麼選. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 3",
+      "focus": "咖啡小知識｜酸不等於壞",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "咖啡小知識｜酸不等於壞",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜咖啡有酸味，不代表咖啡壞了\n2. 咖啡果實本來就含有自然果酸。\n3. 淺焙常保留較多花香、柑橘或莓果般的明亮感。\n4. 深焙通常帶出更多焦糖、堅果與可可風味。\n5. 好喝的酸感應該乾淨、明亮，不會尖銳刺口。\n6. 如果怕酸，可以選低酸豆、深一點的焙度或搭配牛奶。\n7. 最重要的不是懂術語，而是找到自己喜歡的味道。\n8. 結尾｜收藏這張，下次點咖啡就不再只說『不要酸』。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "咖啡小知識｜酸不等於壞",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 咖啡小知識｜酸不等於壞. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 4",
+      "focus": "幕後日常｜開店前的一小時",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "幕後日常｜開店前的一小時",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜你來以前，咖啡店已經醒了一小時\n2. 07:00 拉開窗簾，先讓早晨進到店裡。\n3. 07:10 校正磨豆機，第一杯通常不是賣給客人的。\n4. 07:20 試喝濃縮，調整今天的研磨刻度。\n5. 07:35 烤好第一盤可頌，店裡開始有奶油香。\n6. 07:45 擦桌、補水、把每張椅子放回熟悉的位置。\n7. 08:00 門打開，今天的第一句是『早安』。\n8. 結尾｜你通常幾點需要第一杯咖啡？"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "幕後日常｜開店前的一小時",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 幕後日常｜開店前的一小時. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-27",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 5",
+      "focus": "情境選單｜今天需要哪一種陪伴",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "情境選單｜今天需要哪一種陪伴",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜依照今天的心情點咖啡\n2. 需要清醒｜雙份海風美式，不加糖。\n3. 需要安慰｜溫熱晨光拿鐵，加一點肉桂。\n4. 需要專注｜手沖單品，慢慢喝完一整壺。\n5. 需要放空｜低咖啡因拿鐵，坐窗邊。\n6. 需要慶祝｜慢曜日摩卡，加一份小甜點。\n7. 沒有答案也沒關係，告訴店員你今天的感覺。\n8. 結尾｜分享給那位最近很需要一杯咖啡的人。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "情境選單｜今天需要哪一種陪伴",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 情境選單｜今天需要哪一種陪伴. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 6",
+      "focus": "空間體驗｜找到適合你的座位",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "空間體驗｜找到適合你的座位",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜咖啡店的座位，也有不同個性\n2. 窗邊位｜適合放空、看人群與自然光拍照。\n3. 長桌位｜適合工作，但記得讓肩膀休息。\n4. 角落單人位｜適合讀書與安靜整理心情。\n5. 戶外位｜適合天氣舒服、想帶寵物一起來的日子。\n6. 吧台位｜適合想看看咖啡怎麼完成的人。\n7. 沒有最佳座位，只有今天最適合你的座位。\n8. 結尾｜你是窗邊派、角落派，還是吧台派？"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "空間體驗｜找到適合你的座位",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 空間體驗｜找到適合你的座位. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-29",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 7",
+      "focus": "品牌故事｜名字從哪裡來",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "品牌故事｜名字從哪裡來",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜Mori，不只是一個好聽的名字\n2. Mori 在日文裡讓人想到森林。\n3. 我們想做的不是華麗的店，而是一個讓呼吸慢下來的地方。\n4. 木頭、植物和低飽和色，都是為了減少視覺噪音。\n5. 菜單不需要很長，每一項都應該有留下來的理由。\n6. 服務不必過度熱情，但要讓人覺得被好好看見。\n7. 如果你離開時比進門時放鬆一點，這個名字就有意義。\n8. 結尾｜這就是 Mori Café 想成為的日常森林。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "品牌故事｜名字從哪裡來",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 品牌故事｜名字從哪裡來. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-30",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 8",
+      "focus": "常見問題｜來店前先知道",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "常見問題｜來店前先知道",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜第一次來 Mori Café？這些問題先回答你\n2. 可以訂位嗎？｜平日可預約，週末保留部分現場座位。\n3. 有低咖啡因嗎？｜有，可替換大部分義式咖啡。\n4. 可以帶寵物嗎？｜戶外座位歡迎牽繩寵物。\n5. 有插座嗎？｜長桌區有，尖峰時段請體諒共用。\n6. 有植物奶嗎？｜提供燕麥奶，可詢問當日庫存。\n7. 可以拍照嗎？｜可以，但請不要影響其他客人。\n8. 結尾｜還想知道什麼？留言讓我們補上。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "常見問題｜來店前先知道",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 常見問題｜來店前先知道. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "stream": "carousel",
+      "title": "IG Carousel 九日包｜獨立咖啡店 Day 9",
+      "focus": "九日收尾｜收藏與到店行動",
+      "meta": "8 張 4:5 圖組 · ChatGPT 背景圖＋Canva 可編輯文字",
+      "summary": "本輪 9 天鎖定「獨立咖啡店」，每天一款同視覺系統、不同內容目的的客戶模板。",
+      "items": [
+        {
+          "type": "8 張範例文案",
+          "purpose": "九日收尾｜收藏與到店行動",
+          "engine": "文字",
+          "status": "prompt",
+          "text": "1. 封面｜九天認識 Mori Café，今天換你來坐坐\n2. 如果你喜歡安靜，平日上午是最舒服的時間。\n3. 如果你喜歡陽光，下午三點前選窗邊位。\n4. 如果你第一次來，從晨光拿鐵開始。\n5. 如果你正在戒咖啡因，我們也準備了低咖啡因選擇。\n6. 出示這篇收藏畫面，可獲得當週限定小點試吃一份。\n7. 活動期間｜範例：7/23–7/31；實際販售模板時請替換。\n8. 結尾｜收藏、分享，然後找一天真的來休息。"
+        },
+        {
+          "type": "ChatGPT 生圖 Prompt",
+          "purpose": "九日收尾｜收藏與到店行動",
+          "engine": "ChatGPT Images",
+          "status": "prompt",
+          "text": "Create a coordinated set of eight 4:5 Instagram carousel background/layout images for a 獨立咖啡店 content pack. Topic: 九日收尾｜收藏與到店行動. Editorial lifestyle photography mixed with subtle paper texture and restrained geometric shapes; warm cream, espresso brown and muted sage palette; consistent lighting, margins and visual rhythm across all eight cards. Card 1 is a strong minimal cover, cards 2–7 alternate image-left and image-right layouts with generous empty copy space, card 8 is a calm call-to-action ending. Keep the same brand world and props across the set. Generate no words, letters, numbers, logos, watermarks or fake signage—the Traditional-Chinese copy will be added in Canva. Do not imitate an existing brand or designer. Output eight separate coordinated images, not one contact sheet."
+        },
+        {
+          "type": "Canva 模板規格",
+          "purpose": "可販售模板",
+          "engine": "Canva Pro",
+          "status": "prompt",
+          "text": "CANVA TEMPLATE SPEC｜1080×1350 px, 8 pages. Safe margin 80 px. Create named editable fields: KICKER, HEADLINE, BODY, PAGE_NO, CTA and IMAGE. Use at most two font families and three brand colors. Build page 1 cover, pages 2–7 alternating education/story layouts, page 8 CTA. After placing generated backgrounds, add the supplied Traditional-Chinese copy as editable text—never bake text into images. Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        }
+      ]
+    }
+  ]
+}

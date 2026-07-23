@@ -1,4 +1,4 @@
-// SAIDIO 統一素材庫 — 音樂 / 旁白 / 旅遊三條線合併瀏覽
+// SAIDIO 統一素材庫 — 各創作專案與每日素材合併瀏覽
 const $ = s => document.querySelector(s);
 const fmt = d => d.toISOString().slice(0, 10);
 
@@ -6,6 +6,8 @@ const STREAMS = {
   music:     { label: "音樂", emoji: "🎵", cls: "s-music" },
   voiceover: { label: "旁白", emoji: "🗣️", cls: "s-voiceover" },
   suntravel: { label: "旅遊", emoji: "🎬", cls: "s-suntravel" },
+  capychill: { label: "CapyChill", emoji: "🦫", cls: "s-capychill" },
+  carousel:  { label: "IG Carousel", emoji: "📚", cls: "s-carousel" },
 };
 
 let meta = null, projects = [], radar = [], updatedAt = "";
@@ -41,6 +43,8 @@ async function boot() {
     loadStream("data/dashboard.json", "music"),
     loadStream("data/voiceover.json", "voiceover"),
     loadStream("data/suntravel.json", "suntravel"),
+    loadStream("data/capychill.json", "capychill"),
+    loadStream("data/carousel.json", "carousel"),
   ]);
   briefs = parts.flat().sort((a, b) => a.date.localeCompare(b.date));
   render();
@@ -50,8 +54,15 @@ function visible() {
   return activeStream === "all" ? briefs : briefs.filter(b => b.stream === activeStream);
 }
 
+function currentBatchDate(list) {
+  const today = fmt(new Date());
+  return list.filter(b => b.date <= today).at(-1)?.date || list.at(0)?.date || null;
+}
+
 function render() {
-  const latest = visible().at(-1);
+  const vis = visible();
+  const batchDate = currentBatchDate(vis);
+  const latest = vis.findLast(b => b.date === batchDate);
   $("#today-focus").textContent = latest ? latest.title : "尚無素材";
   $("#today-meta").textContent = latest ? latest.meta : "";
   $("#updated-at").textContent = updatedAt ? `更新於 ${new Date(updatedAt).toLocaleString("zh-Hant-TW")}` : "";
@@ -112,7 +123,7 @@ function briefBlock(b) {
 
 function renderTodayCards() {
   const vis = visible();
-  const latestDate = vis.length ? vis.at(-1).date : null;
+  const latestDate = currentBatchDate(vis);
   const todays = vis.filter(b => b.date === latestDate);
   $("#briefs-eyebrow").textContent = latestDate ? `最新一批素材 · ${latestDate}` : "尚無素材";
   $("#today-cards").innerHTML = todays.length ? todays.map(briefBlock).join("") : `<p class="muted">此分類目前沒有素材。</p>`;

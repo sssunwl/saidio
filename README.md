@@ -1,7 +1,7 @@
 # SAIDIO Operations Desk
 
-Static GitHub Pages dashboard and **daily media factory** for three streams — music, voiceover and
-Suntravel visuals. One workflow creates the daily briefs, calls Gemini TTS, Lyria and Veo, publishes
+Static GitHub Pages dashboard and **daily media factory** for five streams — music, voiceover,
+Suntravel visuals, CapyChill albums and IG Carousel template packs. One workflow creates the daily briefs, calls Gemini TTS, Lyria and Veo, publishes
 the outputs as monthly GitHub Release assets, and exposes generation status and links on the site.
 
 ## Streams & schedule

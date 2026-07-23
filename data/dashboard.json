@@ -54,6 +54,18 @@
       "state": "暫緩",
       "progress": 0,
       "summary": "投資頻道驗證期結束後才重新評估；製作前必須完成權利檢查。"
+    },
+    {
+      "name": "CapyChill Lo-fi Channel",
+      "state": "進行中",
+      "progress": 22,
+      "summary": "每日準備一張約 30 分鐘專輯：10 首同系列音樂，以及同一海邊書桌 reference 的白天、黃昏、夜晚與雨天微動畫 Prompt。"
+    },
+    {
+      "name": "IG Carousel 模板商店",
+      "state": "建立中",
+      "progress": 12,
+      "summary": "每 9 天鎖定一個行業，完成 9 款同視覺系統、各 8 張的可編輯 Canva 客戶模板。"
     }
   ],
   "radar": [

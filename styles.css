@@ -21,12 +21,16 @@
 .chip.on.s-music{background:var(--lime);border-color:var(--lime)}
 .chip.on.s-voiceover{background:var(--orange);border-color:var(--orange)}
 .chip.on.s-suntravel{background:var(--cyan);border-color:var(--cyan)}
+.chip.on.s-capychill{background:#9ed8a7;border-color:#9ed8a7}
+.chip.on.s-carousel{background:#d7a8ff;border-color:#d7a8ff}
 /* 素材卡 */
 .today-cards{display:flex;flex-direction:column;gap:14px;margin-top:6px}
 .stream-card{border:1px solid var(--line);border-left-width:3px;background:#111712}
 .stream-card.s-music{border-left-color:var(--lime)}
 .stream-card.s-voiceover{border-left-color:var(--orange)}
 .stream-card.s-suntravel{border-left-color:var(--cyan)}
+.stream-card.s-capychill{border-left-color:#9ed8a7}
+.stream-card.s-carousel{border-left-color:#d7a8ff}
 .sc-head{display:flex;gap:14px;align-items:center;padding:14px 16px}
 .sc-badge{font:10px "DM Mono",monospace;border:1px solid var(--line);padding:5px 8px;white-space:nowrap;color:var(--ink)}
 .sc-title{flex:1;min-width:0}
@@ -43,6 +47,8 @@
 .dot.s-music,.dots i.s-music{background:var(--lime)}
 .dot.s-voiceover,.dots i.s-voiceover{background:var(--orange)}
 .dot.s-suntravel,.dots i.s-suntravel{background:var(--cyan)}
+.dot.s-capychill,.dots i.s-capychill{background:#9ed8a7}
+.dot.s-carousel,.dots i.s-carousel{background:#d7a8ff}
 #archive-detail .stream-card{margin-top:12px}
 @media(max-width:760px){.toolbar{flex-direction:column;align-items:flex-start}.tool-links a{min-width:0;flex:1}.sc-head{flex-wrap:wrap}}
 .prompt-head{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.55rem}.gen-status{font-size:.68rem;font-weight:750;letter-spacing:.05em;padding:.18rem .45rem;border-radius:99px;background:#27302b;color:#c9d2cc}.gen-ready{background:#173d2b;color:#8cf0b8}.gen-running,.gen-queued{background:#403719;color:#f4d675}.gen-failed{background:#481f23;color:#ff9ba3}.media-link{margin-left:auto;color:#9ee5bc;font-size:.76rem;font-weight:700;text-decoration:none}.media-link:hover{text-decoration:underline}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-22T09:12:00+09:00",
+  "updatedAt": "2026-07-23T09:12:00+09:00",
   "metrics": [
     {
       "label": "進行中製作",
@@ -136,6 +136,125 @@
         "Duration: 2:50. BPM: 100. Mood: Futuristic, mathematical, and contemplative. Instrument Constraints: Granular-synthesized acoustic guitar textures, microtonal digital blips, deep sub-bass, and a processed room-tone hum. Arrangement: Starts with organic acoustic guitar notes that slowly dissolve into granular clouds; a steady, clockwork-like synth pulse enters mid-track, ending abruptly on a clean, sharp microtonal chime. Edit Points: Edits near 15s (glitch texture start), 30s (sub-bass entry), 60s (pulse patterns merge), and 90s (experimental breakdown). Loopable Middle: Not loopable due to progressive mathematical development. Space for Voiceover: Designed as an evocative backing track for tech-forward travel guides or complex AI-driven character segments."
       ],
       "date": "2026-07-22"
+    },
+    {
+      "title": "Saidio Music Asset Brief: Investing Explainer Focus (2026-07-23)",
+      "focus": "Investing Explainer core assets (with secondary considerations for travel Field Notes and banking AI character drama)",
+      "meta": "All 10 prompts are Gemini R&D concept drafts. These prompts do not imply that audio generation has already occurred, nor do they claim any intellectual property or licensing rights for the generated assets.",
+      "summary": "This asset package provides highly structured, clean, and forward-moving music designed specifically for financial explainer videos and investment channels. It offers ample dynamic headroom to accommodate voiceover and narration, using precise editing points to allow editors to cut easily to graphics, tables, or segment transitions.",
+      "prompts": [
+        {
+          "id": "PROMPT_01_CORE_MASTER",
+          "duration": "2:45",
+          "bpm": 110,
+          "mood": "Optimistic, analytical, forward-moving, and trustworthy",
+          "instrument_constraints": "Plucked acoustic guitar, warm electric bass, analog synth pad, soft organic shaker, clean acoustic kick drum. No vocals.",
+          "arrangement": "Starts with a clean, naked acoustic guitar pluck. At 15 seconds, a warm bass and soft shaker enter. At 30 seconds, a gentle analog synth pad fills the stereo field. The track develops dynamic variation in the middle before dropping back to a quiet acoustic guitar and pad arrangement for a clean, ring-out ending.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 1:30.",
+          "loopable_middle": "Yes, the section between 0:30 and 2:00 can be looped seamlessly.",
+          "narration_room": "Excellent. Frequencies between 1kHz and 3kHz are heavily scooped in the mix to leave absolute room for a narrator's voice."
+        },
+        {
+          "id": "PROMPT_02_CORE_MASTER",
+          "duration": "2:50",
+          "bpm": 95,
+          "mood": "Steady, deliberate, intellectual, and secure",
+          "instrument_constraints": "Muted grand piano, ambient electric guitar swells, subtle synthetic cello pad, soft electronic snap percussion. No vocals.",
+          "arrangement": "Begins with a minimal, repetitive muted piano arpeggio. Subtle guitar swells enter at 15 seconds. High-end snap percussion builds a comfortable rhythm from 30 seconds onward. A low-mid cello pad joins at 60 seconds to add weight. The track maintains this steady state before dropping all percussion at 2:35, ending on a sustained piano chord.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 1:45.",
+          "loopable_middle": "Yes, the section from 0:30 to 2:20 is loopable.",
+          "narration_room": "High. The high frequencies are kept warm and rounded, leaving the crisp top-end open for vocal clarity."
+        },
+        {
+          "id": "PROMPT_03_CORE_MASTER",
+          "duration": "3:00",
+          "bpm": 120,
+          "mood": "Precise, balanced, objective, and modern",
+          "instrument_constraints": "Marimba, pizzicato violins, sub-bass pulse, light organic cabasa, low-volume filtered analog lead synth. No vocals.",
+          "arrangement": "An intricate marimba pattern opens the track. Pizzicato strings enter at 15 seconds, reinforcing the rhythm. A deep, warm sub-bass pulse joins at 30 seconds. A highly filtered, non-intrusive synth melody drifts in at 60 seconds to provide narrative development. Ends with a sharp, synchronized pizzicato pluck.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 2:00.",
+          "loopable_middle": "Yes, the section from 0:30 to 2:30 is loopable.",
+          "narration_room": "High. Marimba and pizzicato elements are panned hard left and right, leaving the center image open for voiceover."
+        },
+        {
+          "id": "PROMPT_04_CORE_MASTER",
+          "duration": "2:35",
+          "bpm": 85,
+          "mood": "Cautious, focused, reassuring, and deep",
+          "instrument_constraints": "Fender Rhodes electric piano, airy synthesizer pads, slow acoustic rimshots, warm double bass. No vocals.",
+          "arrangement": "Sparse Rhodes chords establish the tempo. Warm double bass slides in at 15 seconds. Gentle, airy synthesizer pads wash over the track at 30 seconds, followed by a slow, methodical rimshot rhythm at 60 seconds. The beat falls away at 2:15, leaving a lingering, warm Rhodes chord to fade naturally.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 1:30.",
+          "loopable_middle": "Yes, the section from 0:30 to 2:00 can be looped.",
+          "narration_room": "Excellent. The slow tempo and sparse arrangement offer a highly non-distracting bed for dense financial explanations."
+        },
+        {
+          "id": "PROMPT_05_CORE_MASTER",
+          "duration": "2:40",
+          "bpm": 115,
+          "mood": "Motivating, clear, confident, and forward-leaning",
+          "instrument_constraints": "Strummed clean electric guitar, rhythmic bass guitar, synthetic bell plucks, low-pass filtered electronic drum loop. No vocals.",
+          "arrangement": "A crisp, strummed electric guitar introduces the progression. Bass and a filtered drum loop drop in simultaneously at 15 seconds. Bright, clean bell plucks arrive at 30 seconds to define the main theme. The rhythm strips down to bass and guitar at 1:45 before a final, driving chorus that resolves cleanly on an open guitar strum.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 1:45.",
+          "loopable_middle": "Yes, the section from 0:30 to 2:00 is loopable.",
+          "narration_room": "Moderate to High. Bells and lead elements are mixed at a lower volume level to prevent clashing with voiceover."
+        },
+        {
+          "id": "PROMPT_06_CORE_MASTER",
+          "duration": "2:55",
+          "bpm": 100,
+          "mood": "Strategic, visionary, spacious, and sophisticated",
+          "instrument_constraints": "Delayed electric guitar harmonics, cinematic sub-bass hits, soft analog synth pulse, sustain violin section. No vocals.",
+          "arrangement": "Ethereal, delayed guitar harmonics ring out over a silent background. A soft analog synth pulse starts at 15 seconds. Soft cinematic sub-hits emphasize transitions at 30 seconds. Sustained violins add warmth and scale at 60 seconds. The track maintains a spacious, atmospheric depth, ending on a long, decaying guitar delay tail.",
+          "edit_points": "Natural transitions and edit points at 0:15, 0:30, 1:00, and 2:00.",
+          "loopable_middle": "Yes, the section from 1:00 to 2:30 is loopable.",
+          "narration_room": "Outstanding. The slow-attack arrangement keeps transient sounds out of the speaker's vocal frequency range."
+        },
+        {
+          "id": "PROMPT_07_ALT_ARRANGEMENT",
+          "duration": "1:45",
+          "bpm": 110,
+          "mood": "Uncluttered, introspective, clean, and minimal",
+          "instrument_constraints": "Plucked acoustic guitar and warm electric bass only. No drums, percussion, or synths. No vocals.",
+          "arrangement": "A stripped-back, minimalist alternate mix of Core Master 1. It showcases the bare acoustic guitar pluck starting solo, with the warm electric bass entering at 15 seconds. The arrangement progresses quietly and evenly, avoiding any sudden shifts, before ending on a single, long-held acoustic chord.",
+          "edit_points": "Clean transitions at 0:15, 0:30, and 1:00.",
+          "loopable_middle": "Yes, the section from 0:15 to 1:15 is loopable.",
+          "narration_room": "Maximum headroom. Zero mid-to-high frequency synth clutter ensures absolute vocal dominance."
+        },
+        {
+          "id": "PROMPT_08_ALT_ARRANGEMENT",
+          "duration": "1:30",
+          "bpm": 120,
+          "mood": "Driving, neutral, rhythmic, and auxiliary",
+          "instrument_constraints": "Marimba, organic shaker, soft kick drum, and electric bass pulse. No strings, pads, or lead synths. No vocals.",
+          "arrangement": "A highly focused, rhythm-only alternate arrangement of Core Master 3. The track relies entirely on the interlocking patterns of the marimba, shaker, and bass pulse to drive momentum. It maintains a constant energy level throughout, before fading gently over the final 10 seconds.",
+          "edit_points": "Clean transitions at 0:15, 0:30, and 1:00.",
+          "loopable_middle": "Yes, the entire body from 0:15 to 1:15 is loopable.",
+          "narration_room": "Maximum. Designed specifically for rapid-fire data delivery, statistics displays, and screen graphics where speech must remain front and center."
+        },
+        {
+          "id": "PROMPT_09_FUNCTIONAL_CUE",
+          "duration": "0:30",
+          "bpm": 110,
+          "mood": "Informative, transitionary, clean, and resolving",
+          "instrument_constraints": "Reverse cymbal swell, clean synth pluck, Rhodes piano chord, acoustic guitar strum. No vocals.",
+          "arrangement": "An information-card bed and transition cue. It begins with an immediate reverse cymbal swell peaking at 3 seconds, resolving into a bright, clean Rhodes chord. A subtle synth pluck and guitar strum play a brief, 15-second rhythmic progression that winds down cleanly to a solid, resolving final chord at 30 seconds.",
+          "edit_points": "Clear edit or drop-out points at 0:05 and 0:15.",
+          "loopable_middle": "No, this is a linear transition cue designed to play start-to-finish.",
+          "narration_room": "High. The cue is designed to sit underneath a quick 15-to-20 second callout, sponsorship message, or transition slide."
+        },
+        {
+          "id": "PROMPT_10_EXPERIMENTAL_MASTER",
+          "duration": "2:50",
+          "bpm": 105,
+          "mood": "Futuristic, analytical, slightly tense, and high-tech",
+          "instrument_constraints": "Granular synthesizer textures, clean muted electric guitar, glitchy electronic percussion, analog sub-bass, sparse electric piano. No vocals.",
+          "arrangement": "Atmospheric, granular synth textures rise slowly. At 15 seconds, a muted electric guitar begins a rhythmic pattern. Glitchy, micro-percussion enters at 30 seconds, creating a complex but quiet rhythmic matrix. Sub-bass and electric piano chords drop at 60 seconds to ground the track. Complexity peaks at 2:00 before deconstructing back to a single granular texture.",
+          "edit_points": "Natural transition and edit points at 0:15, 0:30, 1:00, and 2:00.",
+          "loopable_middle": "Yes, the section from 0:30 to 2:00 can be looped seamlessly.",
+          "narration_room": "High. While textures are complex, they are mixed wide and low in the frequency spectrum, keeping the center vocal channel entirely clean."
+        }
+      ],
+      "date": "2026-07-23"
     }
   ]
 }

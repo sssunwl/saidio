@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-22T09:18:00+09:00",
+  "updatedAt": "2026-07-23T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -174,6 +174,64 @@
         }
       ],
       "date": "2026-07-22",
+      "stream": "voiceover"
+    },
+    {
+      "title": "智富思維：V-INVEST 理性投資解說音頻包",
+      "focus": "投資解說",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-INVEST",
+      "summary": "本套件專為理財教育與投資分析影片設計，搭配沉穩男聲與專業氛圍音效，打造具信賴感的說服力。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "投資的秘密，不在於追求一夕致富的奇蹟，而是在於時間與複利的累積。每天穩健地前進一步，看似微小的增長，在數十年後都將匯聚成巨大的財富雪球。保持耐心，讓時間成為你最忠實的盟友。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "面對波動的市場，單一資產的重押往往伴隨不可承受的風險。合理的資產配置，就如同為你的財富建立一座防禦工事。透過股債平衡與多元佈局，我們不求每次都贏，但求在市場風雨中，依然行穩致遠。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "許多人試圖預測市場的最高點與最低點，但歷史告訴我們，頻繁交易往往只會侵蝕利潤。選擇指數化投資，買下整體市場的成長，摒除情緒的干擾。理性地與經濟共同成長，才是最簡單也最有效的致富之道。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "在投資的世界裡，最大的敵人往往不是市場，而是我們內心的恐懼與貪婪。當市場過熱時保持冷靜，在恐慌蔓延時堅守紀律。設定好你的止損與停利點，用客觀的數據取代主觀的直覺，才能在波動中立於不敗之地。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "投資解說",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Calm corporate office background ambience, soft tapping of computer keyboards, low-frequency hum of air conditioning, occasional paper rustling, professional and quiet atmosphere, 45 seconds loop, no music."
+        },
+        {
+          "type": "環境音",
+          "purpose": "投資解說",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Subtle digital data ticker-tape sound effects, soft rhythmic electronic bleeps and interface hums, conveying financial analysis and precision, minimal and non-distracting background atmosphere, 30 seconds loop, no music."
+        }
+      ],
+      "date": "2026-07-23",
       "stream": "voiceover"
     }
   ]

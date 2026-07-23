@@ -36,33 +36,30 @@
       </section>
 
       <nav class="tabs" aria-label="營運台章節">
-        <a href="#briefs">每日素材</a><a href="#calendar">年曆</a><a href="#projects">專案</a><a href="#radar">趨勢雷達</a>
+        <a href="#briefs" data-view-link="briefs">每日素材</a><a href="#calendar" data-view-link="calendar">年曆</a><a href="#projects" data-view-link="projects">專案</a><a href="#radar" data-view-link="radar">趨勢雷達</a>
       </nav>
 
-      <!-- 生成類型 / 用途過濾 -->
-      <section class="filters" id="filters" aria-label="素材過濾">
-        <div class="chip-row" id="stream-chips"></div>
+      <section class="view active" id="briefs" data-view="briefs">
+        <div class="filters" id="filters" aria-label="素材過濾"><div class="chip-row" id="stream-chips"></div></div>
+        <div class="metric-row" id="metrics"></div>
+        <div class="split">
+          <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow" id="briefs-eyebrow">最新一批素材</p></div><div id="today-cards" class="today-cards"></div></article>
+          <aside class="panel notification-panel"><p class="eyebrow">通知紀錄</p><div id="notifications"></div></aside>
+        </div>
       </section>
 
-      <section class="metric-row" id="metrics"></section>
-
-      <section class="split" id="briefs">
-        <article class="panel brief-panel">
-          <div class="panel-head"><p class="eyebrow" id="briefs-eyebrow">最新一批素材</p></div>
-          <div id="today-cards" class="today-cards"></div>
-        </article>
-        <aside class="panel notification-panel"><p class="eyebrow">通知紀錄</p><div id="notifications"></div></aside>
-      </section>
-
-      <section class="panel calendar-panel" id="calendar">
+      <section class="view panel calendar-panel" id="calendar" data-view="calendar">
         <div class="panel-head"><div><p class="eyebrow">素材歸檔</p><h2>年度總覽</h2></div><div class="month-controls"><button id="prev-month" aria-label="上一個月">←</button><strong id="month-label"></strong><button id="next-month" aria-label="下一個月">→</button></div></div>
-        <div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div>
-        <div id="archive-detail" class="archive-detail">點選有色點的日子，查看當日所有素材。</div>
+        <div class="calendar-legend" id="calendar-legend"></div>
+        <div class="calendar-workspace">
+          <div class="calendar-left"><div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div></div>
+          <div class="prompt-browser"><aside class="folder-sidebar"><p class="eyebrow">Prompt 文件夾</p><strong id="folder-date">先在年曆選日期</strong><div id="archive-folders" class="archive-folders"></div></aside><div id="archive-detail" class="archive-detail"><div class="empty-state">選擇左側日期，再選一個資料夾查看 Prompt。</div></div></div>
+        </div>
       </section>
 
-      <section class="panel projects-panel" id="projects"><div class="panel-head"><div><p class="eyebrow">製作組合</p><h2>進行中的專案</h2></div><span class="muted">資料來源：project_saidio.md</span></div><div id="projects-grid" class="projects-grid"></div></section>
+      <section class="view panel projects-panel" id="projects" data-view="projects"><div class="panel-head"><div><p class="eyebrow">製作組合</p><h2 id="projects-title">進行中的專案</h2></div><button id="projects-back" class="mini" hidden>← 返回全部專案</button></div><div id="projects-grid" class="projects-grid"></div><div id="project-detail" class="project-detail" hidden></div></section>
 
-      <section class="split bottom" id="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>每日與每週訊號</h2></div><span class="status-chip">靈感收集</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">工作原則</p><blockquote>「精進創作，<br>不被工具定義。」</blockquote><p class="muted">每個訊號都要先變成製作問題，而不是自動變成影片：確認權利、關聯性及觀眾真正得到的價值，才進入製作。</p></article></section>
+      <section class="view split bottom" id="radar" data-view="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>每日與每週訊號</h2></div><span class="status-chip">靈感收集</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">工作原則</p><blockquote>「精進創作，<br>不被工具定義。」</blockquote><p class="muted">每個訊號都要先變成製作問題，而不是自動變成影片：確認權利、關聯性及觀眾真正得到的價值，才進入製作。</p></article></section>
     </main>
     <footer>SAIDIO / SUNIVERSE 創作層 · <span id="updated-at"></span></footer>
     <script src="app.js"></script>

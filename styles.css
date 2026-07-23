@@ -52,3 +52,52 @@
 #archive-detail .stream-card{margin-top:12px}
 @media(max-width:760px){.toolbar{flex-direction:column;align-items:flex-start}.tool-links a{min-width:0;flex:1}.sc-head{flex-wrap:wrap}}
 .prompt-head{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.55rem}.gen-status{font-size:.68rem;font-weight:750;letter-spacing:.05em;padding:.18rem .45rem;border-radius:99px;background:#27302b;color:#c9d2cc}.gen-ready{background:#173d2b;color:#8cf0b8}.gen-running,.gen-queued{background:#403719;color:#f4d675}.gen-failed{background:#481f23;color:#ff9ba3}.media-link{margin-left:auto;color:#9ee5bc;font-size:.76rem;font-weight:700;text-decoration:none}.media-link:hover{text-decoration:underline}
+
+/* ---- 單一內容區與 Prompt 瀏覽器 ---- */
+.tabs a{padding:0 2px 11px;margin-bottom:-14px;border-bottom:2px solid transparent}
+.tabs a.active{color:var(--ink);border-bottom-color:var(--lime)}
+.view{display:none}
+.view.active{display:block}
+.view.split.active{display:grid}
+.calendar-legend{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0 12px}
+.calendar-legend span{display:flex;align-items:center;gap:6px;font:10px "DM Mono",monospace;color:var(--muted)}
+.calendar-legend i{width:7px;height:7px;border-radius:50%}
+.calendar-workspace{display:grid;grid-template-columns:minmax(430px,.9fr) minmax(0,1.1fr);gap:20px;align-items:start}
+.calendar-workspace .weekdays{margin-top:0}
+.calendar-workspace .day{height:76px}
+.prompt-browser{display:grid;grid-template-columns:150px minmax(0,1fr);border:1px solid var(--line);min-height:470px;background:#111712}
+.folder-sidebar{padding:16px 10px;border-right:1px solid var(--line)}
+.folder-sidebar>strong{display:block;font:11px "DM Mono",monospace;margin-bottom:14px}
+.archive-folders{display:flex;flex-direction:column;gap:6px}
+.panel .folder{width:100%;display:flex;justify-content:space-between;gap:6px;text-align:left;border:0;padding:9px 8px;color:var(--muted)}
+.panel .folder:hover,.panel .folder.on{background:#273125;color:var(--lime)}
+.folder b{font-size:9px}
+.archive-detail{margin:0;padding:16px;border-left:0;min-width:0;max-height:620px;overflow:auto}
+.empty-state{display:grid;place-items:center;min-height:420px;text-align:center;color:var(--muted);font-size:12px}
+.panel .project{border:1px solid var(--line);padding:16px;min-height:190px;text-align:left;color:var(--ink);font-family:inherit}
+.panel .project:hover{border-color:var(--lime);color:var(--ink)}
+.project-open{display:block;margin-top:14px;font:10px "DM Mono",monospace;color:var(--lime)}
+.project-detail{margin-top:22px}
+.project-summary{border-left:2px solid #9ed8a7;padding:4px 16px;margin-bottom:20px}
+.project-summary strong{margin-left:10px}
+.project-summary p{color:var(--muted);font-size:13px}
+.project-days{display:flex;flex-direction:column;gap:10px}
+.project-day{display:grid;grid-template-columns:1fr 80px auto;gap:16px;align-items:center;border:1px solid var(--line);padding:16px}
+.project-day time{font:10px "DM Mono",monospace;color:#9ed8a7}
+.project-day h3{margin:4px 0;font-size:16px}
+.project-day p{margin:0;color:var(--muted);font-size:12px}
+.day-progress{text-align:center}
+.day-progress strong,.day-progress span{display:block}
+.day-progress span{font-size:9px;color:var(--muted)}
+.project-day-body{grid-column:1/-1}
+
+@media(max-width:900px){
+  .calendar-workspace{grid-template-columns:1fr}
+  .prompt-browser{min-height:380px}
+}
+@media(max-width:760px){
+  .view.split.active{display:block}
+  .prompt-browser{grid-template-columns:115px minmax(0,1fr)}
+  .project-day{grid-template-columns:1fr auto}
+  .day-progress{display:none}
+}

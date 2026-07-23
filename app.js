@@ -14,6 +14,9 @@ let meta = null, projects = [], radar = [], updatedAt = "";
 let briefs = [];                 // 合併後、依日期排序的所有 brief
 let activeStream = "all";        // all | music | voiceover | suntravel
 let viewed = new Date();
+let activeView = "briefs";
+let selectedDate = null;
+let selectedArchiveStream = null;
 const expanded = new Set();      // 展開中的 brief id
 
 // 把音樂舊格式（prompts 是字串陣列）normalize 成統一的 items 結構
@@ -75,9 +78,18 @@ function render() {
   renderChips();
   renderTodayCards();
   renderNotifications();
-  $("#projects-grid").innerHTML = projects.map(p => `<article class="project"><div class="project-top"><span class="tag ${p.state === "進行中" ? "active" : p.state === "暫緩" ? "hold" : ""}">${p.state}</span><span class="muted">${p.progress}%</span></div><h3>${p.name}</h3><p>${p.summary}</p><div class="progress"><i style="width:${p.progress}%"></i></div></article>`).join("");
+  renderProjects();
   $("#radar-list").innerHTML = radar.map(r => `<div class="signal"><time>${r.date}</time><div><strong>${r.title}</strong><p>${r.detail}</p></div><span class="tag">${r.tag}</span></div>`).join("");
   renderCalendar();
+  showView(location.hash.slice(1) || activeView, false);
+}
+
+function showView(name, updateHash = true) {
+  if (!["briefs", "calendar", "projects", "radar"].includes(name)) name = "briefs";
+  activeView = name;
+  document.querySelectorAll("[data-view]").forEach(x => x.classList.toggle("active", x.dataset.view === name));
+  document.querySelectorAll("[data-view-link]").forEach(x => x.classList.toggle("active", x.dataset.viewLink === name));
+  if (updateHash && location.hash !== `#${name}`) history.pushState(null, "", `#${name}`);
 }
 
 function renderChips() {
@@ -122,7 +134,7 @@ function briefBlock(b) {
 }
 
 function renderTodayCards() {
-  const vis = visible();
+  const vis = briefs;
   const latestDate = currentBatchDate(vis);
   const todays = vis.filter(b => b.date === latestDate);
   $("#briefs-eyebrow").textContent = latestDate ? `最新一批素材 · ${latestDate}` : "尚無素材";
@@ -159,26 +171,77 @@ function renderCalendar() {
   for (let d = 1; d <= days; d++) {
     const key = `${y}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
     const dayBriefs = vis.filter(b => b.date === key);
-    const dots = dayBriefs.map(b => `<i class="${STREAMS[b.stream].cls}"></i>`).join("");
+    const dots = [...new Set(dayBriefs.map(b => b.stream))].map(k => `<i class="${STREAMS[k].cls}"></i>`).join("");
     html += `<button class="day ${dayBriefs.length ? "has-brief" : ""} ${key === today ? "today" : ""}" ${dayBriefs.length ? `data-date="${key}"` : ""}><span class="day-num">${d}</span><span class="dots">${dots}</span></button>`;
   }
   $("#calendar-grid").innerHTML = html;
   document.querySelectorAll(".day[data-date]").forEach(x => x.onclick = () => {
     document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
     x.classList.add("selected");
-    renderArchiveDetail(x.dataset.date);
+    selectedDate = x.dataset.date;
+    selectedArchiveStream = null;
+    renderArchiveFolders();
   });
+  $("#calendar-legend").innerHTML = Object.entries(STREAMS).map(([k, s]) => `<span><i class="${s.cls}"></i>${s.label}</span>`).join("");
+  if (selectedDate) renderArchiveFolders();
 }
 
-let selectedDate = null;
-function renderArchiveDetail(date) {
-  if (date) selectedDate = date;
-  if (!selectedDate) return;
-  const dayBriefs = visible().filter(b => b.date === selectedDate);
-  $("#archive-detail").innerHTML = `<strong>${selectedDate} · 當日素材</strong>` + dayBriefs.map(briefBlock).join("");
+function renderArchiveFolders() {
+  $("#folder-date").textContent = selectedDate || "先在年曆選日期";
+  const dayBriefs = selectedDate ? briefs.filter(b => b.date === selectedDate) : [];
+  $("#archive-folders").innerHTML = dayBriefs.map(b => {
+    const s = STREAMS[b.stream];
+    return `<button class="folder ${selectedArchiveStream === b.stream ? "on" : ""}" data-folder="${b.stream}"><span>▸ ${s.emoji} ${s.label}</span><b>${b.items.length}</b></button>`;
+  }).join("") || (selectedDate ? `<p class="muted">當日沒有 Prompt。</p>` : "");
+  document.querySelectorAll("[data-folder]").forEach(btn => btn.onclick = () => {
+    selectedArchiveStream = btn.dataset.folder;
+    renderArchiveFolders();
+    renderArchiveDetail();
+  });
+  if (!selectedArchiveStream) $("#archive-detail").innerHTML = `<div class="empty-state">${selectedDate ? "請從左側資料夾選擇一個分類。" : "選擇左側日期，再選一個資料夾查看 Prompt。"}</div>`;
+}
+
+function renderArchiveDetail() {
+  if (!selectedDate || !selectedArchiveStream) return;
+  const dayBriefs = briefs.filter(b => b.date === selectedDate && b.stream === selectedArchiveStream);
+  $("#archive-detail").innerHTML = dayBriefs.map(briefBlock).join("");
   wireCards();
 }
 
+function renderProjects() {
+  $("#projects-grid").innerHTML = projects.map((p, i) => `<button class="project" data-project="${i}"><div class="project-top"><span class="tag ${p.state === "進行中" ? "active" : p.state === "暫緩" ? "hold" : ""}">${p.state}</span><span class="muted">${p.progress}%</span></div><h3>${p.name}</h3><p>${p.summary}</p><div class="progress"><i style="width:${p.progress}%"></i></div><span class="project-open">開啟專案 →</span></button>`).join("");
+  document.querySelectorAll("[data-project]").forEach(btn => btn.onclick = () => openProject(projects[Number(btn.dataset.project)]));
+}
+
+function openProject(project) {
+  const stream = project.name.includes("CapyChill") ? "capychill" : project.name.includes("Carousel") ? "carousel" : null;
+  if (!stream) return;
+  const list = briefs.filter(b => b.stream === stream);
+  $("#projects-grid").hidden = true;
+  $("#project-detail").hidden = false;
+  $("#projects-back").hidden = false;
+  $("#projects-title").textContent = project.name;
+  $("#project-detail").innerHTML = `<div class="project-summary"><span class="tag active">${project.state}</span><strong>${project.progress}%</strong><p>${project.summary}</p></div><div class="project-days">${list.map(b => {
+    const ready = b.items.filter(i => i.generation?.status === "ready").length;
+    return `<article class="project-day"><div><time>${b.date}</time><h3>${b.title}</h3><p>${b.focus}</p></div><div class="day-progress"><strong>${ready}/${b.items.length}</strong><span>已完成</span></div><button class="mini" data-project-day="${b.id}">查看每日內容</button><div class="project-day-body" id="project-day-${b.id}" hidden>${briefBlock(b)}</div></article>`;
+  }).join("")}</div>`;
+  document.querySelectorAll("[data-project-day]").forEach(btn => btn.onclick = () => {
+    const body = document.getElementById(`project-day-${btn.dataset.projectDay}`);
+    body.hidden = !body.hidden;
+    btn.textContent = body.hidden ? "查看每日內容" : "收起";
+  });
+  wireCards();
+}
+
+$("#projects-back").onclick = () => {
+  $("#projects-grid").hidden = false;
+  $("#project-detail").hidden = true;
+  $("#projects-back").hidden = true;
+  $("#projects-title").textContent = "進行中的專案";
+};
+
 $("#prev-month").onclick = () => { viewed.setMonth(viewed.getMonth() - 1); renderCalendar(); };
 $("#next-month").onclick = () => { viewed.setMonth(viewed.getMonth() + 1); renderCalendar(); };
+document.querySelectorAll("[data-view-link]").forEach(link => link.onclick = e => { e.preventDefault(); showView(link.dataset.viewLink); });
+window.addEventListener("hashchange", () => showView(location.hash.slice(1), false));
 boot();

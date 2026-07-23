@@ -77,10 +77,18 @@ def main():
     if brief is None or force or stale_format:
         focus = ROTATION[date.today().toordinal() % len(ROTATION)]
         model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
-        response = call_gemini(build_prompt(today, focus), key, model)
-        if response is None:
-            return
-        brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
+        brief = None
+        for parse_attempt in range(1, 4):
+            response = call_gemini(build_prompt(today, focus), key, model)
+            if response is None:
+                return
+            try:
+                brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
+                break
+            except (KeyError, IndexError, TypeError, json.JSONDecodeError) as error:
+                print(f"Invalid Gemini JSON (attempt {parse_attempt}/3): {error}")
+        if brief is None:
+            sys.exit("Gemini returned invalid JSON three times")
         if not isinstance(brief.get("items"), list) or len(brief["items"]) != 8:
             sys.exit("Gemini response did not contain exactly eight items")
         brief["date"] = today

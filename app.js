@@ -156,7 +156,7 @@ function briefBlock(b) {
     <div class="sc-head">
       <span class="sc-badge">${s.emoji} ${s.label}</span>
       <div class="sc-title"><strong>${b.title}</strong><span>${b.focus} · ${b.date}</span></div>
-      <div class="sc-actions"><button class="mini" data-toggle="${b.id}">${open ? "收起" : `開啟 ${b.items.length}`}</button></div>
+      <div class="sc-actions"><button class="mini" data-copy-all="${b.id}">複製全部</button><button class="mini" data-toggle="${b.id}">${open ? "收起" : `開啟 ${b.items.length}`}</button></div>
     </div>
     <div class="sc-body" ${open ? "" : "hidden"}>
       <p class="sc-summary">${b.summary || ""}</p>
@@ -199,6 +199,15 @@ function wireCards() {
     const copy = `日期：${b.date}\n當天主題：${b.title}\n主題重點：${b.focus}\n項目：${it.type}\n用途：${it.purpose || ""}\n使用工具：${it.voice || it.engine || ""}\n\nPROMPT：\n${it.text}`;
     await navigator.clipboard.writeText(copy);
     btn.textContent = "已複製"; setTimeout(() => btn.textContent = "單獨複製", 1200);
+  });
+  document.querySelectorAll("[data-copy-all]").forEach(btn => btn.onclick = async () => {
+    const b = briefs.find(x => x.id === btn.dataset.copyAll);
+    const items = b.items.map((it, index) =>
+      `【${index + 1}. ${it.type}】\n用途：${it.purpose || ""}\n使用工具：${it.voice || it.engine || ""}\n\nPROMPT：\n${it.text}`
+    ).join("\n\n────────────────────\n\n");
+    const copy = `日期：${b.date}\n當天主題：${b.title}\n主題重點：${b.focus}\n內容數量：${b.items.length}\n\n${items}`;
+    await navigator.clipboard.writeText(copy);
+    btn.textContent = "全部已複製"; setTimeout(() => btn.textContent = "複製全部", 1200);
   });
 }
 

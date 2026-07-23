@@ -24,9 +24,9 @@ def build_prompt(today, focus):
 Focus package: {focus}. Return JSON only with keys: title, focus, meta, summary, items.
 - title: a short Traditional-Chinese title mentioning the focus.
 - focus: exactly "{focus}".
-- meta: "Flow 每日選片 · 6 Lite + 2 Fast + 2 內容 + 2 字卡".
+- meta: "Flow 每日選片 · 6 Lite + 2 Fast".
 - summary: one Traditional-Chinese sentence on how to use this package.
-- items: an array of exactly 12 objects, each with keys: type, purpose, engine, status, text.
+- items: an array of exactly 8 objects, each with keys: type, purpose, engine, status, text.
   All items set purpose="{focus}" and status="prompt".
   * Items 1-6: type="Flow Lite", engine="Veo 3.1 Lite · 10點". text = an English text-to-video prompt for a
     5-8 second cinematic B-roll clip fitting {focus}. Each must state shot type, camera movement,
@@ -34,10 +34,6 @@ Focus package: {focus}. Return JSON only with keys: title, focus, meta, summary,
   * Items 7-8: type="Flow Fast", engine="Veo 3.1 Fast · 20點". text = a stronger 8-second cinematic
     candidate with purposeful subject motion, camera movement, lighting, mood and pacing. These are
     the two premium candidates; make them clearly different from the Lite exploration prompts.
-  * Items 9-10: type="旅遊內容", engine="文字". text = a ready-to-post Traditional-Chinese piece —
-    a travel tip, fun fact, or short caption (金句) about the {focus} theme, 40-90 characters.
-  * Items 11-12: type="字卡文案", engine="Imagen/Canva". text = Traditional-Chinese card copy as
-    "主標｜副標" for an overlay card, plus a short English background-image prompt in parentheses.
 No artist/brand references, no copyrighted material, no recognizable real logos."""
 
 
@@ -76,15 +72,17 @@ def main():
     existing_index = next((i for i, item in enumerate(payload["briefs"]) if item["date"] == today), None)
     brief = payload["briefs"][existing_index] if existing_index is not None else None
 
-    if brief is None or force:
+    current_types = [item.get("type") for item in (brief or {}).get("items", [])]
+    stale_format = current_types != (["Flow Lite"] * 6 + ["Flow Fast"] * 2)
+    if brief is None or force or stale_format:
         focus = ROTATION[date.today().toordinal() % len(ROTATION)]
         model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
         response = call_gemini(build_prompt(today, focus), key, model)
         if response is None:
             return
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
-        if not isinstance(brief.get("items"), list) or len(brief["items"]) != 12:
-            sys.exit("Gemini response did not contain exactly twelve items")
+        if not isinstance(brief.get("items"), list) or len(brief["items"]) != 8:
+            sys.exit("Gemini response did not contain exactly eight items")
         brief["date"] = today
         brief["stream"] = "suntravel"
         if existing_index is None:

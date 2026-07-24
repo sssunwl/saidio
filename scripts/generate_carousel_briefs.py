@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/carousel.json"
 EPOCH = date(2026, 7, 23)
+LOCKED_DATES = {"2026-07-23", "2026-07-24"}
 
 INDUSTRIES = [
     "獨立咖啡店", "保養品牌", "房地產顧問", "健身教練", "旅行社",
@@ -229,18 +230,62 @@ def split_copy(raw, slide_no):
         return "MORI CAFÉ", "Slow coffee, soft days.", "收藏這組內容，下次需要休息時再回來。"
     return lead.upper(), body, "一個小選擇，也能改變今天的節奏。"
 
+CONTENT_STRUCTURES = {
+    2: "an establishing page with one dominant image or diagram and a short context caption anchored below",
+    3: "a 60/40 explanatory split with one clear fact and one supporting visual; no repeated cover composition",
+    4: "a focused detail page with one oversized keyword or number and a small evidence image",
+    5: "a visual breathing-space page: one short statement or mood line with generous negative space and one quiet image",
+    6: "a comparison or choice page using two clearly separated options, labels or visual states",
+    7: "a proof, process or behind-the-scenes page with one main visual and two concise annotations",
+    8: "a recap or bridge page that resolves the story and gives one reason to continue to the final card",
+}
+
+
+def card_copy(raw, slide_no):
+    """Give each slide only the copy elements its storytelling role needs."""
+    lead, body = raw.split("｜", 1) if "｜" in raw else ("", raw)
+    page = f"頁碼：{slide_no}/9"
+    if slide_no == 1:
+        return (
+            "LOGO：Mori Café\n"
+            f"小主題／KICKER：{lead or '今日主題'}\n"
+            f"大主題／HEADLINE：{body}\n"
+            "滑動提示／SWIPE CUE：向左滑，慢慢看完 →\n"
+            f"{page}"
+        )
+    if slide_no in (2, 3, 4):
+        label = {2: "先從這裡開始", 3: "值得注意", 4: "一個關鍵細節"}[slide_no]
+        return f"段落標籤／SECTION：{lead or label}\n重點文字／STATEMENT：{body}\n{page}"
+    if slide_no == 5:
+        return f"停頓句／PAUSE LINE：{body}\n{page}"
+    if slide_no in (6, 7):
+        label = lead or ("怎麼選" if slide_no == 6 else "再看近一點")
+        return f"段落標籤／SECTION：{label}\n內容／CONTENT：{body}\n{page}"
+    if slide_no == 8:
+        return f"收束句／TAKEAWAY：{body}\n輕提示／SOFT PROMPT：值得的話，先收藏起來。\n{page}"
+    return (
+        "LOGO：Mori Café\n"
+        "品牌句／BRAND LINE：Slow coffee, soft days.\n"
+        "CTA：收藏這組內容，下次需要休息時再回來。\n"
+        "HASHTAG：#MoriCafe #咖啡日常 #慢生活\n"
+        f"{page}"
+    )
+
 
 def image_prompt(industry, topic, slide_no, raw, style):
-    kicker, headline, body = split_copy(raw, slide_no)
     if slide_no == 1:
         layout = style["cover"]
     elif slide_no == 9:
         layout = style["closing"]
     else:
-        layout = style["content"][(slide_no - 2) % len(style["content"])]
+        accent = style["content"][(slide_no - 2) % len(style["content"])]
+        layout = f"{CONTENT_STRUCTURES[slide_no]}; family-specific treatment: {accent}"
+    copy = card_copy(raw, slide_no)
     return (
         f"Generate exactly ONE standalone Instagram carousel card, slide {slide_no} of 9. "
-        "Do not create a collage, contact sheet, grid, multiple cards, phone mockup or surrounding white canvas. "
+        "Output only this single 4:5 card, never nine cards on one canvas, never a phone mockup and never surrounding "
+        "white canvas. A grid, contact-sheet rhythm or multi-frame layout is allowed only when today's named template "
+        "family explicitly requests it; it must still remain one standalone card. "
         "Output aspect ratio 4:5, 1080×1350, edge-to-edge. This card belongs to a coordinated nine-card system for "
         f"{industry}, topic “{topic}”. TEMPLATE FAMILY {style['id']}｜{style['name']} (one of nine deliberately "
         "different template families). Keep Mori Café's brand DNA consistent, but never reuse another day's cover "
@@ -248,14 +293,11 @@ def image_prompt(industry, topic, slide_no, raw, style):
         f"{style['system']}. Shared brand palette: warm cream paper texture, "
         "espresso brown and muted sage, soft morning sunlight, restrained organic shapes, subtle film grain, "
         "consistent 80px safe margin, Traditional-Chinese serif paired with a clean sans-serif. "
-        f"Layout: {layout}. Render this Traditional-Chinese sample copy as visible, professionally typeset text:\n"
-        f"LOGO：Mori Café\n小主題／KICKER：{kicker}\n大主題／HEADLINE：{headline}\n"
-        f"內文／BODY：{body}\nMOOD：今天不必很快，也能好好前進。\n"
-        f"CTA：{'收藏・分享・來店坐坐' if slide_no == 9 else '向左滑看下一張 →'}\n"
-        f"HASHTAG：#MoriCafe #咖啡日常 #慢生活\n頁碼：{slide_no}/9\n"
-        "Keep every component visually separable for later rebuilding in Canva: [LOGO], [KICKER], [HEADLINE], "
-        "[BODY], [MOOD], [CTA], [HASHTAG], [PAGE_NO], [PHOTO] and [DECORATIVE_ELEMENT]. Do not print the square-bracket "
-        "labels themselves; they describe layers. Use real legible Traditional Chinese, not random glyphs or fake text. "
+        f"Layout: {layout}. Render only the copy roles assigned to this slide—do not add Logo, Mood, CTA or hashtags "
+        f"when they are not listed below. Professionally typeset this Traditional-Chinese sample copy:\n{copy}\n"
+        "Keep every visible component visually separable for later rebuilding in Canva, including its text roles, "
+        "page number, photo or diagram and decorative elements. Do not print layer-instruction labels. Use real "
+        "legible Traditional Chinese, not random glyphs or fake text. "
         "No watermark, signature or imitation of an existing brand/designer."
     )
 
@@ -264,9 +306,10 @@ def canva_spec(style):
     return (
         f"CANVA TEMPLATE SPEC｜Template family: {style['name']} ({style['id']}). 1080×1350 px, 9 separate pages. "
         f"Family design grammar: {style['system']}. Safe margin 80 px. Rebuild each generated reference "
-        "with named editable layers: LOGO, KICKER, HEADLINE, BODY, MOOD, CTA, HASHTAG, PAGE_NO, PHOTO and "
-        "DECORATIVE_ELEMENT. Use at most two font families and three brand colors. Build page 1 cover, pages 2–8 "
-        "alternating education/story layouts, page 9 CTA. Use the generated cards only as layout references; replace "
+        "with named editable layers based on what that page actually uses; do not force LOGO, MOOD, CTA or HASHTAG "
+        "onto every page. Use at most two font families and three brand colors. Build page 1 as the hook; pages 2–4 "
+        "establish and explain; page 5 creates visual breathing room; pages 6–7 compare or prove; page 8 recaps; "
+        "page 9 carries the brand and CTA. Use the generated cards only as layout references; replace "
         "their baked text with editable Canva text and replace photography with its own frame. "
         "Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
     )
@@ -323,6 +366,8 @@ def main():
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
     for day_index in range(9):
         day = cycle_start + timedelta(days=day_index)
+        if day.isoformat() in LOCKED_DATES and day.isoformat() in by_date:
+            continue
         by_date[day.isoformat()] = make_brief(day, cycle, day_index)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")

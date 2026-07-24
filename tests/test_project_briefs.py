@@ -58,12 +58,15 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertIn("64% of image width", first_prompt)
         self.assertIn("42% of image width", second_prompt)
 
-    def test_carousel_has_nine_separate_full_copy_prompts(self):
+    def test_carousel_has_nine_separate_story_role_prompts(self):
         brief = carousel.make_brief(date(2026, 7, 23), 0, 0)
         cards = [item for item in brief["items"] if item["type"].startswith("IG 圖組")]
         self.assertEqual(len(cards), 9)
         self.assertTrue(all("exactly ONE" in item["text"] for item in cards))
-        self.assertTrue(all("大主題／HEADLINE" in item["text"] for item in cards))
+        self.assertTrue(all(f"頁碼：{index}/9" in item["text"] for index, item in enumerate(cards, 1)))
+        self.assertIn("大主題／HEADLINE", cards[0]["text"])
+        self.assertIn("停頓句／PAUSE LINE", cards[4]["text"])
+        self.assertIn("CTA：", cards[8]["text"])
         self.assertIn("1080×1350", brief["items"][-1]["text"])
 
     def test_carousel_cycle_uses_nine_distinct_template_families(self):
@@ -77,6 +80,27 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertIn("quiet-arch-editorial", covers[0])
         self.assertIn("menu-modular-grid", covers[1])
         self.assertNotEqual(carousel.DAY_STYLES[0]["cover"], carousel.DAY_STYLES[1]["cover"])
+
+    def test_new_carousels_use_story_roles_not_every_field_on_every_card(self):
+        brief = carousel.make_brief(date(2026, 7, 25), 0, 2)
+        cards = [item["text"] for item in brief["items"] if item["type"].startswith("IG 圖組")]
+        layouts = [
+            text.split("Layout: ", 1)[1].split(". Render only", 1)[0]
+            for text in cards
+        ]
+        self.assertEqual(len(set(layouts)), 9)
+        self.assertIn("LOGO：Mori Café", cards[0])
+        self.assertNotIn("HASHTAG：", cards[4])
+        self.assertNotIn("CTA：", cards[4])
+        self.assertIn("停頓句／PAUSE LINE", cards[4])
+        self.assertIn("HASHTAG：", cards[8])
+
+    def test_capychill_does_not_repeat_before_july_31(self):
+        titles = {
+            capychill.make_brief(date(2026, 7, day))["title"]
+            for day in range(23, 32)
+        }
+        self.assertEqual(len(titles), 9)
 
 
 if __name__ == "__main__":

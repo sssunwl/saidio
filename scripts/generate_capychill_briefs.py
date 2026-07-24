@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/capychill.json"
+LOCKED_DATES = {"2026-07-23", "2026-07-24"}
 
 THEMES = [
     {
@@ -142,6 +143,44 @@ THEMES = [
         "gaze_target": "the moonlit lake outside the tent",
         "light_motion": "the covered lantern glows steadily while moonlight shimmers softly on the lake",
     },
+    {
+        "name": "竹影午後・Notes by the Stream",
+        "mood": "cool, restorative, quietly creative",
+        "palette": "bamboo green, river-stone grey, warm tea brown",
+        "texture": "a shallow stream and soft bamboo leaves",
+        "setting": "a shaded open-air bamboo tea pavilion beside a shallow forest stream",
+        "surface": "a low reclaimed-wood tea table",
+        "focus_x": 38,
+        "crop": "20% to 52%",
+        "story": "a cool afternoon watercolor break beside moving water",
+        "activity": "adding one pale green wash to a small watercolor postcard",
+        "props": "a celadon tea cup, a flat watercolor palette, one bamboo brush rest and a small river stone",
+        "companion": "a tiny red panda asleep on a woven cushion beside the table",
+        "base_motion": "shallow stream ripples travel steadily downstream around fixed stones, while separate bamboo leaf clusters sway gently in one consistent breeze",
+        "primary_motion": "one narrow tea-steam ribbon rises and disperses before reaching the character",
+        "secondary_motion": "a small bamboo wind bell swings once through a short natural arc while its hanging paper remains intact",
+        "gaze_target": "the stream passing beyond the pavilion",
+        "light_motion": "leaf shadows drift slowly across the table without flickering or changing direction",
+    },
+    {
+        "name": "唱片閣樓・One More Side",
+        "mood": "nostalgic, warm, gently absorbed",
+        "palette": "dusty rose, deep walnut, faded teal and amber",
+        "texture": "very soft vinyl room tone with no audible melody",
+        "setting": "a cosy attic listening room with sloped wooden beams, a round window and shelves of unlabelled records",
+        "surface": "a compact walnut listening desk beside a closed-lid record player",
+        "focus_x": 70,
+        "crop": "52% to 84%",
+        "story": "a late-afternoon listening and album-note session",
+        "activity": "drawing one small circle in a blank listening journal while the pencil stays against the paper",
+        "props": "an amber tea mug, one blank record sleeve, a brass desk lamp and a folded pair of soft cloth gloves",
+        "companion": "a tiny grey kitten curled inside an open fabric record crate away from the turntable",
+        "base_motion": "soft clouds pass slowly across the round window and a few dust motes cross the steady amber lamp beam independently",
+        "primary_motion": "one tea-steam ribbon rises vertically and fades before touching the character or lamp",
+        "secondary_motion": "the kitten takes one slow breath and moves one ear once while every record and solid object remains still",
+        "gaze_target": "the changing light at the round attic window",
+        "light_motion": "the window light softens gradually by less than three percent while the desk lamp stays constant",
+    },
 ]
 
 TRACKS = [
@@ -267,7 +306,7 @@ def make_brief(day, target_minutes=30):
         "stream": "capychill",
         "title": f"CapyChill 每日專輯｜{theme['name']}",
         "focus": "10 首 × 約 3 分鐘＝約 30–35 分鐘",
-        "meta": f"固定海邊書桌母場景 · 10 音樂＋1 概念圖＋{video_count} 段微動畫",
+        "meta": f"每日原創場景 · 10 音樂＋1 概念圖＋{video_count} 段微動畫",
         "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。先只生成第 1 條基準驗收片；確認海浪、倒影、角色結構與循環正常後，才生成其餘項目。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。",
         "items": items,
     }
@@ -283,6 +322,8 @@ def main():
     # Refresh yesterday as well so prompt-rule fixes reach the most recent completed album.
     for offset in range(-1, 7):
         day = start + timedelta(days=offset)
+        if day.isoformat() in LOCKED_DATES and day.isoformat() in by_date:
+            continue
         by_date[day.isoformat()] = make_brief(day, target_minutes)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")

@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-23T09:18:00+09:00",
+  "updatedAt": "2026-07-24T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -232,6 +232,64 @@
         }
       ],
       "date": "2026-07-23",
+      "stream": "voiceover"
+    },
+    {
+      "title": "夏日漫旅：跟著雙聲道探索世界角落",
+      "focus": "旅遊導覽",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-TRAVEL-F",
+      "summary": "本套件專為旅遊導覽設計，結合活力女聲與理性男聲雙聲道互動，搭配高品質自然環境音，打造聲歷其境的語音導遊體驗。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "旅遊導覽",
+          "engine": "AI Studio TTS",
+          "voice": "V-TRAVEL-F",
+          "status": "prompt",
+          "text": "[F] 哈囉大家！今天跟著我一起漫步在京都的石板路上吧。聽，那遠處傳來的鐘聲…… [M] 這裡是清水寺，建於公元778年，以懸空的清水舞台結構聞名。 [F] 真的太壯觀了！我們趕快去喝一口音羽瀑布的清泉，許下你的心願吧！"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "旅遊導覽",
+          "engine": "AI Studio TTS",
+          "voice": "V-TRAVEL-F",
+          "status": "prompt",
+          "text": "[F] 哇！這片蔚藍的海景真的太美了！陽光灑在沙灘上，整個人都放鬆了！ [M] 尼斯天使灣，地中海的明珠，終年氣候溫和。 [F] 踩在溫暖的鵝卵石上，海風吹過髮梢，這就是南法的慢活節奏，準備好和我一起跳進海裡了嗎？"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "旅遊導覽",
+          "engine": "AI Studio TTS",
+          "voice": "V-TRAVEL-F",
+          "status": "prompt",
+          "text": "[F] 天空亮起了綠色的魔法！快看，那是極光在跳舞耶！ [M] 冰島的冬季，當夜空晴朗，太陽帶電粒子與大氣碰撞，便會產生這奇幻的光芒。 [F] 雖然冷到手都在抖，但能親眼看見這一幕，真的這輩子值了！快閉上眼睛許願吧！"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "旅遊導覽",
+          "engine": "AI Studio TTS",
+          "voice": "V-TRAVEL-F",
+          "status": "prompt",
+          "text": "[F] 聞到香味了嗎？這裡就是超熱鬧的在地夜市！滿滿的排隊美食，我的胃已經準備好了！ [M] 台灣夜市融合了多元的小吃文化，是體驗在地生活最直接的方式。 [F] 走！先來一份外酥內嫩的臭豆腐，配上冰涼珍奶，簡直是人間美味！"
+        },
+        {
+          "type": "環境音",
+          "purpose": "旅遊導覽",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Ambient sound of a bustling traditional Kyoto street, distant temple bell chiming soft and resonant, gravel footsteps, gentle chatter of tourists in the background, loopable, 45 seconds, no music."
+        },
+        {
+          "type": "環境音",
+          "purpose": "旅遊導覽",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Relaxing ocean waves gently lapping on a pebble beach, mild Mediterranean sea breeze rustling palm leaves, distant seagulls crying, loopable, 60 seconds, natural atmosphere, no music."
+        }
+      ],
+      "date": "2026-07-24",
       "stream": "voiceover"
     }
   ]

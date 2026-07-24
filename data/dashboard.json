@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-23T09:12:00+09:00",
+  "updatedAt": "2026-07-24T09:12:00+09:00",
   "metrics": [
     {
       "label": "進行中製作",
@@ -267,6 +267,135 @@
         }
       ],
       "date": "2026-07-23"
+    },
+    {
+      "title": "Saidio Daily Asset Brief - AI Character Drama Focus (2026-07-24)",
+      "focus": "AI Character Drama",
+      "meta": "All 10 prompts in this asset brief are generated for Gemini R&D purposes. No licensing rights are claimed, and no actual audio generation has been executed.",
+      "summary": "This asset package provides a diverse selection of acoustic-synthetic hybrid cues tailored for AI Character Drama. The tracks balance computational coldness with human vulnerability, leaving ample mid-range frequency headroom for dialogue, narration, and localized sound design. The package consists of 6 core master tracks, 2 alternate arrangements, 1 utility transition cue, and 1 experimental narrative cue.",
+      "prompts": [
+        {
+          "id": 1,
+          "duration": "2:45",
+          "bpm": 80,
+          "mood": "Melancholic, reflective, analytical, intimate",
+          "instrument_constraints": "Minimalist felt piano, warm analog synthesizer pads, delicate generative glitch-percussion, low-frequency sub-bass pulse. No acoustic drums.",
+          "arrangement": "Starts with a solitary piano motif, introducing soft pads at 0:15. Percussion builds a subtle rhythm from 0:30. A melodic shift occurs at 1:00, entering a loopable middle section before stripping down to a solo piano coda from 2:15 to the end.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:00, 1:45, and 2:15. Features a 60-second loopable middle section between 1:00 and 2:00.",
+          "loopable_middle": true,
+          "narration_headroom": "Broad EQ pocket in the high-mid range (1kHz - 4kHz) to accommodate quiet, reflective character dialogue and soft voiceover.",
+          "ending": "Clean decay of a single sustained piano chord and low synthesizer note."
+        },
+        {
+          "id": 2,
+          "duration": "2:50",
+          "bpm": 110,
+          "mood": "Suspenseful, computational, urgent, ticking",
+          "instrument_constraints": "Plucked marimba, mechanical ticking clock synths, swelling cello lines, deep synth-bass drops. No brass, no drums.",
+          "arrangement": "Opens with an isolated ticking motif and marimba. Low cello swells enter at 0:30. The arrangement thickens at 1:00 with deep bass pulses. The tension peaks at 2:00, followed by a gradual reduction of elements to a solo marimba tail.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:00, 1:30, and 2:00. Features a 60-second loopable middle section between 1:00 and 2:00.",
+          "loopable_middle": true,
+          "narration_headroom": "Dynamic range optimized to sit beneath urgent, whispered narration or technical computer system sound effects.",
+          "ending": "Abrupt, clean stop on a final clock-tick accent."
+        },
+        {
+          "id": 3,
+          "duration": "2:35",
+          "bpm": 72,
+          "mood": "Hopeful, fragile, awakening, organic-digital",
+          "instrument_constraints": "Warm acoustic solo cello, crystalline bell-like synthesizer tones, slow-swelling granular string textures. No percussion, no piano.",
+          "arrangement": "Cello-led theme with soft background granular swells starting at 0:15. Synthesizer bells introduce a delicate counter-melody at 0:30. The texture builds in emotional depth at 1:00, stays consistent through 2:00, and thins out to a warm cello resolution.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:00, 1:45, and 2:10. Features a loopable section from 1:00 to 1:50.",
+          "loopable_middle": true,
+          "narration_headroom": "High-mids and presence frequencies are left unoccupied, perfect for heavy dialogue or emotional character monologues.",
+          "ending": "Sustained cello note fading naturally into absolute silence."
+        },
+        {
+          "id": 4,
+          "duration": "2:55",
+          "bpm": 95,
+          "mood": "Tense, investigative, cold, processing",
+          "instrument_constraints": "Plucked acoustic steel-string guitar, metallic synthesizer sweeps, dynamic bowed double bass, sparse digital noise bursts. No electric guitar, no heavy drums.",
+          "arrangement": "Starts with dry, sparse acoustic guitar plucks. Synthesizer sweeps enter at 0:15. A steady bowed double bass pulse defines the rhythm from 0:30. Dynamic variations keep the progression evolving from 1:00 onwards, peaking at 2:20.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:00, 1:45, and 2:20. Features a loopable middle section from 1:00 to 2:00.",
+          "loopable_middle": true,
+          "narration_headroom": "Acoustic guitar panning leaves a wide, clear center image for dialogue and center-panned narration.",
+          "ending": "Clean, ring-out decay of the final acoustic guitar chord."
+        },
+        {
+          "id": 5,
+          "duration": "3:00",
+          "bpm": 85,
+          "mood": "Epiphany, serene, vast, nostalgic",
+          "instrument_constraints": "Warm felt piano, lush ambient synthesizer pads, slow-building orchestral strings. No electronic drums, no digital glitches.",
+          "arrangement": "Soft pad introduction. The piano enters with a simple 3-note progression at 0:15. Gentle strings sweep in at 0:30, building a cinematic wall of sound through 1:15. The arrangement maintains a plateau of emotion before dropping back to solo piano at 2:30.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:15, 2:00, and 2:30. Features a loopable middle section from 1:15 to 2:15.",
+          "loopable_middle": true,
+          "narration_headroom": "Soft-shelled instrumentation allows narration to glide over the top with minimal EQ carving required.",
+          "ending": "Sustained piano and pad resonance fading slowly over 5 seconds."
+        },
+        {
+          "id": 6,
+          "duration": "2:40",
+          "bpm": 120,
+          "mood": "Isolated, algorithmic, repetitive, focused",
+          "instrument_constraints": "Acoustic harp, cold FM synthesizer bells, sub-bass drones, occasional wooden block percussion. No synthetic snare or hi-hats.",
+          "arrangement": "Harp loops open the track. FM bell tones introduce a pointillistic pattern at 0:15. Sub-bass drones enter at 0:30. The middle section adds density with extra harp layers at 1:00, maintaining structure until resolving to a solitary harp motif at 2:10.",
+          "edit_points": "Natural edit points at 0:15, 0:30, 1:00, 1:45, and 2:10. Features a loopable middle section from 1:00 to 2:00.",
+          "loopable_middle": true,
+          "narration_headroom": "Pitched percussion elements are panned hard left and right, preserving the center for clean voiceover delivery.",
+          "ending": "Clean electronic mute on the final harp note."
+        },
+        {
+          "id": 7,
+          "duration": "1:45",
+          "bpm": 80,
+          "mood": "Stark, lonely, highly-focused, intimate",
+          "instrument_constraints": "Solo felt piano only. No synthesizers, no percussion, no strings.",
+          "arrangement": "A stripped-back alternate arrangement of Prompt 1. Focuses strictly on a solo, highly expressive piano performance with natural breath and mechanical key-noise. Melodic and fragile throughout.",
+          "edit_points": "Natural edit points at 0:15, 0:45, and 1:15.",
+          "loopable_middle": false,
+          "narration_headroom": "Extremely high headroom; the stark piano arrangement sits perfectly behind heavy, emotional character dialogue.",
+          "ending": "Natural decay of the final low key, highlighting the physical mechanical release of the piano keys."
+        },
+        {
+          "id": 8,
+          "duration": "2:00",
+          "bpm": 110,
+          "mood": "Stripped, tense, percussive, computational",
+          "instrument_constraints": "Plucked marimba, mechanical ticking clock synths, and sub-bass pulse only. No cello, no melodic synths.",
+          "arrangement": "A stripped-back, rhythm-focused alternate arrangement of Prompt 2. Emphasizes the clinical, mathematical nature of the ticking and marimba patterns, avoiding all warm acoustic strings.",
+          "edit_points": "Natural edit points at 0:30, 1:00, and 1:30.",
+          "loopable_middle": false,
+          "narration_headroom": "Excellent mid-frequency headroom; ideal for technical briefings, computer screen readouts, or complex monologues.",
+          "ending": "Hard stop on the final tick accent."
+        },
+        {
+          "id": 9,
+          "duration": "0:35",
+          "bpm": 90,
+          "mood": "Transitionary, mysterious, resolving, brief",
+          "instrument_constraints": "Swelling electronic pad, low piano octave, single delayed synthetic chime. No drums.",
+          "arrangement": "Designed as a map transition or information-card bed. Opens with a mysterious synth swell, resolves to a solid low piano octave at 0:15, and slowly decays into a single, high, delayed chime note.",
+          "edit_points": "Natural edit point at 0:15.",
+          "loopable_middle": false,
+          "narration_headroom": "Very low density, specifically engineered to support a brief 10 to 15-second narration or transition sound effect.",
+          "ending": "Long, clean, fading delay tail."
+        },
+        {
+          "id": 10,
+          "duration": "2:50",
+          "bpm": 100,
+          "mood": "Disorienting, cognitive-dissolution, surreal, evolving",
+          "instrument_constraints": "Generative analog synthesizer sequences, processed violin glissandos, heavily manipulated field recordings of server room hums. No traditional drums.",
+          "arrangement": "An experimental narrative master track. Opens with a low, unstable server hum. An irregular synth sequence starts at 0:20. Processed violins begin sliding in pitch at 0:40, creating a feeling of AI cognitive dissonance. The intensity shifts constantly, avoiding traditional loops, but maintaining strict edit structural intervals.",
+          "edit_points": "Practical edit points at 0:20, 0:40, 1:20, and 2:10.",
+          "loopable_middle": false,
+          "narration_headroom": "Challenging soundscape; designed for moments of high tension with sparse, fractured dialogue rather than continuous narration.",
+          "ending": "A sudden, clean digital dropout simulating an immediate system shutdown."
+        }
+      ],
+      "date": "2026-07-24"
     }
   ]
 }

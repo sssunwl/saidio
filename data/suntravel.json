@@ -1,6 +1,6 @@
 {
   "stream": "suntravel",
-  "updatedAt": "2026-07-23T09:24:00+09:00",
+  "updatedAt": "2026-07-24T09:24:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -348,6 +348,72 @@
         }
       ],
       "date": "2026-07-23",
+      "stream": "suntravel"
+    },
+    {
+      "title": "追光之旅：精選「日出日落」絕美晨昏光影選片",
+      "focus": "日出日落",
+      "meta": "Flow 每日選片 · 6 Lite + 2 Fast",
+      "summary": "本套素材專為旅遊影片轉場與氛圍營造設計，捕捉晨曦與黃昏時段極致的光影律動，非常適合留白加入感性旁白與字幕。",
+      "items": [
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Wide shot, slow pan left, warm golden light breaking through early morning clouds over a calm ocean beach. Ethereal and serene mood. Sunrise. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Extreme wide shot, slow tilt down, deep orange and purple twilight sky casting silhouettes on jagged mountain peaks. Majestic and quiet mood. Sunset. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Medium shot, gentle drone push forward, morning mist weaving between skyscrapers illuminated by a soft pink and amber sunrise. Modern yet tranquil mood. Early morning. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Tracking shot moving forward along a dusty forest path, sun rays piercing through autumn leaves, creating dancing light flecks. Nostalgic and warm mood. Late afternoon sunset. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Low angle shot, slow crane up, revealing sharp shadows on sweeping desert sand dunes during a crisp violet and gold sunrise. Minimalist and peaceful mood. Sunrise. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Static wide shot, gentle water ripples reflecting a vibrant red and orange sunset over a still mountain lake, with distant pine trees. Reflective and meditative mood. Sunset. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Fast",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Fast · 20點",
+          "status": "prompt",
+          "text": "Cinematic 8-second slow motion tracking shot. A solitary traveler stands on a rocky cliff edge, slowly raising a vintage camera to their eye as the sun breaches the sea horizon, casting a powerful golden glow. Dramatic lens flare, epic and inspiring mood, deliberate slow pacing. No on-screen text, no logos."
+        },
+        {
+          "type": "Flow Fast",
+          "purpose": "日出日落",
+          "engine": "Veo 3.1 Fast · 20點",
+          "status": "prompt",
+          "text": "Cinematic 8-second slow drone orbit. A single colorful hot air balloon gently rises above a vast misty valley, silhouetted against a breathtaking gradient of deep crimson and orange sunset sky. Dreamy, cinematic, awe-inspiring pacing. No on-screen text, no logos."
+        }
+      ],
+      "date": "2026-07-24",
       "stream": "suntravel"
     }
   ]

@@ -133,6 +133,81 @@ CAFE_DAYS = [
     ),
 ]
 
+DAY_STYLES = [
+    {
+        "id": "quiet-arch-editorial",
+        "name": "靜謐拱窗編輯誌",
+        "system": "asymmetrical literary editorial pages, one tall arched photo window, generous cream negative space, fine serif rules and tiny botanical marks",
+        "cover": "a tall arched coffee photograph occupies the right 44%; a quiet left-aligned headline stack sits low on the left; one thin vertical rule and a tiny leaf mark",
+        "content": ["arched photo window on the left with a narrow essay column on the right", "large serif statement above a shallow panoramic photo", "two unequal cream columns separated by a fine vertical rule"],
+        "closing": "small centered logo beneath a large empty arch outline, with the CTA anchored at the bottom",
+    },
+    {
+        "id": "menu-modular-grid",
+        "name": "招牌選品模組",
+        "system": "bold modular menu grid, espresso color blocks, product cut-outs, price-tag-like labels and crisp sans-serif hierarchy",
+        "cover": "a 2×2 modular grid: oversized headline in the upper-left block, three isolated drink cut-outs crossing the remaining blocks, rounded product labels",
+        "content": ["product cut-out centered over two offset color blocks with a side label", "three stacked specification rows with a small circular drink crop", "comparison grid with bold category tabs and one cropped ingredient photo"],
+        "closing": "bold espresso offer block, three small product tokens and an oversized rounded CTA button",
+    },
+    {
+        "id": "coffee-field-notes",
+        "name": "咖啡風味手記",
+        "system": "field-notebook education pages, ruled-paper cues, annotated bean diagrams, underlines, numbered callouts and restrained handwritten accents",
+        "cover": "an open-notebook composition viewed from above; headline on the left page, annotated coffee bean and flavor diagram on the right page",
+        "content": ["numbered observation with an annotated macro photo and hand-drawn arrow", "ruled note card with three circled keywords and a bean diagram", "vertical tasting scale beside a clipped field photograph"],
+        "closing": "a signed field-note page with a circled takeaway, small taped photo and handwritten-style CTA underline",
+    },
+    {
+        "id": "opening-hour-documentary",
+        "name": "開店紀實時間軸",
+        "system": "documentary contact sheet, timestamp labels, cinematic still frames, film perforation details and chronological reading rhythm",
+        "cover": "three horizontal cinematic frames stacked like a contact sheet, a large 07:00 timestamp crossing the frames, headline in a bottom caption strip",
+        "content": ["wide documentary still with timestamp and compact caption underneath", "two-frame before-and-after contact sheet with a time code rail", "vertical timeline connecting one large and two thumbnail frames"],
+        "closing": "final film frame marked 08:00 with a wide caption bar and invitation CTA",
+    },
+    {
+        "id": "mood-menu-bands",
+        "name": "心情選單色帶",
+        "system": "playful mood-selector system, vertical color bands, pill-shaped mood chips, small organic icons and soft color-coded cards",
+        "cover": "five slim vertical mood bands span the page; the headline floats in a cream rounded card across the middle; tiny mood icons sit along the bands",
+        "content": ["one dominant vertical color band with three mood chips and a small drink cut-out", "stack of rounded choice cards with a soft organic marker", "split mood meter with two color fields and a centered recommendation"],
+        "closing": "a fan of mood chips around a central rounded CTA card, without photographic framing",
+    },
+    {
+        "id": "space-guide-map",
+        "name": "座位空間導覽",
+        "system": "architectural guide pages, simplified floor-plan lines, coordinate markers, framed interior views and zone labels",
+        "cover": "a simplified café floor plan fills the background; three numbered location pins connect to small framed interior photos; headline sits in a map legend box",
+        "content": ["one large interior frame paired with a coordinate label and mini floor-plan locator", "two stacked room views linked by a dotted walking path", "zone card with seat icons, light-direction arrow and framed detail photo"],
+        "closing": "mini floor plan with the preferred seat circled, logo as a map key and CTA in a route label",
+    },
+    {
+        "id": "brand-archive-scrapbook",
+        "name": "品牌森林剪貼簿",
+        "system": "warm archival scrapbook, layered torn paper, taped photographs, botanical pressings, date stamps and restrained handwritten notes",
+        "cover": "one rotated archival café photo taped near the upper-left, a torn sage paper headline layer crossing the lower half, pressed leaf and date stamp",
+        "content": ["layered torn-paper story card with one taped archival photo", "large typewritten quote beside a pressed botanical specimen", "two overlapping snapshots with a handwritten margin note"],
+        "closing": "postcard-like closing page with stamp, small logo, pressed leaf and handwritten CTA",
+    },
+    {
+        "id": "faq-conversation-cards",
+        "name": "來店問答卡",
+        "system": "structured question-and-answer interface, alternating speech cards, accordion tabs, clear icons and high-legibility sans typography",
+        "cover": "three oversized staggered question bubbles surround a central headline card; a tiny coffee-cup icon acts as the conversation avatar",
+        "content": ["large question tab on top and a contrasting answer card below", "two alternating speech cards with a small supporting photo circle", "accordion-style information stack with one expanded answer"],
+        "closing": "an open question bubble with the CTA as the reply, plus a small centered logo avatar",
+    },
+    {
+        "id": "campaign-poster",
+        "name": "九日收尾活動海報",
+        "system": "confident campaign poster, full-bleed lifestyle image, oversized condensed headline, date badge, offer block and strong action hierarchy",
+        "cover": "full-bleed sunlit café photograph, oversized headline spanning nearly the full width, a high-contrast date badge and a bottom offer strip",
+        "content": ["full-bleed photo with one oversized typographic statement", "bold half-photo half-offer block with a circular date badge", "large numbered benefit over a monochrome lifestyle crop"],
+        "closing": "poster-like offer lockup with huge CTA, date range, logo and a single clear action block",
+    },
+]
+
 
 def nine_slides(slides, industry):
     """Always return nine useful cards, including a branded closing card."""
@@ -155,26 +230,24 @@ def split_copy(raw, slide_no):
     return lead.upper(), body, "一個小選擇，也能改變今天的節奏。"
 
 
-def image_prompt(industry, topic, slide_no, raw):
+def image_prompt(industry, topic, slide_no, raw, style):
     kicker, headline, body = split_copy(raw, slide_no)
-    layout = [
-        "hero cover: headline in the upper-left, large coffee photograph in the lower-right",
-        "editorial split: photograph on left 42%, text on right 58%",
-        "editorial split: text on left 58%, photograph on right 42%",
-        "number-led layout with a large translucent numeral behind the copy",
-        "centered quote card with a small still-life photograph at the bottom",
-        "three-level information card with a narrow vertical photograph strip",
-        "full-bleed lifestyle photograph with a cream paper text panel",
-        "checklist or conclusion card with a quiet top-right photograph",
-        "brand closing card with centered CTA and small logo lockup",
-    ][slide_no - 1]
+    if slide_no == 1:
+        layout = style["cover"]
+    elif slide_no == 9:
+        layout = style["closing"]
+    else:
+        layout = style["content"][(slide_no - 2) % len(style["content"])]
     return (
         f"Generate exactly ONE standalone Instagram carousel card, slide {slide_no} of 9. "
         "Do not create a collage, contact sheet, grid, multiple cards, phone mockup or surrounding white canvas. "
         "Output aspect ratio 4:5, 1080×1350, edge-to-edge. This card belongs to a coordinated nine-card system for "
-        f"{industry}, topic “{topic}”. Visual system: editorial lifestyle photography, warm cream paper texture, "
+        f"{industry}, topic “{topic}”. TEMPLATE FAMILY {style['id']}｜{style['name']} (one of nine deliberately "
+        "different template families). Keep Mori Café's brand DNA consistent, but never reuse another day's cover "
+        "grid, photo mask, information rhythm or decorative device. Family-specific design system: "
+        f"{style['system']}. Shared brand palette: warm cream paper texture, "
         "espresso brown and muted sage, soft morning sunlight, restrained organic shapes, subtle film grain, "
-        "consistent 80px safe margin. Use the same brand world as the other cards but make this composition distinct. "
+        "consistent 80px safe margin, Traditional-Chinese serif paired with a clean sans-serif. "
         f"Layout: {layout}. Render this Traditional-Chinese sample copy as visible, professionally typeset text:\n"
         f"LOGO：Mori Café\n小主題／KICKER：{kicker}\n大主題／HEADLINE：{headline}\n"
         f"內文／BODY：{body}\nMOOD：今天不必很快，也能好好前進。\n"
@@ -187,9 +260,10 @@ def image_prompt(industry, topic, slide_no, raw):
     )
 
 
-def canva_spec():
+def canva_spec(style):
     return (
-        "CANVA TEMPLATE SPEC｜1080×1350 px, 9 separate pages. Safe margin 80 px. Rebuild each generated reference "
+        f"CANVA TEMPLATE SPEC｜Template family: {style['name']} ({style['id']}). 1080×1350 px, 9 separate pages. "
+        f"Family design grammar: {style['system']}. Safe margin 80 px. Rebuild each generated reference "
         "with named editable layers: LOGO, KICKER, HEADLINE, BODY, MOOD, CTA, HASHTAG, PAGE_NO, PHOTO and "
         "DECORATIVE_ELEMENT. Use at most two font families and three brand colors. Build page 1 cover, pages 2–8 "
         "alternating education/story layouts, page 9 CTA. Use the generated cards only as layout references; replace "
@@ -200,6 +274,7 @@ def canva_spec():
 
 def make_brief(day, cycle, day_index):
     industry = INDUSTRIES[cycle % len(INDUSTRIES)]
+    style = DAY_STYLES[day_index]
     if cycle == 0:
         topic, slides = CAFE_DAYS[day_index]
     else:
@@ -222,19 +297,19 @@ def make_brief(day, cycle, day_index):
             "purpose": topic,
             "engine": "ChatGPT Images",
             "status": "prompt",
-            "text": image_prompt(industry, topic, index + 1, slide),
+            "text": image_prompt(industry, topic, index + 1, slide, style),
         }
         for index, slide in enumerate(slides)
     ]
     return {
         "date": day.isoformat(),
         "stream": "carousel",
-        "title": f"IG Carousel 九日包｜{industry} Day {day_index + 1}",
+        "title": f"IG Carousel 九日包｜{industry} Day {day_index + 1}｜{style['name']}",
         "focus": topic,
-        "meta": "9 張獨立 4:5 圖卡 · 每張一條 Prompt＋完整範文排版",
-        "summary": f"本輪 9 天鎖定「{industry}」。每一天都有 9 張分開生成、視覺一致但版式不同的完整圖卡，不產生九宮格。",
+        "meta": f"第 {day_index + 1}/9 套｜{style['name']} · 9 張獨立 4:5 圖卡",
+        "summary": f"本輪 9 天鎖定「{industry}」，九天使用九套不重複設計系統。今天是「{style['name']}」：同品牌色彩、字體與 Logo 語言，但封面、圖片框、資訊層級及裝飾均與其他天不同。",
         "items": image_items + [
-            {"type": "Canva 拆件規格", "purpose": "可販售模板", "engine": "Canva Pro", "status": "prompt", "text": canva_spec()},
+            {"type": "Canva 拆件規格", "purpose": f"可販售模板｜{style['name']}", "engine": "Canva Pro", "status": "prompt", "text": canva_spec(style)},
         ],
     }
 

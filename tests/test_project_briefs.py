@@ -66,6 +66,18 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertTrue(all("大主題／HEADLINE" in item["text"] for item in cards))
         self.assertIn("1080×1350", brief["items"][-1]["text"])
 
+    def test_carousel_cycle_uses_nine_distinct_template_families(self):
+        self.assertEqual(len({style["id"] for style in carousel.DAY_STYLES}), 9)
+        briefs = [carousel.make_brief(date(2026, 7, 23), 0, index) for index in range(9)]
+        covers = [
+            next(item["text"] for item in brief["items"] if item["type"] == "IG 圖組・第 1 張")
+            for brief in briefs
+        ]
+        self.assertEqual(len(set(covers)), 9)
+        self.assertIn("quiet-arch-editorial", covers[0])
+        self.assertIn("menu-modular-grid", covers[1])
+        self.assertNotEqual(carousel.DAY_STYLES[0]["cover"], carousel.DAY_STYLES[1]["cover"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -25,16 +25,16 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertEqual(len(music), 10)
         self.assertEqual(len(videos), 6)
         self.assertTrue(all("Veo 3.1 Lite" in item["engine"] for item in videos))
-        self.assertTrue(all("do not create rain" in item["text"] for item in videos))
+        self.assertTrue(all("Preserve the exact weather shown in the reference" in item["text"] for item in videos))
         concept = next(item for item in brief["items"] if item["type"] == "專輯概念圖")
         self.assertIn("DUAL FORMAT", concept["text"])
         self.assertTrue(all("9:16 crop corridor" in item["text"] for item in videos))
         self.assertTrue(all("MANDATORY BASE ENVIRONMENT MOTION" in item["text"] for item in videos))
-        self.assertTrue(all("ocean is visibly alive" in item["text"] for item in videos))
-        self.assertEqual(videos[0]["type"], "影片 Prompt・基準驗收・海面與呼吸")
+        self.assertTrue(all("ocean wave bands" in item["text"] for item in videos))
+        self.assertEqual(videos[0]["type"], "影片 Prompt・基準驗收・場景動態")
         rainy = capychill.make_brief(date(2026, 7, 24))
         rainy_videos = [item for item in rainy["items"] if item["type"].startswith("影片 Prompt")]
-        self.assertTrue(all("must never rise" in item["text"] for item in rainy_videos))
+        self.assertTrue(all("rain trails move continuously downward" in item["text"] for item in rainy_videos))
 
     def test_capychill_video_count_tracks_target_length(self):
         self.assertEqual(
@@ -53,8 +53,10 @@ class ProjectBriefsTest(unittest.TestCase):
         second_prompt = next(item["text"] for item in second["items"] if item["type"] == "專輯概念圖")
         self.assertIn("gratitude note", first_prompt)
         self.assertIn("index cards", second_prompt)
-        self.assertIn("light oatmeal cushion", first_prompt)
-        self.assertIn("dark moss knitted cushion", second_prompt)
+        self.assertIn("seaside writing alcove", first_prompt)
+        self.assertIn("glass greenhouse", second_prompt)
+        self.assertIn("64% of image width", first_prompt)
+        self.assertIn("42% of image width", second_prompt)
 
     def test_carousel_has_nine_separate_full_copy_prompts(self):
         brief = carousel.make_brief(date(2026, 7, 23), 0, 0)

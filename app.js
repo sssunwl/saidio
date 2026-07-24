@@ -144,7 +144,7 @@ function groupedItems(b) {
     `<button class="group-tab" data-group-toggle="${b.id}-${groupIndex}">${name}<b>${items.length}</b></button>`
   ).join("");
   const panels = [...groups.entries()].map(([name, items], groupIndex) =>
-    `<section class="item-group" id="group-${b.id}-${groupIndex}" hidden><div class="item-group-title"><strong>${name}</strong><span>選一項查看或複製</span></div>${items.map(({ it, index }) => itemCard(it, b, index)).join("")}</section>`
+    `<section class="item-group" id="group-${b.id}-${groupIndex}" hidden><div class="item-group-title"><div><strong>${name}</strong><span>選一項查看或複製</span></div><button class="mini" data-copy-group="${b.id}" data-group-index="${groupIndex}">複製${name.replace(/^[^ ]+ /, "")}全部</button></div>${items.map(({ it, index }) => itemCard(it, b, index)).join("")}</section>`
   ).join("");
   return `<div class="group-browser"><nav class="group-tabs">${tabs}</nav><div class="group-content"><div class="group-placeholder">先選擇一個製作分類</div>${panels}</div></div>`;
 }
@@ -156,7 +156,7 @@ function briefBlock(b) {
     <div class="sc-head">
       <span class="sc-badge">${s.emoji} ${s.label}</span>
       <div class="sc-title"><strong>${b.title}</strong><span>${b.focus} · ${b.date}</span></div>
-      <div class="sc-actions"><button class="mini" data-copy-all="${b.id}">複製全部</button><button class="mini" data-toggle="${b.id}">${open ? "收起" : `開啟 ${b.items.length}`}</button></div>
+      <div class="sc-actions"><button class="mini" data-toggle="${b.id}">${open ? "收起" : `開啟 ${b.items.length}`}</button></div>
     </div>
     <div class="sc-body" ${open ? "" : "hidden"}>
       <p class="sc-summary">${b.summary || ""}</p>
@@ -200,14 +200,23 @@ function wireCards() {
     await navigator.clipboard.writeText(copy);
     btn.textContent = "已複製"; setTimeout(() => btn.textContent = "單獨複製", 1200);
   });
-  document.querySelectorAll("[data-copy-all]").forEach(btn => btn.onclick = async () => {
-    const b = briefs.find(x => x.id === btn.dataset.copyAll);
-    const items = b.items.map((it, index) =>
-      `【${index + 1}. ${it.type}】\n用途：${it.purpose || ""}\n使用工具：${it.voice || it.engine || ""}\n\nPROMPT：\n${it.text}`
+  document.querySelectorAll("[data-copy-group]").forEach(btn => btn.onclick = async () => {
+    const b = briefs.find(x => x.id === btn.dataset.copyGroup);
+    const groups = new Map();
+    b.items.forEach((it, index) => {
+      const name = groupName(b.stream, it);
+      if (!groups.has(name)) groups.set(name, []);
+      groups.get(name).push({ it, index });
+    });
+    const [groupLabel, groupItems] = [...groups.entries()][Number(btn.dataset.groupIndex)];
+    const items = groupItems.map(({ it, index }, position) =>
+      `【${position + 1}. ${it.type}】\n用途：${it.purpose || ""}\n使用工具：${it.voice || it.engine || ""}\n\nPROMPT：\n${it.text}`
     ).join("\n\n────────────────────\n\n");
-    const copy = `日期：${b.date}\n當天主題：${b.title}\n主題重點：${b.focus}\n內容數量：${b.items.length}\n\n${items}`;
+    const copy = `日期：${b.date}\n當天主題：${b.title}\n主題重點：${b.focus}\n分類：${groupLabel}\n內容數量：${groupItems.length}\n\n${items}`;
     await navigator.clipboard.writeText(copy);
-    btn.textContent = "全部已複製"; setTimeout(() => btn.textContent = "複製全部", 1200);
+    const original = btn.textContent;
+    btn.textContent = "此分類已複製";
+    setTimeout(() => btn.textContent = original, 1200);
   });
 }
 

@@ -15,6 +15,11 @@ THEMES = [
         "palette": "peach sunset, muted ocean blue, warm walnut",
         "weather": "clear golden-hour sky and calm sea",
         "texture": "soft sea breeze and distant water ambience",
+        "story": "a quiet sunset journaling session before evening",
+        "activity": "writing a short gratitude note in an open cream notebook",
+        "desk_dressing": "a dark ceramic coffee mug, one small shell paperweight, a folded postcard and a slim sandalwood incense holder",
+        "companion": "the same tiny ginger cat curled in a light oatmeal cushion",
+        "motion_design": "ocean wave bands, golden water reflection, coffee steam, sandalwood smoke, curtain edge and the cat's breathing",
     },
     {
         "name": "雨日專注・Rain on the Glass",
@@ -22,6 +27,11 @@ THEMES = [
         "palette": "deep blue-grey rain, amber desk lamp, dark green plants",
         "weather": "steady rain across the same window",
         "texture": "soft rain on glass and low room tone",
+        "story": "a sheltered deep-focus work session during steady rain",
+        "activity": "reviewing two handwritten index cards beside an open notebook, pencil resting safely on the page",
+        "desk_dressing": "a deep green tea mug, a small brass focus timer, two cream index cards and a compact cedar incense holder",
+        "companion": "the same tiny ginger cat sleeping in a dark moss knitted cushion",
+        "motion_design": "downward rain trails, darker ocean waves, tea steam, cedar smoke, two wet plant leaves and the cat's breathing",
     },
     {
         "name": "清晨第一杯・First Light, First Cup",
@@ -29,6 +39,11 @@ THEMES = [
         "palette": "pale cream dawn, sage green, honey wood",
         "weather": "misty early morning over the same bay",
         "texture": "distant gulls used sparingly and a quiet kettle",
+        "story": "a fresh morning planning ritual",
+        "activity": "writing a simple three-item plan on a clean notebook page",
+        "desk_dressing": "a pale blue mug, a tiny breakfast plate, a wooden calendar block without readable text and a citrus incense holder",
+        "companion": "the same tiny ginger cat dozing in a soft sage cushion",
+        "motion_design": "morning mist, small waves, kettle steam, citrus smoke, curtain edge and the cat's breathing",
     },
     {
         "name": "深夜讀寫・Midnight Pages",
@@ -36,6 +51,11 @@ THEMES = [
         "palette": "navy night, warm amber pool of light, soft moon silver",
         "weather": "clear moonlit night outside the same window",
         "texture": "subtle night room tone and faint sea wash",
+        "story": "a calm midnight reading and annotation session",
+        "activity": "reading an open book with one paw resting beside a fountain pen",
+        "desk_dressing": "a navy tea mug, two neatly stacked books, a brass bookmark and a narrow hinoki incense holder",
+        "companion": "the same tiny ginger cat asleep under a small indigo blanket",
+        "motion_design": "moonlit waves, distant town lights, tea steam, hinoki smoke, one page corner and the cat's breathing",
     },
     {
         "name": "週末慢拍・A Very Slow Sunday",
@@ -43,6 +63,11 @@ THEMES = [
         "palette": "soft terracotta, cream, sun-washed blue",
         "weather": "bright lazy afternoon at the same seaside room",
         "texture": "light breeze, leaves and quiet café-like room tone without voices",
+        "story": "an easy Sunday sketching break",
+        "activity": "making a tiny plant sketch in the notebook",
+        "desk_dressing": "a cream cocoa mug, one small pastry plate, a blank postcard and a terracotta incense holder",
+        "companion": "the same tiny ginger cat stretched loosely in a sun-warmed beige cushion",
+        "motion_design": "bright sea ripples, plant leaves, cocoa steam, terracotta incense smoke, curtain edge and the cat's breathing",
     },
     {
         "name": "陰天留白・Clouds Have Time",
@@ -50,6 +75,11 @@ THEMES = [
         "palette": "pearl grey, faded blue, warm natural wood",
         "weather": "slow overcast clouds above the same bay",
         "texture": "soft wind and distant rolling water",
+        "story": "a spacious reset with no pressure to finish",
+        "activity": "leaving a mostly blank notebook open while holding the pencil still",
+        "desk_dressing": "a grey-blue herbal tea mug, one smooth stone, a folded linen cloth and a pale wood incense holder",
+        "companion": "the same tiny ginger cat tucked into a pearl-grey cushion",
+        "motion_design": "overcast clouds, rolling water, herbal steam, pale incense smoke, linen edge and the cat's breathing",
     },
     {
         "name": "月光晚安・Moonlit Capy",
@@ -57,6 +87,11 @@ THEMES = [
         "palette": "indigo, moon cream, very low amber light",
         "weather": "quiet moon and sparse stars over the same sea",
         "texture": "slow waves and extremely soft night ambience",
+        "story": "a gentle final note before sleep",
+        "activity": "writing one last short line before closing the notebook",
+        "desk_dressing": "a moon-cream warm milk mug, a closed storybook, a soft cloth bookmark and a lavender incense holder",
+        "companion": "the same tiny ginger cat tucked under a moon-cream miniature blanket",
+        "motion_design": "slow moonlit waves, sparse stars, warm milk steam, lavender smoke, soft blanket breathing and one tiny ear twitch",
     },
 ]
 
@@ -114,11 +149,13 @@ def image_prompt(theme):
         "left toward the same notebook; the "
         "same large window, desk lamp, mug, shelves and plants stay in identical positions. Camera is locked, "
         f"eye-level, 35mm-equivalent wide view. Today’s album mood is {theme['name']}; use {theme['palette']} "
-        f"with {theme['weather']}. Calm original illustration, clean natural capybara anatomy. No text, letters, "
+        f"with {theme['weather']}. TODAY'S DISTINCT STORY: {theme['story']}. The capybara is {theme['activity']}. "
+        f"Keep the signature furniture and camera geometry fixed, but dress the desk specifically with "
+        f"{theme['desk_dressing']}. Include {theme['companion']}. Plan these visible animation opportunities: "
+        f"{theme['motion_design']}. Do not reuse another day's cup colour, loose props, notebook state or companion "
+        "bedding. Calm original illustration, clean natural capybara anatomy. No text, letters, "
         "numbers, logos, watermark, signature, sparkle icon or fake signage. Output one clean reference image, "
-        "not a collage. Design three to five distinct animation opportunities into the still image without clutter: "
-        "mug steam, curtain edge, two or three plant leaves, a thin incense stick with a small safe holder, and "
-        "one tiny sleeping companion animal in a fixed bed. Each prop must have a clear resting position "
+        "not a collage. Each prop must have a clear resting position "
         "and must never compete with the capybara. COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
         "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
         "The intended portrait crop spans approximately 44% to 76% of the original image width, centred near 60%. "
@@ -206,13 +243,14 @@ def main():
     if target_minutes not in VIDEO_COUNT_BY_MINUTES:
         raise ValueError("CAPY_TARGET_MINUTES must be 30, 45 or 60")
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
-    for offset in range(7):
+    # Refresh yesterday as well so prompt-rule fixes reach the most recent completed album.
+    for offset in range(-1, 7):
         day = start + timedelta(days=offset)
         by_date[day.isoformat()] = make_brief(day, target_minutes)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    print(f"CapyChill {target_minutes}-minute queue ready: {start} through {start + timedelta(days=6)}")
+    print(f"CapyChill {target_minutes}-minute queue ready: {start - timedelta(days=1)} through {start + timedelta(days=6)}")
 
 
 if __name__ == "__main__":

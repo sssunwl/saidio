@@ -46,6 +46,16 @@ class ProjectBriefsTest(unittest.TestCase):
             10,
         )
 
+    def test_consecutive_concepts_change_story_not_only_weather(self):
+        first = capychill.make_brief(date(2026, 7, 23))
+        second = capychill.make_brief(date(2026, 7, 24))
+        first_prompt = next(item["text"] for item in first["items"] if item["type"] == "專輯概念圖")
+        second_prompt = next(item["text"] for item in second["items"] if item["type"] == "專輯概念圖")
+        self.assertIn("gratitude note", first_prompt)
+        self.assertIn("index cards", second_prompt)
+        self.assertIn("light oatmeal cushion", first_prompt)
+        self.assertIn("dark moss knitted cushion", second_prompt)
+
     def test_carousel_has_nine_separate_full_copy_prompts(self):
         brief = carousel.make_brief(date(2026, 7, 23), 0, 0)
         cards = [item for item in brief["items"] if item["type"].startswith("IG 圖組")]

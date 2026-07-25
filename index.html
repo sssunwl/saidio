@@ -1,69 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#101512" />
-    <title>SAIDIO — 創作營運台</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="grain"></div>
-    <header class="topbar">
-      <a class="brand" href="#overview"><span class="mark">S</span><span>SAIDIO</span></a>
-      <p class="strap">精進創作，不被工具定義。</p>
-      <div class="live"><i></i> 系統運行中</div>
-    </header>
-    <main>
-      <section class="hero" id="overview">
-        <div><p class="eyebrow">創作素材營運台 / 2026</p><h1>做好下一個<br><em>值得看的作品。</em></h1></div>
-        <div class="hero-note"><span>最新素材</span><strong id="today-focus">載入中…</strong><p id="today-meta"></p></div>
-      </section>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0b1a">
+  <title>SAIDIO — 創作素材營運台</title>
+  <meta name="description" content="SAIDIO 每日 prompt 工廠與統一素材庫。五條產線的今日任務、歷史歸檔與製作策略。">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <span class="blob b3"></span><span class="blob b4"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
 
-      <!-- 生成工具連結列（固定） -->
-      <section class="toolbar" id="tools" aria-label="生成工具">
-        <details>
-          <summary><span>生成工具與捷徑</span><small>需要時展開</small></summary>
-          <div class="tool-links">
-          <a href="https://labs.google/fx/" target="_blank" rel="noopener"><b>🎵 音樂</b><span>Gemini / Google MusicFX</span></a>
-          <a href="https://aistudio.google.com/generate-speech" target="_blank" rel="noopener"><b>🗣️ 旁白 TTS</b><span>AI Studio Generate Speech</span></a>
-          <a href="https://elevenlabs.io" target="_blank" rel="noopener"><b>🎙️ 固定聲線</b><span>ElevenLabs</span></a>
-          <a href="https://flow.google/" target="_blank" rel="noopener"><b>🎬 每日 Flow 選片</b><span>6 Lite＋2 Fast 提示詞；選 5＋1 生成</span></a>
-          <a href="https://flow.google/" target="_blank" rel="noopener"><b>🖼️ 字卡圖</b><span>Imagen · Google Flow</span></a>
-          <a href="https://www.canva.com" target="_blank" rel="noopener"><b>🖼️ 字卡排版</b><span>Canva</span></a>
-          <a href="#briefs"><b>🦫 CapyChill</b><span>每日 10 首＋概念圖＋影片 Prompt</span></a>
-          <a href="#briefs"><b>📚 IG Carousel</b><span>每 9 天一個行業模板包</span></a>
-          </div>
-        </details>
-      </section>
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">S</span>
+      <div class="brand-text">
+        <strong>SAIDIO</strong>
+        <span class="brand-sub">創作素材營運台</span>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="主要章節">
+      <button class="tab active" data-view="today">今天</button>
+      <button class="tab" data-view="lines">產線</button>
+      <button class="tab" data-view="archive">歸檔</button>
+      <button class="tab" data-view="strategy">策略</button>
+    </nav>
+    <div class="topbar-meta">
+      <span class="dot" aria-hidden="true"></span>
+      <span id="updated-at">載入中…</span>
+    </div>
+  </header>
 
-      <nav class="tabs" aria-label="營運台章節">
-        <a href="#briefs" data-view-link="briefs">每日素材</a><a href="#calendar" data-view-link="calendar">年曆</a><a href="#projects" data-view-link="projects">專案</a><a href="#radar" data-view-link="radar">趨勢雷達</a>
-      </nav>
-
-      <section class="view active" id="briefs" data-view="briefs">
-        <div class="filters" id="filters" aria-label="素材過濾"><div class="chip-row" id="stream-chips"></div></div>
-        <div class="metric-row" id="metrics"></div>
-        <div class="split">
-          <article class="panel brief-panel"><div class="panel-head"><p class="eyebrow" id="briefs-eyebrow">最新一批素材</p></div><div id="today-cards" class="today-cards"></div></article>
-          <aside class="panel notification-panel"><p class="eyebrow">通知紀錄</p><div id="notifications"></div></aside>
+  <main>
+    <!-- 今天:唯一的「我今天要生什麼」清單 -->
+    <section class="view active" id="view-today">
+      <div class="hero glass">
+        <div class="hero-copy">
+          <p class="eyebrow">今日任務</p>
+          <h1 id="today-date">—</h1>
+          <p class="muted" id="today-summary">正在載入今天的素材簡報…</p>
         </div>
-      </section>
+        <div class="hero-stats" id="today-stats"></div>
+      </div>
+      <div class="chip-row" id="today-filter" aria-label="產線過濾"></div>
+      <div id="today-groups" class="stack"></div>
+    </section>
 
-      <section class="view panel calendar-panel" id="calendar" data-view="calendar">
-        <div class="panel-head"><div><p class="eyebrow">素材歸檔</p><h2>年度總覽</h2></div><div class="month-controls"><button id="prev-month" aria-label="上一個月">←</button><strong id="month-label"></strong><button id="next-month" aria-label="下一個月">→</button></div></div>
-        <div class="calendar-legend" id="calendar-legend"></div>
-        <div class="calendar-workspace">
-          <div class="calendar-left"><div class="calendar-wrap"><div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div id="calendar-grid" class="calendar-grid"></div></div></div>
-          <div class="prompt-browser"><aside class="folder-sidebar"><p class="eyebrow">Prompt 文件夾</p><strong id="folder-date">先在年曆選日期</strong><div id="archive-folders" class="archive-folders"></div></aside><div id="archive-detail" class="archive-detail"><div class="empty-state">選擇左側日期，再選一個資料夾查看 Prompt。</div></div></div>
+    <!-- 產線:每條線的規則與歷史 -->
+    <section class="view" id="view-lines">
+      <div class="section-head">
+        <div><p class="eyebrow">五條產線</p><h2>每條線的規則與產出歷史</h2></div>
+        <button id="lines-back" class="mini glass" hidden>← 全部產線</button>
+      </div>
+      <div class="line-grid" id="line-grid"></div>
+      <div id="line-detail" class="stack" hidden></div>
+    </section>
+
+    <!-- 歸檔:年曆 → 那天生了什麼 -->
+    <section class="view" id="view-archive">
+      <div class="section-head">
+        <div><p class="eyebrow">素材歸檔</p><h2>依日期查找</h2></div>
+        <div class="month-nav glass">
+          <button id="prev-month" aria-label="上個月">←</button>
+          <strong id="month-label"></strong>
+          <button id="next-month" aria-label="下個月">→</button>
         </div>
-      </section>
+      </div>
+      <div class="archive-layout">
+        <div class="glass panel calendar-card">
+          <div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div id="calendar-grid" class="calendar-grid"></div>
+          <div class="legend" id="calendar-legend"></div>
+        </div>
+        <div class="glass panel" id="archive-detail">
+          <div class="empty">在左側年曆選一天,查看當天所有產線的 Prompt。</div>
+        </div>
+      </div>
+    </section>
 
-      <section class="view panel projects-panel" id="projects" data-view="projects"><div class="panel-head"><div><p class="eyebrow">製作組合</p><h2 id="projects-title">進行中的專案</h2></div><button id="projects-back" class="mini" hidden>← 返回全部專案</button></div><div id="projects-grid" class="projects-grid"></div><div id="project-detail" class="project-detail" hidden></div></section>
+    <!-- 策略:專案 + 訊號 + 指標 -->
+    <section class="view" id="view-strategy">
+      <div class="section-head">
+        <div><p class="eyebrow">製作策略</p><h2>專案進度與每日訊號</h2></div>
+      </div>
+      <div class="metric-row" id="metrics"></div>
+      <div class="strategy-layout">
+        <div class="glass panel">
+          <p class="eyebrow">進行中的專案</p>
+          <div id="projects-grid" class="projects-grid"></div>
+        </div>
+        <div class="glass panel">
+          <p class="eyebrow">SEANRADAR / 訊號</p>
+          <div id="radar-list" class="radar-list"></div>
+          <blockquote>精進創作,<br>不被工具定義。</blockquote>
+          <p class="muted small">每個訊號都要先變成製作問題,而不是自動變成影片。</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-      <section class="view split bottom" id="radar" data-view="radar"><article class="panel"><div class="panel-head"><div><p class="eyebrow">SEANRADAR</p><h2>每日與每週訊號</h2></div><span class="status-chip">靈感收集</span></div><div id="radar-list" class="radar-list"></div></article><article class="panel"><p class="eyebrow">工作原則</p><blockquote>「精進創作，<br>不被工具定義。」</blockquote><p class="muted">每個訊號都要先變成製作問題，而不是自動變成影片：確認權利、關聯性及觀眾真正得到的價值，才進入製作。</p></article></section>
-    </main>
-    <footer>SAIDIO / SUNIVERSE 創作層 · <span id="updated-at"></span></footer>
-    <script src="app.js"></script>
-  </body>
+  <footer>SAIDIO / SUNIVERSE 創作層 · <span id="footer-updated"></span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
 </html>

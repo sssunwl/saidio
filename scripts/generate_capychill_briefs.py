@@ -2,8 +2,20 @@
 """Maintain a rolling seven-day CapyChill album and fixed-scene production queue."""
 import json
 import os
+import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import (  # noqa: E402
+    CAPY_MUSIC_RULES,
+    IMAGE_NEGATIVE,
+    IMAGE_RULES,
+    MUSIC_NEGATIVE,
+    VIDEO_NEGATIVE,
+    VIDEO_RULES,
+    bundle,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/capychill.json"
@@ -217,60 +229,59 @@ def motion_variants(theme):
 def music_prompt(theme, index, track):
     title, instruments, motif = track
     bpm = 70 + (index % 4) * 2
-    return (
+    prompt = (
         f'Track {index + 1}/10 — "{title}". Create a 3:00–3:30 instrumental lo-fi track for one '
         f'cohesive 30-minute CapyChill album titled "{theme["name"]}". Mood: {theme["mood"]}. '
         f'{bpm} BPM, 4/4, {instruments}, warm restrained bass and soft brushed or tape-muted drums. '
-        f'Composition: {motif}; introduce a small variation after 60 seconds, a calm B section near '
-        f'1:30, then return to the main motif. Mix for long listening: no vocals, no spoken words, '
-        f'no dramatic drops, no piercing highs, no recognizable melody, no artist imitation. '
-        f'Leave gentle headroom and end cleanly with a 4–6 second natural tail. Environmental texture: '
-        f'{theme["texture"]}, very low in the mix. This track must feel related to the other nine tracks '
-        f'without reusing the same lead melody.'
+        f'Composition: {motif}; state the first phrase inside the opening 15 seconds, introduce a small '
+        f'variation after 60 seconds, hold a calm loopable B section from about 1:30 to 2:15, then '
+        f'return to the main motif and resolve. Mix for long listening at low volume, with the stereo '
+        f'centre kept open. Environmental texture: {theme["texture"]}, very low in the mix and never '
+        f'louder than the bass.'
     )
+    return bundle(prompt, MUSIC_NEGATIVE, CAPY_MUSIC_RULES)
 
 
 def image_prompt(theme):
-    return (
+    prompt = (
         "Create one high-resolution 16:9 hand-painted storybook master frame for CapyChill, ideally 3840×2160. "
         "Preserve only the channel identity: the same warm-brown capybara design, cream headphones, relaxed eyes, "
         "natural anatomy and hand-painted storybook rendering. Do not reuse another day's room, furniture layout or "
         f"character position. TODAY'S ORIGINAL SETTING: {theme['setting']}. Place the capybara at {theme['surface']} "
         f"with the centre of its head near {theme['focus_x']}% of image width. Camera is locked, eye-level and calm, "
         f"using a 35mm-equivalent wide view appropriate to this setting. Today’s album is {theme['name']}; use "
-        f"{theme['palette']}. TODAY'S STORY: {theme['story']}. The capybara is {theme['activity']}. Include these "
-        f"scene-specific props: {theme['props']}. Include {theme['companion']}. Make the following physical motion "
-        f"opportunities clearly visible and spatially separated: {theme['base_motion']}; {theme['primary_motion']}; "
-        f"{theme['secondary_motion']}. Calm original illustration, clean natural capybara anatomy. No text, letters, "
-        "numbers, logos, watermark, signature, sparkle icon or fake signage. Output one clean reference image, "
-        "not a collage. Each prop must have a clear resting position "
-        "and must never compete with the capybara. COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
+        f"{theme['palette']}. TODAY'S STORY: {theme['story']}. The capybara is {theme['activity']}. "
+        "PAW CONSTRUCTION: draw both front paws in full view with separated toes, visible knuckles and a clear "
+        "shadow gap between paw and surface, so the animation stage can move them; do not simplify them into "
+        "rounded mittens, and do not tuck, crop or bury a paw under fur, sleeve or prop. "
+        f"Include these scene-specific props: {theme['props']}. Include {theme['companion']}. Make the following "
+        f"physical motion opportunities clearly visible and spatially separated: {theme['base_motion']}; "
+        f"{theme['primary_motion']}; {theme['secondary_motion']}. Calm original illustration, clean natural capybara "
+        "anatomy. Each prop must have a clear resting position and must never compete with the capybara. "
+        "COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
         "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
         f"The intended portrait crop spans approximately {theme['crop']} of the original width, centred near "
-        f"{theme['focus_x']}%. Do not draw crop guides. Inside that corridor keep the entire head, headphones, primary "
+        f"{theme['focus_x']}%. Inside that corridor keep the entire head, headphones, both front paws and the primary "
         "paw action, main working surface, companion, one key prop and enough of today's environment to tell where the "
-        "scene takes place. Keep smoke, steam and moving objects in independent clear air paths that never cross the "
-        "character silhouette or other solid objects. Leave breathing room above the head and below the main action "
-        "for vertical-platform UI overlays. This image will become an image-to-video reference, so use clean separable "
-        "visual layers for the character, companion, foreground props, moving environmental elements and background."
+        "scene takes place. Leave breathing room above the head and below the main action for vertical-platform UI "
+        "overlays."
     )
+    return bundle(prompt, IMAGE_NEGATIVE, IMAGE_RULES)
 
 
 def video_prompt(theme, label, motion):
-    return (
+    prompt = (
         f"8-second 16:9 image-to-video from the selected CapyChill master frame. {label}. "
         "STATIC STRUCTURE: locked camera; architecture, furniture, solid props and room geometry do not move. Preserve "
-        "the character's identity, proportions and silhouette. No cut, zoom, pan or artificial parallax. MANDATORY "
+        "the character's identity, proportions and silhouette. MANDATORY "
         f"BASE ENVIRONMENT MOTION THROUGHOUT THE ENTIRE CLIP: {theme['base_motion']}. Motion remains slow, subtle and "
-        "physically consistent—never frozen, reversed, pulsing, teleporting or moving as one flat sheet. "
-        f"CHARACTER/PROP ACTION FOR THIS CLIP ONLY: {motion} All other optional props and the companion stay still "
-        "unless this clip explicitly names them. Preserve the exact weather shown in the reference; do not invent "
-        "additional rain, snow, smoke, fire, wind or lighting effects. End close to the opening pose and environmental "
-        "motion phase for a gentle loop; "
-        "a short crossfade will be added in editing, so do not force an abrupt rewind. No new objects, morphing, extra "
-        "limbs, floating pencil, liquid volume change, smoke through objects, moving furniture, sudden light pulse, "
-        "text, logo or dialogue. Keep the action and primary moving prop inside the planned 9:16 crop corridor."
+        "physically consistent — alive, never frozen. "
+        f"CHARACTER/PROP ACTION FOR THIS CLIP ONLY: {motion} Throughout the clip both front paws keep a trace of life: "
+        "they shift and re-grip very slightly with the toes staying separated, even when the pose does not change. "
+        "All other optional props and the companion stay still unless this clip explicitly names them. End close to "
+        "the opening pose and environmental motion phase for a gentle loop."
     )
+    return bundle(prompt, VIDEO_NEGATIVE, VIDEO_RULES)
 
 
 def make_brief(day, target_minutes=30):
@@ -307,7 +318,7 @@ def make_brief(day, target_minutes=30):
         "title": f"CapyChill 每日專輯｜{theme['name']}",
         "focus": "10 首 × 約 3 分鐘＝約 30–35 分鐘",
         "meta": f"每日原創場景 · 10 音樂＋1 概念圖＋{video_count} 段微動畫",
-        "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。先只生成第 1 條基準驗收片；確認海浪、倒影、角色結構與循環正常後，才生成其餘項目。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。",
+        "summary": f"本批目標 {target_minutes} 分鐘，安排 {video_count} 段不同微動作。先只生成第 1 條基準驗收片；確認海浪、倒影、角色結構與循環正常後，才生成其餘項目。規則：30 分鐘＝6 段；45 分鐘＝8 段；60 分鐘＝10 段。每一項都是完整包（PROMPT＋NEGATIVE＋RULES），單獨複製即可直接貼給工具，不需再回頭找規則。",
         "items": items,
     }
 

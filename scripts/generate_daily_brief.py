@@ -6,12 +6,33 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import (  # noqa: E402
+    MUSIC_RULES,
+    bundle,
+    flatten_prompt,
+    is_bundled,
+    music_negative,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/dashboard.json"
 ROTATION = [
     "Japan Field Notes — Daylight", "Japan Field Notes — Winter Night", "Food Close-up / Café",
     "Travel Guide Utility", "Investing Explainer", "AI Character Drama", "Study / Sleep seed pack",
 ]
+
+def bundle_brief(brief, focus_hint=""):
+    """Give every prompt its NEGATIVE and RULES block. True if anything changed."""
+    drama = "Drama" in f"{focus_hint} {brief.get('focus', '')}"
+    negative = music_negative(allow_labelled_vocals=drama)
+    before = list(brief.get("prompts", []))
+    brief["prompts"] = [
+        t if is_bundled(t) else bundle(flatten_prompt(t), negative, MUSIC_RULES)
+        for t in before
+    ]
+    return brief["prompts"] != before
+
 
 def main():
     key = os.environ.get("GEMINI_API_KEY")
@@ -24,6 +45,9 @@ def main():
     existing_index = next((i for i, item in enumerate(payload["briefs"]) if item["date"] == today), None)
     if brief and not force:
         print("Brief already exists for today; preparing Discord delivery")
+        if bundle_brief(brief):
+            DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+            print("Backfilled NEGATIVE/RULES blocks onto today's prompts")
     else:
         focus = ROTATION[date.today().toordinal() % len(ROTATION)]
         prompt = f"""You are Saidio's music asset librarian. Create a daily asset brief for {today}.
@@ -37,11 +61,13 @@ that form one reusable asset package:
 - Prompt 9: a dedicated 20–45 second functional cue such as an intro, outro, map transition, bumper,
   or information-card bed, chosen to suit the focus package.
 - Prompt 10: a 2:30–3:00 experimental master that still has practical editing points and a clean ending.
-Every prompt must explicitly state duration, BPM, mood, instrument constraints, arrangement, edit
-points, and whether the middle is loopable. Leave room for narration and location sound where relevant.
-No vocals unless clearly labelled for AI character drama, no artist or existing-song references, no
-recognizable melodies, and no copyrighted samples. State that all 10 prompts are Gemini R&D in meta;
-do not claim licensing rights or imply that generation has already happened."""
+Every prompt must explicitly state duration, BPM, key feel, mood, instrument constraints, arrangement,
+where the clean edit points fall, which section loops, and how the track ends. Name the mix job too:
+what stays out of the narration centre, and how much space the location sound needs. Write each prompt
+as a single paragraph of production direction only — do NOT write a negative list, a "no vocals"
+sentence, or any numbered rules, because a shared NEGATIVE PROMPT and RULES block is appended to every
+prompt automatically and repeating it wastes the model's attention. State that all 10 prompts are
+Gemini R&D in meta; do not claim licensing rights or imply that generation has already happened."""
         model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         req = Request(url, data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json"}}).encode(), headers={"Content-Type":"application/json", "x-goog-api-key": key})
@@ -72,6 +98,8 @@ do not claim licensing rights or imply that generation has already happened."""
         brief = json.loads(response["candidates"][0]["content"]["parts"][0]["text"])
         if not isinstance(brief.get("prompts"), list) or len(brief["prompts"]) != 10:
             sys.exit("Gemini response did not contain exactly ten prompts")
+        # Every prompt ships as a self-contained package, so a single copy is enough to work from.
+        bundle_brief(brief, focus)
         brief["date"] = today
         if existing_index is None:
             payload["briefs"].append(brief)

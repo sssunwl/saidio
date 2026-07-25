@@ -15,9 +15,50 @@ def load_script(name):
 
 capychill = load_script("generate_capychill_briefs")
 carousel = load_script("generate_carousel_briefs")
+blocks = load_script("prompt_blocks")
 
 
 class ProjectBriefsTest(unittest.TestCase):
+    def test_every_capychill_item_is_a_self_contained_package(self):
+        # A single copy has to carry the prompt, the negative list and the rules,
+        # otherwise the rules only exist in someone's memory.
+        for item in capychill.make_brief(date(2026, 7, 25))["items"]:
+            self.assertTrue(blocks.is_bundled(item["text"]), item["type"])
+
+    def test_concept_prompt_demands_readable_paws(self):
+        concept = next(
+            item for item in capychill.make_brief(date(2026, 7, 25))["items"]
+            if item["type"] == "專輯概念圖"
+        )
+        self.assertIn("PAW CONSTRUCTION", concept["text"])
+        self.assertIn("separated toes", concept["text"])
+        self.assertIn("mitten", concept["text"])
+
+    def test_video_prompts_keep_paws_and_weather_alive(self):
+        videos = [
+            item for item in capychill.make_brief(date(2026, 7, 25))["items"]
+            if item["type"].startswith("影片 Prompt")
+        ]
+        self.assertTrue(all("stiff or locked paws" in item["text"] for item in videos))
+        self.assertTrue(all("shift and re-grip very slightly" in item["text"] for item in videos))
+
+    def test_music_brief_bundles_and_flattens_object_prompts(self):
+        daily = load_script("generate_daily_brief")
+        brief = {
+            "focus": "Study / Sleep seed pack",
+            "prompts": [{"id": 1, "type": "Core Master Track", "duration": "2:45", "bpm": "72 BPM"}],
+        }
+        self.assertTrue(daily.bundle_brief(brief))
+        text = brief["prompts"][0]
+        self.assertTrue(blocks.is_bundled(text))
+        self.assertIn("Track 1 — Core Master Track.", text)
+        self.assertIn("BPM: 72 BPM", text)
+        self.assertFalse(daily.bundle_brief(brief), "bundling twice must be a no-op")
+
+    def test_drama_package_keeps_labelled_vocals_allowed(self):
+        self.assertIn("No vocals, lyrics", blocks.music_negative())
+        self.assertIn("except a character take", blocks.music_negative(allow_labelled_vocals=True))
+
     def test_capychill_daily_album_is_thirty_minute_ready(self):
         brief = capychill.make_brief(date(2026, 7, 23))
         music = [item for item in brief["items"] if item["type"] == "專輯音樂"]
@@ -25,7 +66,7 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertEqual(len(music), 10)
         self.assertEqual(len(videos), 6)
         self.assertTrue(all("Veo 3.1 Lite" in item["engine"] for item in videos))
-        self.assertTrue(all("Preserve the exact weather shown in the reference" in item["text"] for item in videos))
+        self.assertTrue(all("Preserve the exact weather, time of day and light level" in item["text"] for item in videos))
         concept = next(item for item in brief["items"] if item["type"] == "專輯概念圖")
         self.assertIn("DUAL FORMAT", concept["text"])
         self.assertTrue(all("9:16 crop corridor" in item["text"] for item in videos))

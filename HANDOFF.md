@@ -60,3 +60,21 @@ GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳
 - 改網站 → 編 `index.html`/`app.js`/`styles.css`，本機 `python3 -m http.server` 起靜態站驗證（fetch 需 http）。
 - 部署 → push 到 `main` 即觸發 Pages（repo 慣例是 bot 直接 commit main）。
 - 測試單支 → `gh workflow run daily-voiceover.yml -R sssunwl/saidio`（注意：若當天 data 已有今日 brief 會跳過生成，只重貼；要強制可在 script 靠 `FORCE_REGENERATE=1`）。
+
+## 2026-07-25：Prompt 一律自帶 NEGATIVE + RULES，網站換上 v2
+
+**為什麼**：SS 平常是「單獨複製一條 prompt」就直接貼到工具，規則若只寫在別的檔案或腦袋裡，實作時一定會漏。所以規則現在跟著 prompt 走。
+
+- 新檔 `scripts/prompt_blocks.py` 是這些區塊的唯一真相來源：`bundle()` 把每條 prompt 組成
+  `【PROMPT】/【NEGATIVE PROMPT｜禁止項】/【RULES｜產出規則】` 三段，音樂、概念圖、影片各有一組。改規則只改這裡。
+- **音樂線**（`generate_daily_brief.py`）：Gemini 只負責寫製作方向那一段（明寫時長、BPM、樂器、編排、剪接點、哪段可循環、怎麼收尾），
+  不再自己寫 negative；negative 與 rules 由程式接上。AI 角色劇那天允許「明確標示的角色人聲」，其餘一律無人聲。
+  Gemini 有時回字串、有時回物件，`flatten_prompt()` 統一攤平成字串（`generate_media.py` 本來就只吃字串）。
+- **CapyChill**（`generate_capychill_briefs.py`）：概念圖 prompt 加了 `PAW CONSTRUCTION` —— 手掌必須畫出分開的腳趾與指節、
+  不可畫成圓團 mitten、不可被毛或道具蓋住。這是「動畫階段手不會動」的**源頭病**：模型讀不出解剖的部位就不動它。
+  影片 prompt 的 negative 明列 `frozen scene / static rain / stiff paws`，rules 要求手掌「輕微 shift and re-grip」，
+  並寫進 Flow「帧」模式（首尾同一張圖）與後製 delogo/xfade 參數。
+- **回填**：今天（7/25）的音樂 brief 已就地補上三段式；更早的歷史批次維持原樣。旅遊／旁白／IG Carousel 尚未套用，之後要就照同一套加。
+- **網站**：`index.html`/`app.js`/`styles.css` 換成玻璃感 v2（今天／產線／歸檔／策略四頁籤），
+  單條「複製」複製的就是完整三段式。v2 補回了 `generation.status` 徽章與成品連結，媒體排程的結果照樣看得到。
+  本機開發版在 `/Users/sws/Sun/Claude/saidio/web_v2/`，改完要兩邊同步。

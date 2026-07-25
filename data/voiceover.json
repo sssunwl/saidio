@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-24T09:18:00+09:00",
+  "updatedAt": "2026-07-25T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -290,6 +290,64 @@
         }
       ],
       "date": "2026-07-24",
+      "stream": "voiceover"
+    },
+    {
+      "title": "靜心呼吸：V-CALM 冥想引導與療癒音效",
+      "focus": "冥想引導",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-CALM",
+      "summary": "本資源包專為正念與冥想設計，結合極致溫柔的留白女聲與自然環境音，助您快速進入深層放鬆狀態。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "輕輕地……閉上雙眼……（停頓）……吸氣……感受空氣的溫度……（停頓）……呼氣……釋放所有的疲憊……（停頓）……讓每一次呼吸……帶你回到……當下。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "讓肩膀……慢慢沉下來……（停頓）……放鬆額頭……還有緊繃的眉心……（停頓）……現在……你的身體像羽毛一樣輕盈……（停頓）……安靜地……躺在溫暖的包圍中。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥放引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "腦海中的思緒……就像天空的雲……（停頓）……看著它來……也看著它緩緩飄走……（停頓）……你不需要抓住任何事……（停頓）……此時此刻……只有平靜。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "冥想引導",
+          "engine": "AI Studio TTS",
+          "voice": "V-CALM",
+          "status": "prompt",
+          "text": "想像胸口……有一道溫柔的光……（停頓）……隨着呼吸……慢慢擴散……（停頓）……溫暖你身體的每一個角落……（停頓）……在這裡……你是無比安全的。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Loopable 45-second ambient soundscape of gentle ocean waves softly lapping on a sandy beach, low-frequency white noise, extremely soothing, no music, no bird chirps, pure natural relaxation."
+        },
+        {
+          "type": "環境音",
+          "purpose": "冥想引導",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "Loopable 60-second deep forest ambience with soft, distant wind rustling leaves, sparse and gentle rain droplets falling on soft foliage, calm and meditative, wide stereo field, no melody."
+        }
+      ],
+      "date": "2026-07-25",
       "stream": "voiceover"
     }
   ]

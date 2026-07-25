@@ -1,6 +1,6 @@
 {
   "stream": "suntravel",
-  "updatedAt": "2026-07-24T09:24:00+09:00",
+  "updatedAt": "2026-07-25T09:24:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -414,6 +414,72 @@
         }
       ],
       "date": "2026-07-24",
+      "stream": "suntravel"
+    },
+    {
+      "title": "雨天室內精選：雨日漫步的溫馨室內美學",
+      "focus": "雨天室內",
+      "meta": "Flow 每日選片 · 6 Lite + 2 Fast",
+      "summary": "本套包專為雨天旅遊與室內療癒企劃設計，利用暖調光影與細緻靜態美學，營造舒適愜意的雨日避風港氛圍。",
+      "items": [
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Medium shot, slow pan. A steaming ceramic mug of hot tea sitting on a rustic wooden table right next to a window covered in raindrops. Soft, warm indoor lighting contrasting with the cool, gloomy rainy afternoon outside. Cinematic depth of field, highly detailed water droplets. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Close-up shot, static camera. An open vintage book on a soft linen sheet, pages slightly rustling. Gentle ambient light from a bedside lamp, cozy bedroom atmosphere during a heavy rainstorm at daytime. Soft focus background showing rain sliding down the window pane. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Wide shot, slow tilt up. An empty, stylish minimalist cafe with warm pendant lights glowing softly. Rain cascading down the large floor-to-ceiling glass windows, looking out to a misty green garden. Serene, quiet, and moody atmosphere, overcast midday. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Extreme close-up, slow dolly out. Raindrops falling and running down a glass windowpane with beautiful golden fairy lights blurred in the background, creating a cozy and warm bokeh effect. Intimate and nostalgic mood, twilight. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Medium-long shot, slow tracking camera. A cozy reading nook featuring a comfortable armchair with a thick knitted throw blanket next to a glowing fireplace. Moody, cool-toned daylight filtering through a rainy window, peaceful and relaxing vibe. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Lite",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Lite · 10點",
+          "status": "prompt",
+          "text": "Medium shot, rack focus. Transitioning from a lush green indoor houseplant glistening with moisture to the heavy rain pouring outside in an urban courtyard. Cool cinematic color grading, natural overcast light, midday. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Fast",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Fast · 20點",
+          "status": "prompt",
+          "text": "Medium shot, dynamic tracking shot. A hand slowly pouring hot water from a matte black gooseneck kettle into a glass coffee dripper. Rich steam rises and curls elegantly into the air. Soft morning light blends with the moody gray rain light coming from a large window. Cinematic slow-motion water droplets, highly detailed textures of the coffee grounds, warm and deliberate pacing. No on-screen text, no logos, leave room for narration."
+        },
+        {
+          "type": "Flow Fast",
+          "purpose": "雨天室內",
+          "engine": "Veo 3.1 Fast · 20點",
+          "status": "prompt",
+          "text": "Medium shot, slow crane up. A person wearing a cozy oversized knit sweater sits comfortably on a padded window bench, cradling a warm mug. The camera captures their gentle breathing as they gaze out at the blurred city streets glistening in the rain. Melancholic yet deeply comforting mood, soft cinematic studio lighting, slow-paced and reflective storytelling. No on-screen text, no logos, leave room for narration."
+        }
+      ],
+      "date": "2026-07-25",
       "stream": "suntravel"
     }
   ]

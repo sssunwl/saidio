@@ -16,7 +16,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "現在，讓自己坐得舒服一點…（停頓）…把注意力，輕輕放回呼吸上…（停頓）…吸氣，感覺空氣進來…（停頓）…吐氣，讓身體慢慢鬆開。"
+          "text": "【PROMPT】\n現在，讓自己坐得舒服一點…（停頓）…把注意力，輕輕放回呼吸上…（停頓）…吸氣，感覺空氣進來…（停頓）…吐氣，讓身體慢慢鬆開。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -24,7 +24,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "如果有念頭飄過…（停頓）…沒關係，就讓它像雲一樣經過…（停頓）…你只要，回到這一次呼吸。"
+          "text": "【PROMPT】\n如果有念頭飄過…（停頓）…沒關係，就讓它像雲一樣經過…（停頓）…你只要，回到這一次呼吸。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -32,7 +32,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "感覺雙肩，慢慢往下沉…（停頓）…下巴放鬆…（停頓）…眉心之間，也鬆開了。"
+          "text": "【PROMPT】\n感覺雙肩，慢慢往下沉…（停頓）…下巴放鬆…（停頓）…眉心之間，也鬆開了。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -40,7 +40,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "接下來的三次呼吸，屬於你自己…（停頓）…慢慢來，不用急。"
+          "text": "【PROMPT】\n接下來的三次呼吸，屬於你自己…（停頓）…慢慢來，不用急。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -48,7 +48,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Soft continuous rain on a wooden roof, very gentle, distant, 60s seamless loop, no music, no thunder, warm and calming."
+          "text": "【PROMPT】\nSoft continuous rain on a wooden roof, very gentle, distant, 60s seamless loop, no music, no thunder, warm and calming.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -56,7 +56,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Low warm ambient drone with faint wind chimes, 45s loopable, meditative, no melody, no copyrighted material."
+          "text": "【PROMPT】\nLow warm ambient drone with faint wind chimes, 45s loopable, meditative, no melody, no copyrighted material.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ]
     },
@@ -72,7 +72,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "閉上雙眼 …（停頓）… 感受空氣 …（停頓）… 緩緩吸入 …（停頓）… 再慢慢呼出 …（停頓）… 每次呼吸 …（停頓）… 身體都變得更輕 …（停頓）… 留在此刻 …（停頓）… 享受這份寧靜。"
+          "text": "【PROMPT】\n閉上雙眼 …（停頓）… 感受空氣 …（停頓）… 緩緩吸入 …（停頓）… 再慢慢呼出 …（停頓）… 每次呼吸 …（停頓）… 身體都變得更輕 …（停頓）… 留在此刻 …（停頓）… 享受這份寧靜。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -80,7 +80,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "把腦中的思緒 …（停頓）… 想像成飄過的雲 …（停頓）… 不去抓住它 …（停頓）… 就讓它輕輕地 …（停頓）… 飄走 …（停頓）… 找回心中的空隙 …（停頓）… 感受自由。"
+          "text": "【PROMPT】\n把腦中的思緒 …（停頓）… 想像成飄過的雲 …（停頓）… 不去抓住它 …（停頓）… 就讓它輕輕地 …（停頓）… 飄走 …（停頓）… 找回心中的空隙 …（停頓）… 感受自由。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -88,7 +88,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "感覺你的雙肩 …（停頓）… 慢慢放鬆 …（停頓）… 卸下所有的緊繃 …（停頓）… 溫暖的力量 …（停頓）… 正流向你的指尖 …（停頓）… 很好 …（停頓）… 保持這份平靜。"
+          "text": "【PROMPT】\n感覺你的雙肩 …（停頓）… 慢慢放鬆 …（停頓）… 卸下所有的緊繃 …（停頓）… 溫暖的力量 …（停頓）… 正流向你的指尖 …（停頓）… 很好 …（停頓）… 保持這份平靜。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -96,7 +96,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "這裡很安全 …（停頓）… 沒有人會打擾你 …（停頓）… 傾聽心跳的聲音 …（停頓）… 每一聲 …（停頓）… 都在溫柔地告訴你 …（停頓）… 你已經做得很好 …（停頓）… 睡吧。"
+          "text": "【PROMPT】\n這裡很安全 …（停頓）… 沒有人會打擾你 …（停頓）… 傾聽心跳的聲音 …（停頓）… 每一聲 …（停頓）… 都在溫柔地告訴你 …（停頓）… 你已經做得很好 …（停頓）… 睡吧。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -104,7 +104,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "A continuous 45-second loop of a very soft, distant rain falling on broad leaves, accompanied by the occasional gentle, low-pitched chime of a bamboo wind bell. Calm, peaceful, no musical instruments, seamless loop."
+          "text": "【PROMPT】\nA continuous 45-second loop of a very soft, distant rain falling on broad leaves, accompanied by the occasional gentle, low-pitched chime of a bamboo wind bell. Calm, peaceful, no musical instruments, seamless loop.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -112,7 +112,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "A 60-second seamless ambient drone loop featuring a deep, resonant Tibetan singing bowl being struck softly once, followed by its long, vibrating decay fading into a quiet, warm forest night hum. Pure white noise hum, high-frequency-reduced, highly relaxing."
+          "text": "【PROMPT】\nA 60-second seamless ambient drone loop featuring a deep, resonant Tibetan singing bowl being struck softly once, followed by its long, vibrating decay fading into a quiet, warm forest night hum. Pure white noise hum, high-frequency-reduced, highly relaxing.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ],
       "date": "2026-07-21",
@@ -130,7 +130,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-SLEEP",
           "status": "prompt",
-          "text": "深夜的森林裡，小松鼠已經閉上了眼睛。微風輕輕吹過樹梢，搖晃著柔軟的樹葉。小松鼠縮在溫暖的樹洞裡，蓋上蓬鬆的尾巴，沉沉地睡著了。晚安，親愛的小寶貝，你也閉上眼睛，一起做個甜甜的夢吧。"
+          "text": "【PROMPT】\n深夜的森林裡，小松鼠已經閉上了眼睛。微風輕輕吹過樹梢，搖晃著柔軟的樹葉。小松鼠縮在溫暖的樹洞裡，蓋上蓬鬆的尾巴，沉沉地睡著了。晚安，親愛的小寶貝，你也閉上眼睛，一起做個甜甜的夢吧。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -138,7 +138,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-SLEEP",
           "status": "prompt",
-          "text": "你看，夜空中的小星星正在一閃一閃，像是在對你溫柔地微笑。月亮船在銀河裡慢慢地漂流，把銀白色的微光灑在你的枕頭上。現在，閉上雙眼，乘著月亮船，慢慢漂向那片安靜又美麗的夢境星空。"
+          "text": "【PROMPT】\n你看，夜空中的小星星正在一閃一閃，像是在對你溫柔地微笑。月亮船在銀河裡慢慢地漂流，把銀白色的微光灑在你的枕頭上。現在，閉上雙眼，乘著月亮船，慢慢漂向那片安靜又美麗的夢境星空。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -146,7 +146,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-SLEEP",
           "status": "prompt",
-          "text": "吸氣……（停頓）……讓溫暖的空氣填滿身體。呼氣……（停頓）……把所有的疲倦都放鬆下來。吸氣……（停頓）……身體變得好輕好輕。呼氣……（停頓）……像躺在雲朵上一樣，安靜地，睡吧。"
+          "text": "【PROMPT】\n吸氣……（停頓）……讓溫暖的空氣填滿身體。呼氣……（停頓）……把所有的疲倦都放鬆下來。吸氣……（停頓）……身體變得好輕好輕。呼氣……（停頓）……像躺在雲朵上一樣，安靜地，睡吧。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -154,7 +154,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-SLEEP",
           "status": "prompt",
-          "text": "在安靜的深海裡，有一座發著微光的水晶城堡。小五彩魚在珊瑚床裡慢慢游動，吐著彩色的小泡泡。海水溫柔地包裹著一切，沒有一點聲音。跟著小魚一起，慢慢地，閉上眼睛，在藍色的海洋裡睡著吧。"
+          "text": "【PROMPT】\n在安靜的深海裡，有一座發著微光的水晶城堡。小五彩魚在珊瑚床裡慢慢游動，吐著彩色的小泡泡。海水溫柔地包裹著一切，沒有一點聲音。跟著小魚一起，慢慢地，閉上眼睛，在藍色的海洋裡睡著吧。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -162,7 +162,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Loopable gentle forest nighttime ambience, soft rustling leaves, occasional distant slow cricket chirps, very quiet and comforting wind, no sharp noises, 45 seconds, seamless loop."
+          "text": "【PROMPT】\nLoopable gentle forest nighttime ambience, soft rustling leaves, occasional distant slow cricket chirps, very quiet and comforting wind, no sharp noises, 45 seconds, seamless loop.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -170,7 +170,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Calm cosmic ambient drone, deep warm soft hum, slow gentle low-frequency pulsations, mimicking a safe and cozy womb or space pod, 60 seconds, seamless loop."
+          "text": "【PROMPT】\nCalm cosmic ambient drone, deep warm soft hum, slow gentle low-frequency pulsations, mimicking a safe and cozy womb or space pod, 60 seconds, seamless loop.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ],
       "date": "2026-07-22",
@@ -188,7 +188,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-INVEST",
           "status": "prompt",
-          "text": "投資的秘密，不在於追求一夕致富的奇蹟，而是在於時間與複利的累積。每天穩健地前進一步，看似微小的增長，在數十年後都將匯聚成巨大的財富雪球。保持耐心，讓時間成為你最忠實的盟友。"
+          "text": "【PROMPT】\n投資的秘密，不在於追求一夕致富的奇蹟，而是在於時間與複利的累積。每天穩健地前進一步，看似微小的增長，在數十年後都將匯聚成巨大的財富雪球。保持耐心，讓時間成為你最忠實的盟友。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -196,7 +196,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-INVEST",
           "status": "prompt",
-          "text": "面對波動的市場，單一資產的重押往往伴隨不可承受的風險。合理的資產配置，就如同為你的財富建立一座防禦工事。透過股債平衡與多元佈局，我們不求每次都贏，但求在市場風雨中，依然行穩致遠。"
+          "text": "【PROMPT】\n面對波動的市場，單一資產的重押往往伴隨不可承受的風險。合理的資產配置，就如同為你的財富建立一座防禦工事。透過股債平衡與多元佈局，我們不求每次都贏，但求在市場風雨中，依然行穩致遠。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -204,7 +204,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-INVEST",
           "status": "prompt",
-          "text": "許多人試圖預測市場的最高點與最低點，但歷史告訴我們，頻繁交易往往只會侵蝕利潤。選擇指數化投資，買下整體市場的成長，摒除情緒的干擾。理性地與經濟共同成長，才是最簡單也最有效的致富之道。"
+          "text": "【PROMPT】\n許多人試圖預測市場的最高點與最低點，但歷史告訴我們，頻繁交易往往只會侵蝕利潤。選擇指數化投資，買下整體市場的成長，摒除情緒的干擾。理性地與經濟共同成長，才是最簡單也最有效的致富之道。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -212,7 +212,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-INVEST",
           "status": "prompt",
-          "text": "在投資的世界裡，最大的敵人往往不是市場，而是我們內心的恐懼與貪婪。當市場過熱時保持冷靜，在恐慌蔓延時堅守紀律。設定好你的止損與停利點，用客觀的數據取代主觀的直覺，才能在波動中立於不敗之地。"
+          "text": "【PROMPT】\n在投資的世界裡，最大的敵人往往不是市場，而是我們內心的恐懼與貪婪。當市場過熱時保持冷靜，在恐慌蔓延時堅守紀律。設定好你的止損與停利點，用客觀的數據取代主觀的直覺，才能在波動中立於不敗之地。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -220,7 +220,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Calm corporate office background ambience, soft tapping of computer keyboards, low-frequency hum of air conditioning, occasional paper rustling, professional and quiet atmosphere, 45 seconds loop, no music."
+          "text": "【PROMPT】\nCalm corporate office background ambience, soft tapping of computer keyboards, low-frequency hum of air conditioning, occasional paper rustling, professional and quiet atmosphere, 45 seconds loop, no music.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -228,7 +228,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Subtle digital data ticker-tape sound effects, soft rhythmic electronic bleeps and interface hums, conveying financial analysis and precision, minimal and non-distracting background atmosphere, 30 seconds loop, no music."
+          "text": "【PROMPT】\nSubtle digital data ticker-tape sound effects, soft rhythmic electronic bleeps and interface hums, conveying financial analysis and precision, minimal and non-distracting background atmosphere, 30 seconds loop, no music.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ],
       "date": "2026-07-23",
@@ -246,7 +246,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-TRAVEL-F",
           "status": "prompt",
-          "text": "[F] 哈囉大家！今天跟著我一起漫步在京都的石板路上吧。聽，那遠處傳來的鐘聲…… [M] 這裡是清水寺，建於公元778年，以懸空的清水舞台結構聞名。 [F] 真的太壯觀了！我們趕快去喝一口音羽瀑布的清泉，許下你的心願吧！"
+          "text": "【PROMPT】\n[F] 哈囉大家！今天跟著我一起漫步在京都的石板路上吧。聽，那遠處傳來的鐘聲…… [M] 這裡是清水寺，建於公元778年，以懸空的清水舞台結構聞名。 [F] 真的太壯觀了！我們趕快去喝一口音羽瀑布的清泉，許下你的心願吧！\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -254,7 +254,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-TRAVEL-F",
           "status": "prompt",
-          "text": "[F] 哇！這片蔚藍的海景真的太美了！陽光灑在沙灘上，整個人都放鬆了！ [M] 尼斯天使灣，地中海的明珠，終年氣候溫和。 [F] 踩在溫暖的鵝卵石上，海風吹過髮梢，這就是南法的慢活節奏，準備好和我一起跳進海裡了嗎？"
+          "text": "【PROMPT】\n[F] 哇！這片蔚藍的海景真的太美了！陽光灑在沙灘上，整個人都放鬆了！ [M] 尼斯天使灣，地中海的明珠，終年氣候溫和。 [F] 踩在溫暖的鵝卵石上，海風吹過髮梢，這就是南法的慢活節奏，準備好和我一起跳進海裡了嗎？\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -262,7 +262,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-TRAVEL-F",
           "status": "prompt",
-          "text": "[F] 天空亮起了綠色的魔法！快看，那是極光在跳舞耶！ [M] 冰島的冬季，當夜空晴朗，太陽帶電粒子與大氣碰撞，便會產生這奇幻的光芒。 [F] 雖然冷到手都在抖，但能親眼看見這一幕，真的這輩子值了！快閉上眼睛許願吧！"
+          "text": "【PROMPT】\n[F] 天空亮起了綠色的魔法！快看，那是極光在跳舞耶！ [M] 冰島的冬季，當夜空晴朗，太陽帶電粒子與大氣碰撞，便會產生這奇幻的光芒。 [F] 雖然冷到手都在抖，但能親眼看見這一幕，真的這輩子值了！快閉上眼睛許願吧！\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -270,7 +270,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-TRAVEL-F",
           "status": "prompt",
-          "text": "[F] 聞到香味了嗎？這裡就是超熱鬧的在地夜市！滿滿的排隊美食，我的胃已經準備好了！ [M] 台灣夜市融合了多元的小吃文化，是體驗在地生活最直接的方式。 [F] 走！先來一份外酥內嫩的臭豆腐，配上冰涼珍奶，簡直是人間美味！"
+          "text": "【PROMPT】\n[F] 聞到香味了嗎？這裡就是超熱鬧的在地夜市！滿滿的排隊美食，我的胃已經準備好了！ [M] 台灣夜市融合了多元的小吃文化，是體驗在地生活最直接的方式。 [F] 走！先來一份外酥內嫩的臭豆腐，配上冰涼珍奶，簡直是人間美味！\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -278,7 +278,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Ambient sound of a bustling traditional Kyoto street, distant temple bell chiming soft and resonant, gravel footsteps, gentle chatter of tourists in the background, loopable, 45 seconds, no music."
+          "text": "【PROMPT】\nAmbient sound of a bustling traditional Kyoto street, distant temple bell chiming soft and resonant, gravel footsteps, gentle chatter of tourists in the background, loopable, 45 seconds, no music.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -286,7 +286,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Relaxing ocean waves gently lapping on a pebble beach, mild Mediterranean sea breeze rustling palm leaves, distant seagulls crying, loopable, 60 seconds, natural atmosphere, no music."
+          "text": "【PROMPT】\nRelaxing ocean waves gently lapping on a pebble beach, mild Mediterranean sea breeze rustling palm leaves, distant seagulls crying, loopable, 60 seconds, natural atmosphere, no music.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ],
       "date": "2026-07-24",
@@ -304,7 +304,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "輕輕地……閉上雙眼……（停頓）……吸氣……感受空氣的溫度……（停頓）……呼氣……釋放所有的疲憊……（停頓）……讓每一次呼吸……帶你回到……當下。"
+          "text": "【PROMPT】\n輕輕地……閉上雙眼……（停頓）……吸氣……感受空氣的溫度……（停頓）……呼氣……釋放所有的疲憊……（停頓）……讓每一次呼吸……帶你回到……當下。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -312,7 +312,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "讓肩膀……慢慢沉下來……（停頓）……放鬆額頭……還有緊繃的眉心……（停頓）……現在……你的身體像羽毛一樣輕盈……（停頓）……安靜地……躺在溫暖的包圍中。"
+          "text": "【PROMPT】\n讓肩膀……慢慢沉下來……（停頓）……放鬆額頭……還有緊繃的眉心……（停頓）……現在……你的身體像羽毛一樣輕盈……（停頓）……安靜地……躺在溫暖的包圍中。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -320,7 +320,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "腦海中的思緒……就像天空的雲……（停頓）……看著它來……也看著它緩緩飄走……（停頓）……你不需要抓住任何事……（停頓）……此時此刻……只有平靜。"
+          "text": "【PROMPT】\n腦海中的思緒……就像天空的雲……（停頓）……看著它來……也看著它緩緩飄走……（停頓）……你不需要抓住任何事……（停頓）……此時此刻……只有平靜。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "旁白腳本",
@@ -328,7 +328,7 @@
           "engine": "AI Studio TTS",
           "voice": "V-CALM",
           "status": "prompt",
-          "text": "想像胸口……有一道溫柔的光……（停頓）……隨着呼吸……慢慢擴散……（停頓）……溫暖你身體的每一個角落……（停頓）……在這裡……你是無比安全的。"
+          "text": "【PROMPT】\n想像胸口……有一道溫柔的光……（停頓）……隨着呼吸……慢慢擴散……（停頓）……溫暖你身體的每一個角落……（停頓）……在這裡……你是無比安全的。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
         },
         {
           "type": "環境音",
@@ -336,7 +336,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Loopable 45-second ambient soundscape of gentle ocean waves softly lapping on a sandy beach, low-frequency white noise, extremely soothing, no music, no bird chirps, pure natural relaxation."
+          "text": "【PROMPT】\nLoopable 45-second ambient soundscape of gentle ocean waves softly lapping on a sandy beach, low-frequency white noise, extremely soothing, no music, no bird chirps, pure natural relaxation.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         },
         {
           "type": "環境音",
@@ -344,7 +344,7 @@
           "engine": "SFX",
           "voice": "",
           "status": "prompt",
-          "text": "Loopable 60-second deep forest ambience with soft, distant wind rustling leaves, sparse and gentle rain droplets falling on soft foliage, calm and meditative, wide stereo field, no melody."
+          "text": "【PROMPT】\nLoopable 60-second deep forest ambience with soft, distant wind rustling leaves, sparse and gentle rain droplets falling on soft foliage, calm and meditative, wide stereo field, no melody.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
         }
       ],
       "date": "2026-07-25",

@@ -75,6 +75,31 @@ GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳
   影片 prompt 的 negative 明列 `frozen scene / static rain / stiff paws`，rules 要求手掌「輕微 shift and re-grip」，
   並寫進 Flow「帧」模式（首尾同一張圖）與後製 delogo/xfade 參數。
 - **回填**：今天（7/25）的音樂 brief 已就地補上三段式；更早的歷史批次維持原樣。旅遊／旁白／IG Carousel 尚未套用，之後要就照同一套加。
+## 2026-07-25（第二輪）：三段式套到全部產線，locks 改成只鎖已完成的音樂
+
+用戶要求「全部 Prompt 都更新，除了 CapyChill 7/23–7/25 的音樂」（其餘媒體他會重新生成）。
+
+- **`prompt_blocks.py` 補完四組區塊**：`VOICE_*`（旁白腳本）、`SFX_*`（環境音）、`BROLL_*`（旅遊 Flow 片）、
+  `CARD_*`（IG 圖卡）。新增 `blocks_for(stream, item_type)` 當唯一對照表，生成器與 backfill 共用，不會各自漂移。
+- **旁白／旅遊生成器**：Gemini 只寫腳本或分鏡本身，程式再接上 negative + rules；並明確叫 Gemini
+  **不要自己寫 negative／rules**（兩份規則貼在一起會互相矛盾）。今天的 brief 若是舊格式，
+  不呼叫 API 也會就地補上區塊。
+- **IG Carousel**：每張圖卡改成完整三段式；`LOCKED_DATES` 清空（全部重寫）；
+  尺寸抽成 `CARD_WIDTH/CARD_HEIGHT/CARD_RATIO` 常數，方便日後從 4:5 換 3:4。
+- **CapyChill 鎖的粒度改了**：舊版整天鎖死 → 現在 `MUSIC_LOCKED_DATES = {7/23, 7/24, 7/25}`
+  只鎖**音樂 prompt**（專輯已產出，不該誘發重跑），概念圖與微動畫照現行規則重寫。
+  見 `keep_published_music()`。
+- **新腳本 `scripts/backfill_prompt_blocks.py`**：不需要 API key，把歷史檔案裡沒有三段式的 prompt
+  就地補上（本輪補了 125 條）。改完 `prompt_blocks.py` 就可以再跑一次。
+- **測試**：`python3 -m unittest discover -s tests`，20 項全過（新增 4 項：圖卡三段式、
+  旁白與環境音吃到不同規則、重複 bundle 不會疊套、鎖定日保留音樂但換掉影片規則）。
+- **修掉 CapyChill 7/24 的手寫 Flow prompt**：`CapyChill/DailyPrompt/20260724/character_raw/Flow_prompts.md`
+  舊版六條全寫「雨凍住、環境完全凍結、手不動」，正是僵硬的兩個病因。已改為**由生成器輸出**
+  （內容等同 `data/capychill.json` 的 7/24 影片項），舊版移到同層 `.archived/`。
+- **新腳本 `CapyChill/scripts/upscale_master.py`**：母圖貼進 Flow 前的 Lanczos 放大（+ 輕微 unsharp），
+  `--portrait --focus <THEMES 的 focus_x>` 可一併切出 9:16 走廊。已在 7/24 母圖實測。
+- **待討論**：`CAROUSEL_V2_DESIGN.md`（母圖分割 + 可變張數 + 販售流程提案，尚未實作）。
+
 - **網站**：`index.html`/`app.js`/`styles.css` 換成玻璃感 v2（今天／產線／歸檔／策略四頁籤），
   單條「複製」複製的就是完整三段式。v2 補回了 `generation.status` 徽章與成品連結，媒體排程的結果照樣看得到。
   本機開發版在 `/Users/sws/Sun/Claude/saidio/web_v2/`，改完要兩邊同步。

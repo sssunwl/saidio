@@ -11,6 +11,9 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import blocks_for, bundle, is_bundled  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/suntravel.json"
 
@@ -30,11 +33,14 @@ Focus package: {focus}. Return JSON only with keys: title, focus, meta, summary,
   All items set purpose="{focus}" and status="prompt".
   * Items 1-6: type="Flow Lite", engine="Veo 3.1 Lite · 10點". text = an English text-to-video prompt for a
     5-8 second cinematic B-roll clip fitting {focus}. Each must state shot type, camera movement,
-    lighting/mood, time of day, and "no on-screen text, no logos, leave room for narration".
+    lighting/mood and time of day, and must name at least one element that keeps moving for the whole
+    clip (water, foliage, steam, traffic, cloth) so the shot never reads as a frozen photograph.
   * Items 7-8: type="Flow Fast", engine="Veo 3.1 Fast · 20點". text = a stronger 8-second cinematic
     candidate with purposeful subject motion, camera movement, lighting, mood and pacing. These are
     the two premium candidates; make them clearly different from the Lite exploration prompts.
-No artist/brand references, no copyrighted material, no recognizable real logos."""
+Write only the shot description itself: no negative-prompt list, no rules section, no headings, no
+production notes. Those blocks are appended automatically afterwards, and repeating them inside your
+text makes the pasted prompt contradict itself."""
 
 
 def call_gemini(prompt, key, model):
@@ -60,6 +66,21 @@ def call_gemini(prompt, key, model):
                 continue
             (ROOT / "suntravel-error.txt").write_text(f"Gemini API network error: {error.reason}")
             return None
+
+
+def bundle_items(brief):
+    """Attach NEGATIVE + RULES to every item, so one copied line is the whole package."""
+    changed = False
+    for item in brief.get("items", []):
+        text = item.get("text")
+        if not isinstance(text, str) or is_bundled(text):
+            continue
+        pair = blocks_for("suntravel", item.get("type"))
+        if pair is None:
+            continue
+        item["text"] = bundle(text, *pair)
+        changed = True
+    return changed
 
 
 def main():
@@ -93,11 +114,16 @@ def main():
             sys.exit("Gemini response did not contain exactly eight items")
         brief["date"] = today
         brief["stream"] = "suntravel"
+        bundle_items(brief)
         if existing_index is None:
             payload["briefs"].append(brief)
         else:
             payload["briefs"][existing_index] = brief
         payload["stream"] = "suntravel"
+        payload["updatedAt"] = f"{today}T09:24:00+09:00"
+        DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    elif bundle_items(brief):
+        # An earlier run wrote this brief before the rules existed; upgrade it for free.
         payload["updatedAt"] = f"{today}T09:24:00+09:00"
         DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 

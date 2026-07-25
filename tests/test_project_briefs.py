@@ -15,6 +15,8 @@ def load_script(name):
 
 capychill = load_script("generate_capychill_briefs")
 carousel = load_script("generate_carousel_briefs")
+voiceover = load_script("generate_voiceover_brief")
+suntravel = load_script("generate_suntravel_brief")
 blocks = load_script("prompt_blocks")
 
 
@@ -142,6 +144,48 @@ class ProjectBriefsTest(unittest.TestCase):
             for day in range(23, 32)
         }
         self.assertEqual(len(titles), 9)
+
+    def test_every_carousel_card_is_a_self_contained_package(self):
+        for item in carousel.make_brief(date(2026, 7, 25), 0, 2)["items"]:
+            if item["type"].startswith("IG 圖組"):
+                self.assertTrue(blocks.is_bundled(item["text"]), item["type"])
+                self.assertIn("garbled", item["text"])
+                self.assertIn("80 px safe margin", item["text"])
+
+    def test_voiceover_scripts_and_ambience_get_different_rules(self):
+        brief = {"items": [
+            {"type": "旁白腳本", "text": "今天先深呼吸一次。"},
+            {"type": "環境音", "text": "Soft rain on a wooden roof, 60 seconds."},
+        ]}
+        self.assertTrue(voiceover.bundle_items(brief))
+        script, ambience = brief["items"]
+        self.assertIn("…（停頓）…", script["text"])
+        self.assertIn("-16 LUFS", script["text"])
+        self.assertIn("No music, melody", ambience["text"])
+        self.assertNotIn("-16 LUFS", ambience["text"])
+
+    def test_bundling_an_already_bundled_brief_is_a_no_op(self):
+        # The daily workflow re-runs over its own output; a second pass must not nest blocks.
+        brief = {"items": [{"type": "Flow Lite", "text": "Wide shot of a harbour at dawn."}]}
+        self.assertTrue(suntravel.bundle_items(brief))
+        once = brief["items"][0]["text"]
+        self.assertFalse(suntravel.bundle_items(brief))
+        self.assertEqual(once, brief["items"][0]["text"])
+        self.assertEqual(once.count(blocks.HEAD_RULES), 1)
+
+    def test_locked_album_keeps_its_music_but_gets_new_video_rules(self):
+        published = {"items": [
+            {"type": "專輯音樂", "text": "ORIGINAL TRACK PROMPT"},
+            {"type": "影片 Prompt・舊版", "text": "everything frozen, static rain"},
+        ]}
+        merged = capychill.keep_published_music(capychill.make_brief(date(2026, 7, 25)), published)
+        music = [item for item in merged["items"] if item["type"] == "專輯音樂"]
+        self.assertEqual(len(music), 1)
+        self.assertEqual(music[0]["text"], "ORIGINAL TRACK PROMPT")
+        videos = [item for item in merged["items"] if item["type"].startswith("影片 Prompt")]
+        self.assertNotIn("舊版", " ".join(item["type"] for item in videos))
+        for video in videos:
+            self.assertIn("never frozen", video["text"])
 
 
 if __name__ == "__main__":

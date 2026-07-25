@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
 """Create one nine-day, one-industry Instagram carousel product cycle."""
 import json
+import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import CARD_NEGATIVE, CARD_RULES, bundle  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/carousel.json"
 EPOCH = date(2026, 7, 23)
-LOCKED_DATES = {"2026-07-23", "2026-07-24"}
+# Nothing is frozen any more: the user is regenerating every carousel set under the
+# NEGATIVE + RULES packaging, so every day in the cycle is rewritten on each run.
+LOCKED_DATES = set()
+
+# One place to change the card size. 2026 Meta guidance favours 3:4 (1080×1440) because
+# the profile grid crops a 4:5 card on both sides; 4:5 is kept until the user decides.
+CARD_WIDTH, CARD_HEIGHT = 1080, 1350
+CARD_RATIO = "4:5"
 
 INDUSTRIES = [
     "獨立咖啡店", "保養品牌", "房地產顧問", "健身教練", "旅行社",
@@ -281,12 +292,13 @@ def image_prompt(industry, topic, slide_no, raw, style):
         accent = style["content"][(slide_no - 2) % len(style["content"])]
         layout = f"{CONTENT_STRUCTURES[slide_no]}; family-specific treatment: {accent}"
     copy = card_copy(raw, slide_no)
-    return (
+    prompt = (
         f"Generate exactly ONE standalone Instagram carousel card, slide {slide_no} of 9. "
-        "Output only this single 4:5 card, never nine cards on one canvas, never a phone mockup and never surrounding "
-        "white canvas. A grid, contact-sheet rhythm or multi-frame layout is allowed only when today's named template "
-        "family explicitly requests it; it must still remain one standalone card. "
-        "Output aspect ratio 4:5, 1080×1350, edge-to-edge. This card belongs to a coordinated nine-card system for "
+        f"Output only this single {CARD_RATIO} card, never nine cards on one canvas, never a phone mockup and never "
+        "surrounding white canvas. A grid, contact-sheet rhythm or multi-frame layout is allowed only when today's "
+        "named template family explicitly requests it; it must still remain one standalone card. "
+        f"Output aspect ratio {CARD_RATIO}, {CARD_WIDTH}×{CARD_HEIGHT}, edge-to-edge. "
+        "This card belongs to a coordinated nine-card system for "
         f"{industry}, topic “{topic}”. TEMPLATE FAMILY {style['id']}｜{style['name']} (one of nine deliberately "
         "different template families). Keep Mori Café's brand DNA consistent, but never reuse another day's cover "
         "grid, photo mask, information rhythm or decorative device. Family-specific design system: "
@@ -294,17 +306,15 @@ def image_prompt(industry, topic, slide_no, raw, style):
         "espresso brown and muted sage, soft morning sunlight, restrained organic shapes, subtle film grain, "
         "consistent 80px safe margin, Traditional-Chinese serif paired with a clean sans-serif. "
         f"Layout: {layout}. Render only the copy roles assigned to this slide—do not add Logo, Mood, CTA or hashtags "
-        f"when they are not listed below. Professionally typeset this Traditional-Chinese sample copy:\n{copy}\n"
-        "Keep every visible component visually separable for later rebuilding in Canva, including its text roles, "
-        "page number, photo or diagram and decorative elements. Do not print layer-instruction labels. Use real "
-        "legible Traditional Chinese, not random glyphs or fake text. "
-        "No watermark, signature or imitation of an existing brand/designer."
+        f"when they are not listed below. Professionally typeset this Traditional-Chinese sample copy:\n{copy}"
     )
+    return bundle(prompt, CARD_NEGATIVE, CARD_RULES)
 
 
 def canva_spec(style):
     return (
-        f"CANVA TEMPLATE SPEC｜Template family: {style['name']} ({style['id']}). 1080×1350 px, 9 separate pages. "
+        f"CANVA TEMPLATE SPEC｜Template family: {style['name']} ({style['id']}). "
+        f"{CARD_WIDTH}×{CARD_HEIGHT} px, 9 separate pages. "
         f"Family design grammar: {style['system']}. Safe margin 80 px. Rebuild each generated reference "
         "with named editable layers based on what that page actually uses; do not force LOGO, MOOD, CTA or HASHTAG "
         "onto every page. Use at most two font families and three brand colors. Build page 1 as the hook; pages 2–4 "

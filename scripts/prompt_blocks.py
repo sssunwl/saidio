@@ -132,6 +132,108 @@ VIDEO_NEGATIVE = (
     "watermark, dialogue or speed ramp."
 )
 
+VOICE_NEGATIVE = (
+    "禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。"
+    "禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。"
+    "禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。"
+    "禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。"
+    "禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。"
+)
+
+VOICE_RULES = (
+    "1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n"
+    "2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n"
+    "3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n"
+    "4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n"
+    "5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n"
+    "6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n"
+    "7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n"
+    "8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
+)
+
+SFX_NEGATIVE = (
+    "No music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human "
+    "voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable "
+    "media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. "
+    "No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. "
+    "No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that "
+    "collapses in mono."
+)
+
+SFX_RULES = (
+    "1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must "
+    "not be able to tell where the loop starts.\n"
+    "2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so "
+    "the file loops with a short crossfade and no seam.\n"
+    "3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n"
+    "4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep "
+    "each in its own frequency range and stereo position.\n"
+    "5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, "
+    "not a feature.\n"
+    "6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n"
+    "7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan "
+    "before the file leaves R&D."
+)
+
+BROLL_NEGATIVE = (
+    "No on-screen text, caption, subtitle, title card, logo, watermark, signature, UI element or "
+    "readable signage in any language. No recognizable real brand, storefront name, product label, "
+    "vehicle badge, currency or map. No identifiable human face, no crowd close-up, no children as the "
+    "subject. No morphing, warping, extra limbs, melting geometry, duplicated horizon, flickering "
+    "exposure or shifting colour temperature. No speed ramp, no timelapse whip, no aspect-ratio change, "
+    "no letterbox bars, no split screen, no zoom-in-and-out oscillation, no handheld shake, no drone "
+    "orbit that reveals a stitched background. No frozen water, static foliage, or environment that "
+    "moves as one flat sheet."
+)
+
+BROLL_RULES = (
+    "1. State shot size, lens feel, camera movement, light direction, time of day and mood explicitly — "
+    "an unstated parameter is a parameter the model invents.\n"
+    "2. One clip, one continuous camera move at one constant speed. No cut inside the clip.\n"
+    "3. Motion must be continuous from the first frame to the last: water, foliage, steam, traffic and "
+    "cloth never freeze, reverse or pulse.\n"
+    "4. Leave the middle third of the frame visually calm — narration subtitles land there.\n"
+    "5. Keep the subject and its action inside the central 9:16 corridor so the same clip can be "
+    "reframed for Reels without a re-render.\n"
+    "6. The first and last 12 frames must be usable as cut points: no motion blur spike, no subject "
+    "entering or leaving frame at the boundary.\n"
+    "7. Deliver 1080p or better at 24 or 30 fps, no added grain or LUT — colour grading happens in the "
+    "edit, not in the generation.\n"
+    "8. Log engine, credit cost, generation date and the focus package in the filename "
+    "(YYYYMMDD＋主題＋序號) before the file leaves R&D."
+)
+
+CARD_NEGATIVE = (
+    "No garbled, invented, mirrored or partially-rendered Chinese glyphs; no lorem ipsum, no placeholder "
+    "squiggle standing in for text, no English filler where Traditional Chinese is specified. No "
+    "watermark, signature, stock-photo mark, AI-tool badge or imitation of an existing brand, designer "
+    "or publication. No nine-cards-on-one-canvas, no phone or device mockup, no drop-shadowed card "
+    "floating on a coloured backdrop, no surrounding white canvas, no crop marks or safe-area guides. No "
+    "text, logo or key subject inside the outer safe margin or crossing a slice seam. No heavy drop "
+    "shadow, bevel, glossy gradient, neon glow, 3D extruded type or 2015-era template look. No more than "
+    "two type families or three brand colours. No emoji, no unlicensed icon set, no chart with invented "
+    "numbers presented as real data."
+)
+
+CARD_RULES = (
+    "1. Output ONE standalone card at the stated pixel size, edge to edge, with nothing outside the "
+    "artboard.\n"
+    "2. Keep an 80 px safe margin on all four sides; the Instagram grid thumbnail crops a 4:5 card on "
+    "both sides, so anything load-bearing sits centred and inside that margin.\n"
+    "3. The cover must be readable as a 160 px thumbnail: the hook needs one dominant line at 90 px or "
+    "larger and a contrast ratio of at least 4.5:1 against whatever is behind it.\n"
+    "4. Render only the copy roles this card is assigned. A card that does not need a logo, CTA or "
+    "hashtag must not show one.\n"
+    "5. Use real, legible Traditional Chinese (Taiwan usage) with punctuation, and keep body text at "
+    "36 px or larger — a phone reader is holding this at arm's length.\n"
+    "6. Every component must stay visually separable for rebuilding in Canva: text block, photo or "
+    "diagram frame, decorative element, page number. Do not print layer-instruction labels on the card.\n"
+    "7. Hold the set's brand grammar — palette, type pairing, margin, decorative device — while changing "
+    "composition and information density from card to card.\n"
+    "8. Body copy must be replaceable: no text baked into a photograph, no headline whose meaning "
+    "depends on a decorative shape that cannot be moved."
+)
+
 VIDEO_RULES = (
     "1. The camera is locked; architecture, furniture and solid props hold their exact position and "
     "scale for the whole clip.\n"
@@ -151,3 +253,31 @@ VIDEO_RULES = (
     "9. Post: remove the Veo watermark with delogo=x=1845:y=1024:w=72:h=44, then build the seamless "
     "loop with an xfade of about 1.2 s before looping the clip out to album length."
 )
+
+
+# One mapping from an item's stream + type to its blocks, so the generators and the
+# backfill script can never drift apart on which rules a given prompt gets.
+def blocks_for(stream, item_type):
+    """Return (negative, rules) for an item, or None when it carries no media prompt."""
+    label = item_type or ""
+    if stream == "voiceover":
+        if "環境音" in label or "音效" in label:
+            return SFX_NEGATIVE, SFX_RULES
+        return VOICE_NEGATIVE, VOICE_RULES
+    if stream == "suntravel":
+        return BROLL_NEGATIVE, BROLL_RULES
+    if stream == "carousel":
+        if "Canva" in label:
+            return None
+        return CARD_NEGATIVE, CARD_RULES
+    if stream == "capychill":
+        if "音樂" in label:
+            return MUSIC_NEGATIVE, CAPY_MUSIC_RULES
+        if "概念圖" in label:
+            return IMAGE_NEGATIVE, IMAGE_RULES
+        if "影片" in label:
+            return VIDEO_NEGATIVE, VIDEO_RULES
+        return None
+    if stream == "music":
+        return MUSIC_NEGATIVE, MUSIC_RULES
+    return None

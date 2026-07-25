@@ -19,7 +19,10 @@ from prompt_blocks import (  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/capychill.json"
-LOCKED_DATES = {"2026-07-23", "2026-07-24"}
+# The ten-track albums for these days are already generated, so their music prompts stay
+# exactly as published. Everything else about the day — concept frame, motion clips — is
+# rewritten, because the user is regenerating that media under the current rules.
+MUSIC_LOCKED_DATES = {"2026-07-23", "2026-07-24", "2026-07-25"}
 
 THEMES = [
     {
@@ -323,6 +326,22 @@ def make_brief(day, target_minutes=30):
     }
 
 
+def keep_published_music(fresh, previous):
+    """Reuse the exact music prompts a finished album was generated from.
+
+    The ten tracks for a locked day already exist as audio files, so re-issuing their
+    prompts would only invite a re-render. The concept frame and the motion clips are
+    still replaced, because those are the ones the current rules actually fix.
+    """
+    old_music = [item for item in previous.get("items", []) if "音樂" in (item.get("type") or "")]
+    if not old_music:
+        return fresh
+    rest = [item for item in fresh["items"] if "音樂" not in (item.get("type") or "")]
+    fresh["items"] = old_music + rest
+    fresh["summary"] = "本日十首音樂已完成，音樂 prompt 維持原樣；概念圖與微動畫已改用現行規則重寫。" + fresh["summary"]
+    return fresh
+
+
 def main():
     payload = json.loads(DATA.read_text())
     start = date.today()
@@ -333,9 +352,11 @@ def main():
     # Refresh yesterday as well so prompt-rule fixes reach the most recent completed album.
     for offset in range(-1, 7):
         day = start + timedelta(days=offset)
-        if day.isoformat() in LOCKED_DATES and day.isoformat() in by_date:
-            continue
-        by_date[day.isoformat()] = make_brief(day, target_minutes)
+        key = day.isoformat()
+        fresh = make_brief(day, target_minutes)
+        if key in MUSIC_LOCKED_DATES and key in by_date:
+            fresh = keep_published_music(fresh, by_date[key])
+        by_date[key] = fresh
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")

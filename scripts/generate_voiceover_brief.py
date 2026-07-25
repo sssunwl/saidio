@@ -11,6 +11,9 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import blocks_for, bundle, is_bundled  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/voiceover.json"
 
@@ -41,8 +44,10 @@ Return JSON only with keys: title, focus, meta, summary, items.
   * Items 5-6: type="環境音", engine="SFX", voice="", status="prompt".
     text = an English sound-design prompt for an ambience/SFX loop that fits the {theme}
     (state duration ~30-60s, loopable, no music, no copyrighted material).
-All items must set purpose="{theme}". No artist or existing-song references, no copyrighted
-samples. Do not claim any audio has already been generated."""
+All items must set purpose="{theme}". Do not claim any audio has already been generated.
+Write only the script or sound-design brief itself: do not add a negative-prompt list, a rules
+section, headings, or production notes. Those blocks are appended automatically afterwards, and a
+second copy of them inside your text makes the pasted prompt contradict itself."""
 
 
 def call_gemini(prompt, key, model):
@@ -70,6 +75,21 @@ def call_gemini(prompt, key, model):
             return None
 
 
+def bundle_items(brief):
+    """Attach NEGATIVE + RULES to every item, so one copied line is the whole package."""
+    changed = False
+    for item in brief.get("items", []):
+        text = item.get("text")
+        if not isinstance(text, str) or is_bundled(text):
+            continue
+        pair = blocks_for("voiceover", item.get("type"))
+        if pair is None:
+            continue
+        item["text"] = bundle(text, *pair)
+        changed = True
+    return changed
+
+
 def main():
     key = os.environ.get("GEMINI_API_KEY")
     if not key:
@@ -91,11 +111,16 @@ def main():
             sys.exit("Gemini response did not contain exactly six items")
         brief["date"] = today
         brief["stream"] = "voiceover"
+        bundle_items(brief)
         if existing_index is None:
             payload["briefs"].append(brief)
         else:
             payload["briefs"][existing_index] = brief
         payload["stream"] = "voiceover"
+        payload["updatedAt"] = f"{today}T09:18:00+09:00"
+        DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    elif bundle_items(brief):
+        # An earlier run wrote this brief before the rules existed; upgrade it for free.
         payload["updatedAt"] = f"{today}T09:18:00+09:00"
         DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 

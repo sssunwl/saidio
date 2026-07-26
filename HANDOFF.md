@@ -301,3 +301,37 @@ Canva 連接器抓公開圖用的丟棄式空間,以後每個行業包都可以�
 只列出舊的 `EAHQd4F-edo`(內容還是最初沒背景的版本)。用 `get-brand-template-dataset(EAHQfHucRM8)`
 直接查才確認新版真的存在、21 欄位都在——**search 的索引比實際建立慢,不能只憑 search 判斷發佈成功與否**,
 要用 `get-brand-template-dataset` 直接戳 id 才準。
+
+## 2026-07-26(再晚):線稿類母圖改成 Canva 原生向量畫,不再外部生圖
+
+SS 兩個回饋都是對的,而且指向同一個結論:
+①「三個風格背景都長一樣」——生圖工具收斂成同一種調性,換 prompt 文字沒有真的換出風格差異;
+②「你能操控 Canva,為什麼不直接在裡面做」——問得對。
+
+**改用 `insert_shape` 直接畫向量拱門**,不再靠 ChatGPT Images/Imagen 生背景圖再貼進 Canva。
+拱門是一條 SVG path(`M0 H L0 r A r r 0 0 1 W r L W H`,r=width/2 畫出正圓弧),
+`insert_shape` 支援 M/L/A 指令,半圓拱門一次到位、線條保證銳利(向量,不是點陣放大)。
+
+**好處是三個問題一次解決**:
+- 不會糊(向量沒有「放大倍率」這回事)
+- 不會漂移(座標自己算,要多準有多準)
+- 不用託管(不用建 scratch repo、不用簽名網址、不用煩惱 Canva 抓不抓得到)
+
+**「每張都一樣很難賣」也是對的**——第一次只做了一張範例就急著問方向,等於自己也犯了同一個錯。
+補救:9 張全部重做,同一套語言(線色 `#B8996F`、同一排版)但構圖各自不同——
+大拱門/單拱門(左右各一次,鏡射)/雙拱門/小拱門/無拱門(視覺停頓卡故意留白)/窄長拱門/
+置中小拱門(收束卡)/實心色塊(CTA 卡,唯一填滿的一張,標記收尾)。
+位置用「清空區」原則手算(避開既有文字的 bounding box),不是憑感覺亂擺。
+
+**這對系統的結論**:線稿/幾何類視覺語言(這款、瑞士方格、展間掛牌都算——這三款母圖規則本來就
+只有線條沒有照片)**以後直接向量畫,不進 `segment_plate_prompt()` 那條外部生圖的路**。
+分段生成/seam report/scratch repo 那整套仍然保留,但只留給**真的需要照片質感或複雜紋理**的
+未來款式——目前九個買家行業裡還沒有一個非得靠外部生圖不可,所以短期內這條路可能都用不到。
+
+新設計 id `DAHQgWZnzi8`(從 Brand Template `EAHQfHucRM8` 複製出的最新工作副本)。
+成品 PNG 存 `SonaSNS-Platform/IGcarousell/Template/20260726-coach-list-quietarch/vector_final/`。
+
+⚠️ **這個 design id 之後大概率也會在下次 publish 後失效**(第三次遇到同樣模式:
+publish-brand-template 之後,原本的工作 design 就讀不到了)。下次要接著改,
+先用 `create-design-from-brand-template(最新模板id)` 生一份新副本再開始,
+不要嘗試回頭改舊的 design id。

@@ -222,3 +222,34 @@ Canva design id `DAHQdxXsoZ0`;PNG 存 `resource/carousel/20260726-coach-list-qui
 
 ⚠️ 先前估的「autofill 之後每組上字 ~5 分鐘」**尚未驗證**。第一份模板是手工組出來的,花了約二十趟 API。
 tag + publish 之後才知道真實速度。
+
+## 2026-07-26(續):autofill 已 tag 並發成 Brand Template
+
+**Brand Template `EAHQd4F-edo`**(「Sophisticated Brand Positioning Instagram Carousel」),
+dataset 21 個欄位全部生效,`search-brand-templates(dataset:"non_empty")` 查得到:
+
+```
+card1_kicker / card1_number / card1_headline / card1_logo
+card2_kicker / card2_body   … card5_kicker / card5_body
+card6_pause
+card7_kicker / card7_body
+card8_kicker / card8_takeaway
+card9_logo / card9_cta / card9_secondary / card9_hashtags
+```
+頁碼與封面滑動提示**刻意不 tag**(每組都一樣,tag 了只是增加填表負擔)。
+
+### 三件實測出來的事
+
+1. **`publish-brand-template` 會回錯誤但其實已經成功。** 訊息是
+   `Not allowed to access brand template with id 'EAHQd4F-edo'` —— 那是發佈後「回讀」的權限問題,
+   模板本身已建立、dataset 也正確。**不要因為看到這個錯誤就重跑發佈**,先用
+   `search-brand-templates(dataset:"any")` 確認。
+2. **這個 connector 沒有 `autofill-design` 工具。** 其他工具的說明文字有提到它,但實際可用清單裡沒有。
+   所以「餵一列資料 → 自動產一份設計」目前**不能全程由程式跑完**。兩條替代路:
+   (a) SS 在 Canva 介面用 Bulk Create + CSV(dataset 已經在,這條可用);
+   (b) 我用 `create-design-from-brand-template` 複製九頁,再逐頁 `replace_text`
+       —— 省掉全部排版工,約 10 趟 API(從零組版是約 20 趟),但不是一鍵。
+3. ⚠️ **一個結構一個母模板,不是一個行業一個。** dataset 綁在版面上,
+   `列表款×靜謐拱窗編輯誌` 是 9 頁,7/27 的 `金句款×模組方格` 是 6 頁、版面也不同 —— **套不進去**。
+   → 正確的量產計畫是:**先做 7 個母模板(一個 STORY_STRUCTURE 一個)**,
+   之後九個行業就只是換資料。做完 7 個,行業包才真的變便宜。

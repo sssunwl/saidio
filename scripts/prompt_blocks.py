@@ -240,7 +240,12 @@ PLATE_NEGATIVE = (
     "AI-tool badge. No human figure, face, hand, animal or recognizable branded product. No card "
     "borders, frames, crop marks, seam guides, gutters, drop-shadowed panels or anything that reads as "
     "a divided grid of separate cards. No phone mockup, no presentation slide, no surrounding canvas. "
-    "No high-detail focal subject and no photographic centrepiece — a plate is a stage, not a picture. "
+    "NO PHOTOGRAPHY ANYWHERE ON THE PLATE — no photographic landscape, interior, sky, foliage, texture "
+    "photo or photo-realistic fill, not even faint, tinted, cropped inside a frame or used as a corner "
+    "accent. Photo windows must be left EMPTY: draw the frame outline only and leave the inside as the "
+    "plain paper ground. Photographs are placed in Canva afterwards at full resolution, because the "
+    "plate is stretched about 5× horizontally and any photograph in it smears into pulp. "
+    "No high-detail focal subject and no illustrated centrepiece — a plate is a stage, not a picture. "
     "No hard vignette, heavy noise, neon glow or blown-out highlight that would fight typography."
 )
 

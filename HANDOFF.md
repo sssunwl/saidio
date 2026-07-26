@@ -183,3 +183,42 @@ SS:「不要寫太單一的輪播圖 Prompt,我想做出很多不同款又好看
 
 **產品決定**:動態頁(Canva 頁面動畫)**改走代做服務**,不放進模板包 —— 買家自己做的成功率太低,
 賣他做不出來的檔案會變客訴。服務文案在 `GUMROAD_LISTING.md`。
+
+## 2026-07-26(晚):Canva 連接器實測 —— 端到端跑完 7/26 商業教練那組
+
+SS 已授權 Canva 連接器(可用;帳號下有 4 個 brand kit:OkinawaSunDays / TT / Seasee / OKIPLAYGROUND,
+本次**刻意不套**,因為這是要賣的模板,必須品牌中性)。
+
+**成品**:9 張 1080×1440 的「商業教練｜品牌定位｜列表款 × 靜謐拱窗編輯誌」。
+Canva design id `DAHQdxXsoZ0`;PNG 存 `resource/carousel/20260726-coach-list-quietarch/`(不進 git)。
+
+### 實測結論:Canva 的 AI 生成做不出「照規格的一整組輪播」
+
+`generate-design` 四個候選沒有一個能用:一個幾乎全空、一個是不相干的實景照片版型、
+一個**直接生成九宮格 contact sheet**(正是 `CAROUSEL_RULES.md` 明令禁止的)、一個是單張裝飾封面。
+而且 `instagram_post` preset 是 1080×1350(4:5),要再 `resize-design` 成 custom 1080×1440。
+
+→ **可行路徑是程式化組版**:`read-design(open_transaction)` → `edit-design` 的
+`add_page` / `add_text` / `insert_shape` / `format_text` / `position_element` → `commit`。
+完全可控:邊界、字級、顏色、角色分工都照 `CAROUSEL_RULES.md` 落地。
+
+### 三個要記住的 API 限制
+
+1. **`format_text` 沒有字型家族參數**。設得了級數/顏色/字重/行高,**設不了 serif↔grotesk**。
+   所以 `TYPE_PAIRINGS` 這個維度目前只能靠人在 Canva 裡手動換字型。生成器照樣要寫,
+   因為那是給人看的規格,但別以為 API 會自動套。
+2. **`add_text` 一律以 16px 黑字落地**,必須第二趟 `format_text`。也就是每頁最少兩次呼叫
+   (加元素一次、排版一次),因為 format 需要的 element_id 只有加完才拿得到。
+3. **`resize-design` 會產生新的 design id**,不是原地改。舊 id 要丟掉。
+
+### 這一組還沒做完的三件事
+
+- **母圖還沒接**:SS 還沒生連續背景帶。第 1 張沿用 AI 給的奶油色拱窗紙紋當背景,第 2–9 張是純色。
+  母圖生好之後把切片放到每張的最底層即可。
+- **autofill 還沒 tag**:目前是一份普通 design,不是 Brand Template。要用
+  `edit-design` 的 `update_autofill_field` 幫每個文字框掛欄位名(p1_headline、p2_body…),
+  再 `publish-brand-template`。**沒做這步,明天的房仲包還是要重來一次同樣的組版流程。**
+- 字型配對(serif-led)未套用,見限制 1。
+
+⚠️ 先前估的「autofill 之後每組上字 ~5 分鐘」**尚未驗證**。第一份模板是手工組出來的,花了約二十趟 API。
+tag + publish 之後才知道真實速度。

@@ -253,3 +253,51 @@ card9_logo / card9_cta / card9_secondary / card9_hashtags
    `列表款×靜謐拱窗編輯誌` 是 9 頁,7/27 的 `金句款×模組方格` 是 6 頁、版面也不同 —— **套不進去**。
    → 正確的量產計畫是:**先做 7 個母模板(一個 STORY_STRUCTURE 一個)**,
    之後九個行業就只是換資料。做完 7 個,行業包才真的變便宜。
+
+## 2026-07-26(深夜):第一組完整成品做完 —— 商業教練 9 張,背景+文字都到位
+
+**設計**:`DAHQeQnrU7M`(從 Brand Template `EAHQd4F-edo` 複製出的工作副本)。
+**Brand Template 已更新**:`EAHQfHucRM8`(21 欄位 dataset 生效,`get-brand-template-dataset` 驗證過)。
+成品 PNG 存 `SonaSNS-Platform/IGcarousell/Template/20260726-coach-list-quietarch/final_cards/`。
+
+### 圖片託管:公開 URL 只吃得動一種格式
+
+Canva 的 `upload-asset-from-url` **只接受直接回 200 的 URL,不能是簽名重導向**:
+- GitHub Release 附件的下載連結是 302 轉址到 Azure blob 簽名 URL —— `curl` 抓得到、Canva 抓不到,
+  9 次全部 `fetch_failed`(即使簽名 URL 本身立即用 curl 驗證仍是 200)。懷疑是 Canva 的抓取器
+  不跟 redirect,或不接受 `Content-Type: application/octet-stream`。
+- 改用 **`raw.githubusercontent.com`**(plain 200、`Content-Type: image/png`)全部成功。
+→ **以後餵圖給 Canva,一律用 raw.githubusercontent.com,不要用簽名轉址連結。**
+
+新建了一個**專用的暫存 repo**:`sssunwl/canva-scratch-assets`(public)——不放進 `saidio` 本身,
+因為 `saidio` 有「repo 只存文字不存媒體」的規則(Footage 教訓)。這個 scratch repo 就是給
+Canva 連接器抓公開圖用的丟棄式空間,以後每個行業包都可以往這丟,定期清空即可。
+
+### 一個真的會炸的坑:editing transaction 會過期,而且過期不會告訴你
+
+開一個 `read-design(open_transaction:true)` 之後,如果中間插了太多其他呼叫(對話被中斷、
+工具暫時不可用之類),**transaction 會悄悄過期**,之後的 `edit-design` 全部回
+`Editing transaction ... not found`。更糟的是:**過期前已經做的所有 insert/layer 都不會保留**,
+因為從頭到尾沒有呼叫 `commit`——回頭 `read-design` 會發現設計整個打回原形。
+這次因此把 4 頁的背景插入工作重做了一次。
+
+→ **教訓:每處理完 2–3 頁就呼叫一次 `commit`**,不要囤到最後一次性 commit。
+`layer_element` 需要 `insert_fill` 回傳的 element_id,所以每頁至少要兩次 `edit-design` 呼叫
+(插入一次、疊層一次),抓緊時機盡快 commit。
+
+### 產品邏輯的坑:CTA 卡不能自己選深色底
+
+原始手工版第 9 頁(CTA)是我自己選的深咖啡實色底 + 淺色字,但母圖系統的整條 strip
+只有**一個色票**(這正是「同一組必然統一」的設計初衷)。貼上母圖切片後,CTA 卡背景
+從深咖啡變成跟其他 8 張一樣的暖米色,淺色字整個讀不出來。
+**修法**:CTA 卡文字改用跟其他卡一樣的深墨色(`#5C4433`/`#8F6342`/`#A89078`),
+不再假設 CTA 卡背景會不一樣。**以後手工組模板,CTA 卡不要另外挑背景色**,
+要嘛在母圖規則裡明講「最後一張要深色」,要嘛就跟其他卡同色——目前選了後者。
+
+### Canva `publish-brand-template` 這次不是同一種假錯誤
+
+之前(7/26 稍早)發佈完的「無法存取」錯誤是假警報,`search-brand-templates` 馬上就查得到。
+**這次不一樣**:發佈後回的錯誤裡新 id 是 `EAHQfHucRM8`,但 `search-brand-templates` 完全不列出它、
+只列出舊的 `EAHQd4F-edo`(內容還是最初沒背景的版本)。用 `get-brand-template-dataset(EAHQfHucRM8)`
+直接查才確認新版真的存在、21 欄位都在——**search 的索引比實際建立慢,不能只憑 search 判斷發佈成功與否**,
+要用 `get-brand-template-dataset` 直接戳 id 才準。

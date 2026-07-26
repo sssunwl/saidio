@@ -45,6 +45,9 @@ jobs:
           python scripts/generate_suntravel_brief.py
           python scripts/generate_capychill_briefs.py
           python scripts/generate_carousel_briefs.py
+          # Idempotent safety net: anything that reached the archive without its
+          # NEGATIVE + RULES blocks gets them here, with no API call.
+          python scripts/backfill_prompt_blocks.py
       - name: Generate media through Gemini APIs
         if: ${{ (github.event_name == 'schedule' && vars.SAIDIO_MEDIA_ENABLED == 'true') || (github.event_name == 'workflow_dispatch' && inputs.generate_media) }}
         env:

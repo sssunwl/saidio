@@ -258,7 +258,16 @@ PLATE_RULES = (
     "6. Output the widest aspect ratio the tool offers at the highest available resolution; the strip is "
     "fitted and cut afterwards by scripts/split_carousel.py.\n"
     "7. Detail level matters more than pixel count here: the plate is stretched several times its "
-    "generated width, which soft texture survives and fine structure does not."
+    "generated width, which soft texture survives and fine structure does not.\n"
+    "8. PRE-COMPRESS THE GEOMETRY. You can only output about 2.25:1 but the strip is 6.75:1, so "
+    "everything you draw is stretched roughly 3× wider afterwards. Draw every arch, frame, circle or "
+    "motif THREE TIMES NARROWER than it should finally look — a tall narrow arch here becomes a "
+    "correctly-proportioned arch on the card. Horizontal rules and bands are unaffected.\n"
+    "9. ONE MOTIF PER CARD, evenly spaced. If the set is N cards, place exactly N repeats across the "
+    "strip, each centred in its own 1/N slice, so no card inherits a motif that has drifted off-centre "
+    "or been split between two cards.\n"
+    "10. No vertical dividing rules between the repeats. A vertical line at a cut turns the swipe into "
+    "a row of bordered panels, which is the one thing the plate must never look like."
 )
 
 VIDEO_RULES = (

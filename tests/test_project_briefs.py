@@ -134,6 +134,36 @@ class ProjectBriefsTest(unittest.TestCase):
         coach = [t.split("｜")[2] for t, _ in looks if "商業教練" in t]
         self.assertEqual(len(set(coach)), len(coach), coach)
 
+    def test_segment_plate_covers_its_own_card_range_and_no_others(self):
+        # 分段生成的核心承諾:每段只描述自己那 3 張,不重複、不跳號、不越界。
+        family = carousel.VISUAL_FAMILIES[0]
+        cards, segment_count = 9, 3
+        seen = set()
+        for i in range(segment_count):
+            text = carousel.segment_plate_prompt(
+                family, "warm-neutral", "warm cream, espresso brown", cards, i, segment_count)
+            self.assertTrue(blocks.is_bundled(text))
+            first, last = i * 3 + 1, min(cards, (i + 1) * 3)
+            self.assertIn(f"cards {first}–{last}", text)
+            seen.update(range(first, last + 1))
+        self.assertEqual(seen, set(range(1, cards + 1)))
+
+    def test_segment_plate_drops_the_pre_compress_hack_a_9card_plate_needs(self):
+        # 9 張一條要求「先畫窄 3 倍」補償非等比拉伸;3 張一段的拉伸接近等比,這條補償應該消失。
+        family = carousel.VISUAL_FAMILIES[0]
+        whole = carousel.plate_prompt(family, "warm-neutral", "warm cream, espresso brown", 9)
+        segment = carousel.segment_plate_prompt(
+            family, "warm-neutral", "warm cream, espresso brown", 9, 0, 3)
+        self.assertIn("PRE-COMPRESS", whole)
+        self.assertNotIn("PRE-COMPRESS", segment)
+        self.assertIn("interchangeable slice", segment.replace("\n", " "))
+
+    def test_segment_split_command_maps_each_file_to_the_right_cards(self):
+        cmd = carousel.segment_split_command(["a.png", "b.png", "c.png"], 9)
+        self.assertIn("a.png --cards 3", cmd)
+        self.assertIn("卡 1/2/3", cmd)
+        self.assertIn("卡 7/8/9", cmd)
+
     def test_industry_pack_card_count_follows_its_story_structure(self):
         # 頁數跟著結構走（金句款 6 張、客戶疑慮款 7 張…），不是每天都硬湊九張。
         counts = set()

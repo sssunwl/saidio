@@ -21,7 +21,9 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from prompt_blocks import CARD_NEGATIVE, CARD_RULES, PLATE_NEGATIVE, PLATE_RULES, bundle  # noqa: E402
+from prompt_blocks import (  # noqa: E402
+    CARD_NEGATIVE, CARD_RULES, PLATE_NEGATIVE, PLATE_RULES, SEGMENT_PLATE_RULES, bundle,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/carousel.json"
@@ -390,6 +392,61 @@ def split_command(source_name, cards):
         "母圖是抽象紋理才用預設 `--fit stretch`；若母圖有拱門、照片框、物件等可辨識結構，"
         "改用 `--fit cover`（保幾何但裁掉大部分高度）。"
     )
+
+
+SEGMENT_SIZE = 3  # cards per segment — matches most image models' native ~2.25:1 output
+
+
+def segment_plate_prompt(family, colour_id, palette, cards, segment_index, segment_count,
+                          surface=SURFACES[0]):
+    """One text-free plate covering SEGMENT_SIZE cards, not the whole set.
+
+    Why this exists: a 9-card strip is 6.75:1, but an image model gives roughly 2.25:1 — a
+    5.17× horizontal stretch against only 1.72× vertical. That mismatch is what squashes arches
+    and other round motifs sideways, on top of the blur that any 5× upscale causes. A 3-card
+    segment's target ratio (2.25:1) lands close to what the model already outputs natively, so
+    the stretch is close to uniform in both directions and only ~1.7× — no squash, less blur.
+
+    Segments are generated independently (three separate calls to the image tool) and never
+    share pixels at the join, so the prompt leans hard on "no directional gradient" (rule 5 in
+    SEGMENT_PLATE_RULES) rather than on matching anything across calls.
+    """
+    strip_width = CARD_WIDTH * SEGMENT_SIZE
+    surface_id, surface_desc = surface
+    first_card = segment_index * SEGMENT_SIZE + 1
+    last_card = min(cards, (segment_index + 1) * SEGMENT_SIZE)
+    prompt = (
+        f"Create ONE wide, seamless, TEXT-FREE background plate — segment {segment_index + 1} of "
+        f"{segment_count} in a {cards}-card Instagram carousel set. This segment alone will be "
+        f"machine-split into {SEGMENT_SIZE} separate {CARD_RATIO} cards of {CARD_WIDTH}×{CARD_HEIGHT} px "
+        f"(cards {first_card}–{last_card} of the full set), so compose it as one continuous horizontal "
+        f"strip that reads left to right (this segment's strip size {strip_width}×{CARD_HEIGHT}). "
+        "Output the widest aspect ratio this tool supports; the strip is fitted afterwards. "
+        f"TEMPLATE FAMILY {family['id']}｜{family['name']}. Design grammar: {family['system']}. "
+        f"CONTINUOUS STRUCTURE — this is the whole point of the plate: {family['plate']}. "
+        f"Colourway {colour_id}: {palette}. Surface {surface_id}: {surface_desc}. "
+        f"Every {CARD_WIDTH} px along the strip is a cut line: keep the design either continuous across "
+        f"those cuts or clear of them, and never place a self-contained motif so that it straddles one. "
+        "Leave broad calm areas with no detail — headlines, body copy and logos are typeset in Canva on "
+        "top of this plate, and they need somewhere quiet to land."
+    )
+    return bundle(prompt, PLATE_NEGATIVE, SEGMENT_PLATE_RULES)
+
+
+def segment_split_command(source_names, cards):
+    lines = [f"# {SEGMENT_SIZE} 段各自獨立生成、各自獨立切,不要先拼接再切"]
+    for i, name in enumerate(source_names):
+        first = i * SEGMENT_SIZE + 1
+        last = min(cards, (i + 1) * SEGMENT_SIZE)
+        lines.append(
+            f"python3 scripts/split_carousel.py {name} --cards {SEGMENT_SIZE} "
+            f"--out seg{i + 1}_cards/   # → 這段輸出的 01/02/03 就是卡 {first}/{first+1}/{last}"
+        )
+    lines.append(
+        f"先看每段自己的 seam preview：紅帶是每個切點左右各 {SEAM_DANGER}px 的禁區。"
+        "母圖是抽象紋理才用預設 `--fit stretch`；若有拱門、照片框等可辨識結構，改用 `--fit cover`。"
+    )
+    return "\n".join(lines)
 
 
 def card_prompt(family, role, index, cards, context, colour_id, palette, typeset=TYPE_PAIRINGS[0]):

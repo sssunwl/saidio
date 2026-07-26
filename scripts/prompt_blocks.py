@@ -275,6 +275,33 @@ PLATE_RULES = (
     "a row of bordered panels, which is the one thing the plate must never look like."
 )
 
+# A 9-card plate is stretched 5.17× horizontally against 1.72× vertically — the mismatch itself
+# squashes arches and other round geometry sideways, on top of the blur plain upscaling causes.
+# A 3-card segment's target ratio (3:4 × 3 cards wide) lands within a few percent of what most
+# image models natively output, so the stretch is close to uniform in both directions: no more
+# squash, and only one clean ~1.7× upscale instead of a lopsided 5×. Rule 8 (pre-compress the
+# geometry 3× narrower) is gone because there is nothing left to compensate for.
+SEGMENT_PLATE_RULES = (
+    "1. This plate is a background only. Text is typeset on top of it later, so more than half of the "
+    "surface must stay quiet enough to read 36 px body copy against.\n"
+    "2. Compose as one continuous strip. Any structural element — rule, band, path, torn edge, gradient "
+    "— must run unbroken from the left edge to the right edge of THIS segment.\n"
+    "3. Self-contained motifs must not straddle a cut line. Either repeat them on a rhythm that clears "
+    "the cuts, or let the design be genuinely continuous instead.\n"
+    "4. Keep contrast low and even along the whole segment: one end darker than the other makes "
+    "neighbouring segments visibly mismatched when placed side by side.\n"
+    "5. Hold one palette and one texture for the entire segment — the same ones used in the other "
+    "segments of this set. Do not introduce a gradient, vignette or lighting direction that would make "
+    "this segment identifiable as \"the left one\" or \"the right one\": every segment must look like an "
+    "interchangeable slice of the same infinite pattern, because segments are generated independently "
+    "and never touch pixel-for-pixel at the join.\n"
+    "6. Output the widest aspect ratio the tool offers at the highest available resolution.\n"
+    "7. ONE MOTIF PER CARD in this segment, evenly spaced, each centred in its own 1/3 slice of this "
+    "segment — not drifted off-centre, not split across a cut.\n"
+    "8. No vertical dividing rules between the repeats. A vertical line at a cut turns the swipe into "
+    "a row of bordered panels, which is the one thing the plate must never look like."
+)
+
 VIDEO_RULES = (
     "1. The camera is locked; architecture, furniture and solid props hold their exact position and "
     "scale for the whole clip.\n"

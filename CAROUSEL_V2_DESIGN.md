@@ -157,4 +157,7 @@ IG 輪播可以混圖片與影片。兩個放法：
 `scripts/split_carousel.py`（新增，含 seam preview）、`scripts/prompt_blocks.py`（新增 `PLATE_*`）、
 `CAROUSEL_RULES.md`（改寫為 v2）。
 
-**還沒做的**：LICENSE.md 草稿、Gumroad 產品頁文案、動態頁（Canva 頁面動畫）流程。
+**2026-07-26 補上**：`LICENSE.md`（買家可用於自己與客戶的貼文、不可轉售模板本身；字體全走 OFL 開源，
+不碰 Canva Pro 專屬字體）、`GUMROAD_LISTING.md`（四層定價的產品頁文案 + 視覺素材清單 + 驗證門檻）。
+
+**還沒做的**：動態頁（Canva 頁面動畫）流程 —— 見第 5 節，要寫成一份可照做的 SOP。

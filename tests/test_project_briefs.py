@@ -101,14 +101,14 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertIn("64% of image width", first_prompt)
         self.assertIn("42% of image width", second_prompt)
 
-    def test_universal_kit_runs_first_then_industry_packs(self):
-        # 百搭先上：the first five days are the structure-first kit, then buyers' industries.
+    def test_industry_packs_run_first_then_universal_kit(self):
+        # 買家先上：教練／房仲／攝影師… 是真的會掏錢的人，百搭 Kit 排在九天之後補齊。
+        week = [carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=n)) for n in range(9)]
+        self.assertTrue(all(brief["title"].startswith("IG 行業包") for brief in week))
+        self.assertIn("商業教練", week[0]["title"])
         kit = [carousel.make_brief(carousel.UNIVERSAL_EPOCH + timedelta(days=n)) for n in range(5)]
-        self.assertEqual(len({brief["title"] for brief in kit}), 5)
         self.assertTrue(all(brief["title"].startswith("IG 百搭 Kit") for brief in kit))
-        first_industry = carousel.make_brief(carousel.INDUSTRY_EPOCH)
-        self.assertTrue(first_industry["title"].startswith("IG 行業包"))
-        self.assertIn("商業教練", first_industry["title"])
+        self.assertEqual(len({brief["title"] for brief in kit}), 5)
 
     def test_one_day_is_one_industry_not_nine_days_per_brand(self):
         # The whole reason for the master-plate rewrite: a brand is a day's work.
@@ -116,10 +116,35 @@ class ProjectBriefsTest(unittest.TestCase):
         industries = [brief["title"].split("｜")[1] for brief in week]
         self.assertEqual(len(set(industries)), 9, industries)
         # Coming back to the same industry next round must not reuse the same look.
-        again = carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=9))
+        again = carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=carousel.CYCLE_DAYS))
         self.assertIn("商業教練", again["title"])
         self.assertNotEqual(again["title"], week[0]["title"])
         self.assertNotEqual(again["focus"], week[0]["focus"])
+
+    def test_no_two_days_ever_look_the_same(self):
+        # SS 的要求是「很多不同款」：視覺 × 配色 × 字型 × 質感 × 結構 五個維度用互質步長輪替，
+        # 任何兩天都不該撞在同一個組合上。七種結構會被十四天的循環整除，那個共振特別容易回歸。
+        looks = [
+            (brief["title"], brief["meta"])
+            for brief in (
+                carousel.make_brief(carousel.EPOCH + timedelta(days=n)) for n in range(140)
+            )
+        ]
+        self.assertEqual(len(set(looks)), len(looks))
+        coach = [t.split("｜")[2] for t, _ in looks if "商業教練" in t]
+        self.assertEqual(len(set(coach)), len(coach), coach)
+
+    def test_industry_pack_card_count_follows_its_story_structure(self):
+        # 頁數跟著結構走（金句款 6 張、客戶疑慮款 7 張…），不是每天都硬湊九張。
+        counts = set()
+        for n in range(len(carousel.INDUSTRIES)):
+            brief = carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=n))
+            cards = [i for i in brief["items"] if i["type"].startswith("圖卡文字")]
+            self.assertIn(f"--cards {len(cards)}",
+                          next(i["text"] for i in brief["items"] if i["type"] == "分割指令"))
+            self.assertTrue(6 <= len(cards) <= 12, len(cards))
+            counts.add(len(cards))
+        self.assertGreater(len(counts), 1)
 
     def test_card_count_varies_by_structure_and_stays_in_range(self):
         counts = {}

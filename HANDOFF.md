@@ -156,3 +156,30 @@ GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳
   字體只用 OFL 開源字體,**不碰 Canva Pro 專屬字體**(否則買家不能外發給客戶)。
 - `GUMROAD_LISTING.md` —— 四層定價的產品頁文案(免費導流 / US$19 百搭 Kit / US$49 行業包 /
   US$99 代理授權)、標題關鍵字、視覺素材清單、上架後導流與驗證門檻。所有 `〔〕` 是上架前要填的欄位。
+
+## 2026-07-26(下午):行業包排前面 + 五個維度打散「長得都一樣」
+
+SS:「不要寫太單一的輪播圖 Prompt,我想做出很多不同款又好看的。」另外要求**行業包先跑**
+(教練/房仲/攝影師/課程創作者才是掏錢的買家)。
+
+`scripts/generate_carousel_briefs.py`:
+
+- **排程改成 14 天一循環**:9 天行業包 → 5 天百搭 Kit。`EPOCH=2026-07-26`、`CYCLE_DAYS=14`;
+  `INDUSTRY_EPOCH=EPOCH`、`UNIVERSAL_EPOCH=EPOCH+9`(名字留著,值對調了)。
+  `main()` 的 `start` 也要跟著用 `EPOCH`,不然會從百搭那天才開始寫。
+- **五個正交維度**,各用互質步長輪替(`pick()`):
+  20 `VISUAL_FAMILIES` × 10 `COLOURWAYS` × 6 `TYPE_PAIRINGS` × 5 `SURFACES` × 7 `STORY_STRUCTURES`。
+  視覺語法(怎麼長)與故事結構(怎麼講)是**正交**的:`industry_brief()` 把兩者組成一個 `look` 再餵給
+  既有的 prompt builder,所以 `plate_prompt()`/`card_prompt()` 不用改介面。
+- ⚠️ **7 種結構會被 14 天整除**。單用日次會讓同一個行業每輪都拿到同一個結構(共振),
+  所以結構的 index 是 `day_index + round_index`。改 `CYCLE_DAYS` 或結構數時,
+  一定要重跑 `test_no_two_days_ever_look_the_same`(檢查 140 天內零重複組合)。
+- **頁數跟著結構走**(金句 6 / 客戶疑慮 7 / 對比與誤解破除 8 / 清單、步驟、案例 9),不再硬湊九張。
+  賣的時候標題的頁數要跟實際檔案一致。
+- 百搭 Kit 的三個配色也隨輪次前進,第二輪的列表款不會跟第一輪同色。
+
+`data/carousel.json` 已重生(7/26 → 8/8);7/23–7/25 三筆舊格式維持鎖定不動。
+25 個測試全過。
+
+**產品決定**:動態頁(Canva 頁面動畫)**改走代做服務**,不放進模板包 —— 買家自己做的成功率太低,
+賣他做不出來的檔案會變客訴。服務文案在 `GUMROAD_LISTING.md`。

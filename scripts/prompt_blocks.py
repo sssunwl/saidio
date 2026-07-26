@@ -244,7 +244,7 @@ PLATE_NEGATIVE = (
     "photo or photo-realistic fill, not even faint, tinted, cropped inside a frame or used as a corner "
     "accent. Photo windows must be left EMPTY: draw the frame outline only and leave the inside as the "
     "plain paper ground. Photographs are placed in Canva afterwards at full resolution, because the "
-    "plate is stretched about 5× horizontally and any photograph in it smears into pulp. "
+    "plate is stretched to fit the strip afterwards and any photograph in it smears into pulp. "
     "No high-detail focal subject and no illustrated centrepiece — a plate is a stage, not a picture. "
     "No hard vignette, heavy noise, neon glow or blown-out highlight that would fight typography."
 )

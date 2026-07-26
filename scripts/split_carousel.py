@@ -56,48 +56,70 @@ def ink_profile(strip):
     return [max(0, paper - v) for v in values]
 
 
-def best_trim(strip, master_width, cards):
-    """How much to trim off the master's left so each card gets a centred motif.
+def find_motif_centres(master, cards):
+    """Locate the repeating motif once per card, by its vertical strokes.
 
-    An image model cannot land its motifs on exact 1/N boundaries, so an otherwise
-    correct plate still slices arches down the middle. Trimming where we start cutting
-    is free; moving the artwork is not.
-
-    The objective is CENTRING, not "quiet at the seam". Minimising ink at the cuts has
-    a degenerate answer for frame-shaped motifs — an arch's interior is bare paper, so
-    the cheapest seam runs straight through the middle of an arch. Measured on the
-    first real plate that made the drift three times worse. Centring each card's ink
-    mass is what actually matches the eye.
+    Sampled from the middle band only: the top is usually empty and the bottom often
+    carries a continuous rule, and neither says anything about where a repeat sits.
+    Returns one centre per repeat, or None when the plate has no countable rhythm
+    (a gradient wash, a plain texture) or the count does not match the card count.
     """
-    ink = ink_profile(strip)
-    strip_width = strip.width
-    half = CARD_WIDTH / 2
+    width, height = master.size
+    band = master.convert("L").crop((0, round(height * 0.25), width, round(height * 0.70)))
+    values = list(band.resize((width, 1), Image.Resampling.BOX).getdata())
+    paper = sorted(values)[int(len(values) * 0.95)]
+    ink = [max(0, paper - v) for v in values]
+    if not any(ink):
+        return None
 
-    def cost(trim):
-        # Trimming `trim` master px rescales the remainder over the whole strip.
-        span = master_width - trim
-        if span < master_width * 0.5:
-            return float("inf")
-        total = 0.0
-        for index in range(cards):
-            weight = mass = 0.0
-            for x in range(index * CARD_WIDTH, (index + 1) * CARD_WIDTH, 4):
-                source = int((trim + x * span / strip_width) * strip_width / master_width)
-                if not 0 <= source < strip_width:
-                    return float("inf")
-                value = ink[source]
-                mass += value
-                weight += value * (x - index * CARD_WIDTH)
-            if mass > 0:
-                total += abs(weight / mass - half)
-        return total
+    threshold = max(ink) * 0.35
+    peaks, index = [], 0
+    while index < width:
+        if ink[index] > threshold:
+            start = index
+            while index < width and ink[index] > threshold:
+                index += 1
+            peaks.append((start + index - 1) / 2)
+        else:
+            index += 1
 
-    step = max(1, master_width // (cards * 60))
-    candidates = range(0, master_width // cards, step)
-    chosen = min(candidates, key=cost)
-    baseline = cost(0)
-    gain = 0.0 if baseline in (0, float("inf")) else 1 - cost(chosen) / baseline
-    return chosen, gain
+    # A frame motif shows two strokes per repeat (an arch's legs); a rule or stem shows one.
+    if len(peaks) == cards * 2:
+        return [(peaks[2 * i] + peaks[2 * i + 1]) / 2 for i in range(cards)]
+    if len(peaks) == cards:
+        return peaks
+    return None
+
+
+def grid_crop(master, cards):
+    """Crop so the motif rhythm lands exactly on the card grid.
+
+    The mismatch is systematic: a model spaces its repeats evenly across the artwork
+    but insets the whole block from the edges, so the repeat pitch never equals the
+    card pitch and the error accumulates outwards — the end cards look lopsided while
+    the middle ones look fine. Cropping to half a pitch outside the first and last
+    repeat makes the two pitches identical.
+    """
+    centres = find_motif_centres(master, cards)
+    if not centres or len(centres) < 2:
+        return None
+    width = master.width
+    pitch = (centres[-1] - centres[0]) / (cards - 1)
+    left = centres[0] - pitch / 2
+    right = centres[-1] + pitch / 2
+    if left < -1 or right > width + 1 or right - left < width * 0.5:
+        return None
+
+    def worst(origin, span):
+        return max(
+            abs(centres[i] - (origin + span / cards * (i + 0.5))) * (CARD_WIDTH * cards / span)
+            for i in range(cards)
+        )
+
+    before, after = worst(0, width), worst(left, right - left)
+    if after >= before:
+        return None
+    return (max(0, round(left)), min(width, round(right))), before, after
 
 
 def report_seams(strip, cards):
@@ -148,10 +170,9 @@ def main():
     parser.add_argument("--cards", type=int, default=9, help="how many cards (6–12)")
     parser.add_argument("--fit", choices=("stretch", "cover"), default="stretch")
     parser.add_argument(
-        "--align", choices=("auto", "none"), default="none",
-        help="auto: trim the master so motifs sit nearer their card centres. Best effort — "
-             "on a plate that is already on the grid it makes things worse, so read the "
-             "seam report and only reach for it when the report says the cuts are dirty",
+        "--align", choices=("auto", "none"), default="auto",
+        help="auto: crop the master so the repeat pitch matches the card pitch. Does nothing "
+             "unless it finds exactly one repeat per card and the crop measurably helps",
     )
     parser.add_argument("--out", type=Path, help="output directory (default: <source>_cards/)")
     parser.add_argument("--preview", action="store_true", default=True)
@@ -172,14 +193,15 @@ def main():
     strip = fit_to_strip(master, strip_width, args.fit)
 
     if args.align == "auto":
-        trim, gain = best_trim(strip, master.width, args.cards)
-        if trim and gain > 0.15:
-            master = master.crop((trim, 0, master.width, master.height))
+        result = grid_crop(master, args.cards)
+        if result:
+            (left, right), before, after = result
+            master = master.crop((left, 0, right, master.height))
             strip = fit_to_strip(master, strip_width, args.fit)
-            print(f"align: trimmed {trim}px off the master — motifs sit {gain:.0%} "
-                  "closer to their card centres")
+            print(f"align: cropped the master to x={left}–{right} — worst motif offset "
+                  f"{before:.0f}px → {after:.0f}px")
         else:
-            print("align: plate is already on the grid, cutting as-is")
+            print("align: no countable repeat on the card grid, cutting as-is")
 
     out = args.out or args.source.with_name(f"{args.source.stem}_cards")
     out.mkdir(parents=True, exist_ok=True)

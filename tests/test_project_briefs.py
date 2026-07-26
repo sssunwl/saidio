@@ -1,6 +1,6 @@
 import importlib.util
 import unittest
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -101,42 +101,65 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertIn("64% of image width", first_prompt)
         self.assertIn("42% of image width", second_prompt)
 
-    def test_carousel_has_nine_separate_story_role_prompts(self):
-        brief = carousel.make_brief(date(2026, 7, 23), 0, 0)
-        cards = [item for item in brief["items"] if item["type"].startswith("IG 圖組")]
-        self.assertEqual(len(cards), 9)
-        self.assertTrue(all("exactly ONE" in item["text"] for item in cards))
-        self.assertTrue(all(f"頁碼：{index}/9" in item["text"] for index, item in enumerate(cards, 1)))
-        self.assertIn("大主題／HEADLINE", cards[0]["text"])
-        self.assertIn("停頓句／PAUSE LINE", cards[4]["text"])
-        self.assertIn("CTA：", cards[8]["text"])
-        self.assertIn("1080×1350", brief["items"][-1]["text"])
+    def test_universal_kit_runs_first_then_industry_packs(self):
+        # 百搭先上：the first five days are the structure-first kit, then buyers' industries.
+        kit = [carousel.make_brief(carousel.UNIVERSAL_EPOCH + timedelta(days=n)) for n in range(5)]
+        self.assertEqual(len({brief["title"] for brief in kit}), 5)
+        self.assertTrue(all(brief["title"].startswith("IG 百搭 Kit") for brief in kit))
+        first_industry = carousel.make_brief(carousel.INDUSTRY_EPOCH)
+        self.assertTrue(first_industry["title"].startswith("IG 行業包"))
+        self.assertIn("商業教練", first_industry["title"])
 
-    def test_carousel_cycle_uses_nine_distinct_template_families(self):
-        self.assertEqual(len({style["id"] for style in carousel.DAY_STYLES}), 9)
-        briefs = [carousel.make_brief(date(2026, 7, 23), 0, index) for index in range(9)]
-        covers = [
-            next(item["text"] for item in brief["items"] if item["type"] == "IG 圖組・第 1 張")
-            for brief in briefs
-        ]
-        self.assertEqual(len(set(covers)), 9)
-        self.assertIn("quiet-arch-editorial", covers[0])
-        self.assertIn("menu-modular-grid", covers[1])
-        self.assertNotEqual(carousel.DAY_STYLES[0]["cover"], carousel.DAY_STYLES[1]["cover"])
+    def test_one_day_is_one_industry_not_nine_days_per_brand(self):
+        # The whole reason for the master-plate rewrite: a brand is a day's work.
+        week = [carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=n)) for n in range(9)]
+        industries = [brief["title"].split("｜")[1] for brief in week]
+        self.assertEqual(len(set(industries)), 9, industries)
+        # Coming back to the same industry next round must not reuse the same look.
+        again = carousel.make_brief(carousel.INDUSTRY_EPOCH + timedelta(days=9))
+        self.assertIn("商業教練", again["title"])
+        self.assertNotEqual(again["title"], week[0]["title"])
+        self.assertNotEqual(again["focus"], week[0]["focus"])
 
-    def test_new_carousels_use_story_roles_not_every_field_on_every_card(self):
-        brief = carousel.make_brief(date(2026, 7, 25), 0, 2)
-        cards = [item["text"] for item in brief["items"] if item["type"].startswith("IG 圖組")]
-        layouts = [
-            text.split("Layout: ", 1)[1].split(". Render only", 1)[0]
-            for text in cards
-        ]
-        self.assertEqual(len(set(layouts)), 9)
-        self.assertIn("LOGO：Mori Café", cards[0])
-        self.assertNotIn("HASHTAG：", cards[4])
-        self.assertNotIn("CTA：", cards[4])
-        self.assertIn("停頓句／PAUSE LINE", cards[4])
-        self.assertIn("HASHTAG：", cards[8])
+    def test_card_count_varies_by_structure_and_stays_in_range(self):
+        counts = {}
+        for family in carousel.UNIVERSAL_FAMILIES:
+            brief = carousel.universal_brief(carousel.UNIVERSAL_EPOCH, family)
+            cards = [i for i in brief["items"] if i["type"].startswith("圖卡文字")]
+            self.assertEqual(len(cards), family["cards"], family["name"])
+            self.assertEqual(len(family["roles"]), family["cards"], family["name"])
+            self.assertTrue(6 <= family["cards"] <= 12, family["name"])
+            counts[family["id"]] = family["cards"]
+        # The whole point of variable length: they are not all nine.
+        self.assertGreater(len(set(counts.values())), 1)
+
+    def test_plate_is_text_free_and_split_command_matches_card_count(self):
+        brief = carousel.universal_brief(carousel.UNIVERSAL_EPOCH, carousel.UNIVERSAL_FAMILIES[0])
+        plates = [i for i in brief["items"] if i["type"].startswith("母圖")]
+        self.assertEqual(len(plates), 3)  # one per colourway
+        for plate in plates:
+            self.assertTrue(blocks.is_bundled(plate["text"]))
+            self.assertIn("NO TEXT OF ANY KIND", plate["text"])
+            self.assertIn("9720×1440", plate["text"])
+        command = next(i for i in brief["items"] if i["type"] == "分割指令")
+        self.assertIn("--cards 9", command["text"])
+
+    def test_only_cover_and_closing_card_carry_logo_and_cta(self):
+        family = carousel.UNIVERSAL_FAMILIES[0]
+        brief = carousel.universal_brief(carousel.UNIVERSAL_EPOCH, family)
+        cards = [i["text"] for i in brief["items"] if i["type"].startswith("圖卡文字")]
+        self.assertIn("logo may appear here", cards[0])
+        self.assertIn("do not repeat them here", cards[4])
+        self.assertIn("one clear CTA", cards[-1])
+
+    def test_carousel_is_three_by_four_everywhere(self):
+        brief = carousel.make_brief(carousel.INDUSTRY_EPOCH)
+        for item in brief["items"]:
+            self.assertNotIn("1080×1350", item["text"])
+        spec = next(i for i in brief["items"] if i["type"] == "Canva 拆件規格")
+        self.assertIn("1080×1440", spec["text"])
+        # Buyers get cropped by the uploader default if nobody tells them.
+        self.assertIn("4:5 改成 3:4", spec["text"])
 
     def test_capychill_does_not_repeat_before_july_31(self):
         titles = {
@@ -146,8 +169,8 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertEqual(len(titles), 9)
 
     def test_every_carousel_card_is_a_self_contained_package(self):
-        for item in carousel.make_brief(date(2026, 7, 25), 0, 2)["items"]:
-            if item["type"].startswith("IG 圖組"):
+        for item in carousel.make_brief(carousel.INDUSTRY_EPOCH)["items"]:
+            if item["type"].startswith("圖卡文字"):
                 self.assertTrue(blocks.is_bundled(item["text"]), item["type"])
                 self.assertIn("garbled", item["text"])
                 self.assertIn("80 px safe margin", item["text"])

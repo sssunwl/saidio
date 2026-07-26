@@ -98,7 +98,30 @@ GitHub Actions 每天用 Gemini(免費文字額度)生成三條線的 prompt/腳
   （內容等同 `data/capychill.json` 的 7/24 影片項），舊版移到同層 `.archived/`。
 - **新腳本 `CapyChill/scripts/upscale_master.py`**：母圖貼進 Flow 前的 Lanczos 放大（+ 輕微 unsharp），
   `--portrait --focus <THEMES 的 focus_x>` 可一併切出 9:16 走廊。已在 7/24 母圖實測。
-- **待討論**：`CAROUSEL_V2_DESIGN.md`（母圖分割 + 可變張數 + 販售流程提案，尚未實作）。
+## 2026-07-26：IG Carousel 改成「一天一個可販售產品」
+
+用戶決定：尺寸改 3:4、百搭先上且行業包也要、行業研究現在跑。三件都做完了。
+
+- **架構換掉**：舊版是「九天磨一個品牌、每張獨立生成」。新版是
+  **一張無文字連續背景母圖 → 分割成 N 張 → Canva 上字**。
+  原因是算數：9 張並排要 9720px 寬，模型長邊只給約 1536px，切完每格剩 ~170px 再放大——
+  背景撐得住，**文字和人臉一定爛**。所以能切的只有沒有文字的那一層。
+- **兩個階段**：`UNIVERSAL_EPOCH`(7/26)–7/30 是**百搭 Kit** 五套結構型
+  （列表／前後對比／教學步驟／金句／誤解破除）× 3 配色；`INDUSTRY_EPOCH`(7/31) 之後是
+  **行業包，一天一個行業**（`industry_index = delta % 9`，家族用 `(industry_index + round_index) % 9`
+  錯開，所以同一個行業下一輪不會長得一樣）。
+- **張數可變 6–12**，由結構決定（金句 6、對比與誤解破除 8、清單與步驟 9）。
+  預設 9 是有依據的：互動在第 3 張後掉、第 8 張後回升，8–10 張最好。
+- **`scripts/split_carousel.py`（新）**：母圖 → N 張 1080×1440 + `_seam_preview.png`。
+  preview 會畫出每個切點左右 80px 禁區，發文前先看它。
+  `--fit stretch` 只適用抽象紋理母圖；有可辨識結構就改 `--fit cover`。
+- **`PLATE_NEGATIVE / PLATE_RULES`（新）**：母圖專用，第一條就是 NO TEXT OF ANY KIND。
+- **`INDUSTRIES` 換成買家導向**（商業教練／房仲／攝影師／課程創作者…）。研究發現：
+  咖啡店、餐廳、牙醫是**內容題材**，不是**模板買家**。
+- **文件**：`CAROUSEL_RULES.md` 改寫為 v2；`CAROUSEL_RESEARCH.md`（新，市場數據 + 來源）；
+  `CAROUSEL_V2_DESIGN.md`（架構與販售流程，已標註哪幾節被研究推翻）。
+- **測試 23 項全過**。舊架構的 7/23–7/25 三天保留在 data 裡當歸檔，不再重寫。
+- **還沒做**：LICENSE.md 草稿、Gumroad 產品頁文案、Canva 動態頁流程。
 
 - **網站**：`index.html`/`app.js`/`styles.css` 換成玻璃感 v2（今天／產線／歸檔／策略四頁籤），
   單條「複製」複製的就是完整三段式。v2 補回了 `generation.status` 徽章與成品連結，媒體排程的結果照樣看得到。

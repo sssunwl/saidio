@@ -1,148 +1,151 @@
 #!/usr/bin/env python3
-"""Create one nine-day, one-industry Instagram carousel product cycle."""
+"""Build one sellable Instagram carousel product per day.
+
+Two phases, in this order:
+
+  Phase 1 — 百搭 Kit. Five structure-first template families that work for any
+  industry (list / before-after / steps / quote / myth-buster), each shipped in three
+  colourways. Five days produces one complete kit that can go on sale without waiting
+  for industry research.
+
+  Phase 2 — 行業包. The nine visual template families applied to one buyer-oriented
+  industry per day, so a brand is a day of work, not nine.
+
+Each brief is one product: one text-free master plate per colourway, the split command,
+per-card copy specs, and the Canva rebuild spec. The plate carries background only —
+see CAROUSEL_V2_DESIGN.md for why text cannot survive being split out of a master.
+"""
 import json
 import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from prompt_blocks import CARD_NEGATIVE, CARD_RULES, bundle  # noqa: E402
+from prompt_blocks import CARD_NEGATIVE, CARD_RULES, PLATE_NEGATIVE, PLATE_RULES, bundle  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/carousel.json"
-EPOCH = date(2026, 7, 23)
-# Nothing is frozen any more: the user is regenerating every carousel set under the
-# NEGATIVE + RULES packaging, so every day in the cycle is rewritten on each run.
-LOCKED_DATES = set()
 
-# One place to change the card size. 2026 Meta guidance favours 3:4 (1080×1440) because
-# the profile grid crops a 4:5 card on both sides; 4:5 is kept until the user decides.
-CARD_WIDTH, CARD_HEIGHT = 1080, 1350
-CARD_RATIO = "4:5"
+# 3:4 is the 2026 Instagram feed and profile-grid ratio: a cover no longer gets
+# cropped in the grid. See CAROUSEL_RESEARCH.md — and warn buyers that the carousel
+# uploader still defaults to 4:5.
+CARD_WIDTH, CARD_HEIGHT = 1080, 1440
+CARD_RATIO = "3:4"
+SEAM_DANGER = 80
 
-INDUSTRIES = [
-    "獨立咖啡店", "保養品牌", "房地產顧問", "健身教練", "旅行社",
-    "牙科診所", "餐廳", "美髮沙龍", "寵物服務",
+# 8–10 cards measurably outperforms shorter sets; engagement dips after card 3 and
+# recovers past card 8. Six is reserved for structures that are genuinely short.
+DEFAULT_CARDS = 9
+
+UNIVERSAL_EPOCH = date(2026, 7, 26)
+INDUSTRY_EPOCH = UNIVERSAL_EPOCH + timedelta(days=5)
+
+COLOURWAYS = [
+    ("warm-neutral", "warm cream paper, espresso brown, muted sage accent"),
+    ("cool-editorial", "cool off-white, deep navy, soft slate blue accent"),
+    ("soft-clay", "pale oat, terracotta clay, dusty rose accent"),
 ]
 
-CAFE_DAYS = [
-    (
-        "品牌初識｜為什麼我們慢一點",
-        [
-            "封面｜一杯咖啡，也可以是今天的休息鍵",
-            "Mori Café 不追求最快出杯，我們在意每一杯是否剛好適合你。",
-            "豆子每天少量研磨，讓香氣不必在櫃子裡等待。",
-            "牛奶、甜度與濃度都能調整，不需要勉強自己喝『標準答案』。",
-            "我們保留安靜座位，也歡迎只想坐十分鐘的人。",
-            "外帶杯、店內杯，同樣認真完成。",
-            "今天不必完成所有事，先喝完眼前這一杯。",
-            "結尾｜收藏這組，下次需要休息時回來找我們。",
+# Structure-first families. These sell because the structure is the product: a buyer
+# in any industry drops their own words into the same skeleton.
+UNIVERSAL_FAMILIES = [
+    {
+        "id": "list-stack",
+        "name": "列表款",
+        "cards": 9,
+        "premise": "N 個重點／N 個常見錯誤",
+        "system": "numbered stack layout, oversized numerals as the dominant graphic, one rule line per item, generous left margin",
+        "plate": "a continuous vertical rule running the full height near the left third, crossed by evenly spaced horizontal hairlines, with a wide calm field to the right for numbering and text",
+        "roles": [
+            "封面｜大數字 + 一句 hook",
+            "第 1 項｜編號 + 一句陳述",
+            "第 2 項｜編號 + 一句陳述",
+            "第 3 項｜編號 + 一句陳述",
+            "第 4 項｜編號 + 一句陳述",
+            "視覺停頓｜只有一句短句與大量留白",
+            "第 5 項｜編號 + 一句陳述",
+            "收束｜把五項收成一句可帶走的結論",
+            "品牌 CTA｜Logo + 一個明確動作",
         ],
-    ),
-    (
-        "招牌商品｜三款咖啡怎麼選",
-        [
-            "封面｜第一次來 Mori Café，從這三杯開始",
-            "晨光拿鐵｜柔和、奶香明顯，適合不喜歡苦味的人。",
-            "海風美式｜乾淨清爽，尾韻帶一點柑橘感。",
-            "慢曜日摩卡｜可可感較濃，像一份可以喝的甜點。",
-            "想提神：選海風美式。",
-            "想放鬆：選晨光拿鐵。",
-            "想獎勵自己：選慢曜日摩卡。",
-            "結尾｜留言告訴我們，你今天是哪一杯？",
+    },
+    {
+        "id": "before-after",
+        "name": "前後對比款",
+        "cards": 8,
+        "premise": "before/after、錯 vs 對",
+        "system": "split-field comparison, a hard vertical or diagonal divider, one muted side and one saturated side, matching label chips",
+        "plate": "a single continuous diagonal division sweeping across the whole strip, muted tone above and saturated tone below, so each card inherits a different part of the same diagonal",
+        "roles": [
+            "封面｜對比承諾：從 A 到 B",
+            "情境｜大多數人現在的做法",
+            "問題｜這樣做會付出什麼代價",
+            "轉折｜換一個做法",
+            "對比一｜左錯右對，各一句",
+            "對比二｜左錯右對，各一句",
+            "證據｜一個具體結果或數字",
+            "品牌 CTA｜Logo + 一個明確動作",
         ],
-    ),
-    (
-        "咖啡小知識｜酸不等於壞",
-        [
-            "封面｜咖啡有酸味，不代表咖啡壞了",
-            "咖啡果實本來就含有自然果酸。",
-            "淺焙常保留較多花香、柑橘或莓果般的明亮感。",
-            "深焙通常帶出更多焦糖、堅果與可可風味。",
-            "好喝的酸感應該乾淨、明亮，不會尖銳刺口。",
-            "如果怕酸，可以選低酸豆、深一點的焙度或搭配牛奶。",
-            "最重要的不是懂術語，而是找到自己喜歡的味道。",
-            "結尾｜收藏這張，下次點咖啡就不再只說『不要酸』。",
+    },
+    {
+        "id": "step-path",
+        "name": "教學步驟款",
+        "cards": 9,
+        "premise": "Step 1…N，最容易被存檔",
+        "system": "progress-path layout, a connecting line threading step markers, one step per card, small progress indicator in a fixed corner",
+        "plate": "one unbroken connecting path line travelling horizontally across the entire strip with evenly spaced node dots, so the path visibly continues from card to card when swiped",
+        "roles": [
+            "封面｜做完會得到什麼，需要多久",
+            "準備｜開始前要有的三樣東西",
+            "Step 1｜動作 + 一個判斷標準",
+            "Step 2｜動作 + 一個判斷標準",
+            "Step 3｜動作 + 一個判斷標準",
+            "視覺停頓｜一句提醒，大量留白",
+            "Step 4｜動作 + 一個判斷標準",
+            "常見卡點｜最容易做錯的一步",
+            "品牌 CTA｜Logo + 存檔提示",
         ],
-    ),
-    (
-        "幕後日常｜開店前的一小時",
-        [
-            "封面｜你來以前，咖啡店已經醒了一小時",
-            "07:00 拉開窗簾，先讓早晨進到店裡。",
-            "07:10 校正磨豆機，第一杯通常不是賣給客人的。",
-            "07:20 試喝濃縮，調整今天的研磨刻度。",
-            "07:35 烤好第一盤可頌，店裡開始有奶油香。",
-            "07:45 擦桌、補水、把每張椅子放回熟悉的位置。",
-            "08:00 門打開，今天的第一句是『早安』。",
-            "結尾｜你通常幾點需要第一杯咖啡？",
+    },
+    {
+        "id": "quote-anchor",
+        "name": "金句款",
+        "cards": 6,
+        "premise": "引言 + 大字，最好做、存檔率高",
+        "system": "typographic poster layout, one oversized statement per card, tiny supporting caption, one repeating quiet graphic mark",
+        "plate": "a large soft tonal wash drifting slowly along the whole strip with one thin baseline rule near the lower third, giving each card a different region of the same gradient",
+        "roles": [
+            "封面｜最強的一句話，字級最大",
+            "延伸｜為什麼這句成立",
+            "反面｜不這樣做會怎樣",
+            "具體｜一個可以照做的小動作",
+            "共鳴｜一句短句，幾乎全留白",
+            "品牌 CTA｜Logo + 分享提示",
         ],
-    ),
-    (
-        "情境選單｜今天需要哪一種陪伴",
-        [
-            "封面｜依照今天的心情點咖啡",
-            "需要清醒｜雙份海風美式，不加糖。",
-            "需要安慰｜溫熱晨光拿鐵，加一點肉桂。",
-            "需要專注｜手沖單品，慢慢喝完一整壺。",
-            "需要放空｜低咖啡因拿鐵，坐窗邊。",
-            "需要慶祝｜慢曜日摩卡，加一份小甜點。",
-            "沒有答案也沒關係，告訴店員你今天的感覺。",
-            "結尾｜分享給那位最近很需要一杯咖啡的人。",
+    },
+    {
+        "id": "myth-buster",
+        "name": "誤解破除款",
+        "cards": 8,
+        "premise": "先講迷思 → 逐張糾正，服務業最吃這款",
+        "system": "claim-and-correction layout, struck-through myth chip above a clean correction block, consistent two-tone labelling",
+        "plate": "two continuous horizontal bands of different tone running the full strip, the upper band slightly darker, so every card inherits the same myth-above / correction-below structure",
+        "roles": [
+            "封面｜點出一個大家都信的說法",
+            "迷思一｜說法 + 為什麼不成立",
+            "迷思二｜說法 + 為什麼不成立",
+            "迷思三｜說法 + 為什麼不成立",
+            "視覺停頓｜一句定調的短句",
+            "正解｜正確的判斷方式",
+            "適用條件｜什麼情況才成立，避免誇大",
+            "品牌 CTA｜Logo + 一個明確動作",
         ],
-    ),
-    (
-        "空間體驗｜找到適合你的座位",
-        [
-            "封面｜咖啡店的座位，也有不同個性",
-            "窗邊位｜適合放空、看人群與自然光拍照。",
-            "長桌位｜適合工作，但記得讓肩膀休息。",
-            "角落單人位｜適合讀書與安靜整理心情。",
-            "戶外位｜適合天氣舒服、想帶寵物一起來的日子。",
-            "吧台位｜適合想看看咖啡怎麼完成的人。",
-            "沒有最佳座位，只有今天最適合你的座位。",
-            "結尾｜你是窗邊派、角落派，還是吧台派？",
-        ],
-    ),
-    (
-        "品牌故事｜名字從哪裡來",
-        [
-            "封面｜Mori，不只是一個好聽的名字",
-            "Mori 在日文裡讓人想到森林。",
-            "我們想做的不是華麗的店，而是一個讓呼吸慢下來的地方。",
-            "木頭、植物和低飽和色，都是為了減少視覺噪音。",
-            "菜單不需要很長，每一項都應該有留下來的理由。",
-            "服務不必過度熱情，但要讓人覺得被好好看見。",
-            "如果你離開時比進門時放鬆一點，這個名字就有意義。",
-            "結尾｜這就是 Mori Café 想成為的日常森林。",
-        ],
-    ),
-    (
-        "常見問題｜來店前先知道",
-        [
-            "封面｜第一次來 Mori Café？這些問題先回答你",
-            "可以訂位嗎？｜平日可預約，週末保留部分現場座位。",
-            "有低咖啡因嗎？｜有，可替換大部分義式咖啡。",
-            "可以帶寵物嗎？｜戶外座位歡迎牽繩寵物。",
-            "有插座嗎？｜長桌區有，尖峰時段請體諒共用。",
-            "有植物奶嗎？｜提供燕麥奶，可詢問當日庫存。",
-            "可以拍照嗎？｜可以，但請不要影響其他客人。",
-            "結尾｜還想知道什麼？留言讓我們補上。",
-        ],
-    ),
-    (
-        "九日收尾｜收藏與到店行動",
-        [
-            "封面｜九天認識 Mori Café，今天換你來坐坐",
-            "如果你喜歡安靜，平日上午是最舒服的時間。",
-            "如果你喜歡陽光，下午三點前選窗邊位。",
-            "如果你第一次來，從晨光拿鐵開始。",
-            "如果你正在戒咖啡因，我們也準備了低咖啡因選擇。",
-            "出示這篇收藏畫面，可獲得當週限定小點試吃一份。",
-            "活動期間｜範例：7/23–7/31；實際販售模板時請替換。",
-            "結尾｜收藏、分享，然後找一天真的來休息。",
-        ],
-    ),
+    },
+]
+
+# Buyer-oriented: these are the people who actually pay for Instagram templates.
+# The last three stay because SS has real material to make sample sets from.
+INDUSTRIES = [
+    "商業教練", "房地產仲介", "攝影師", "線上課程創作者", "營養師／健身教練",
+    "婚禮策劃", "美業個人工作室", "寵物服務", "獨立咖啡店",
 ]
 
 DAY_STYLES = [
@@ -150,239 +153,271 @@ DAY_STYLES = [
         "id": "quiet-arch-editorial",
         "name": "靜謐拱窗編輯誌",
         "system": "asymmetrical literary editorial pages, one tall arched photo window, generous cream negative space, fine serif rules and tiny botanical marks",
-        "cover": "a tall arched coffee photograph occupies the right 44%; a quiet left-aligned headline stack sits low on the left; one thin vertical rule and a tiny leaf mark",
-        "content": ["arched photo window on the left with a narrow essay column on the right", "large serif statement above a shallow panoramic photo", "two unequal cream columns separated by a fine vertical rule"],
-        "closing": "small centered logo beneath a large empty arch outline, with the CTA anchored at the bottom",
+        "plate": "one continuous cream field with a repeating tall arch outline motif and a single fine vertical rule travelling the whole strip",
     },
     {
         "id": "menu-modular-grid",
-        "name": "招牌選品模組",
+        "name": "模組方格",
         "system": "bold modular menu grid, espresso color blocks, product cut-outs, price-tag-like labels and crisp sans-serif hierarchy",
-        "cover": "a 2×2 modular grid: oversized headline in the upper-left block, three isolated drink cut-outs crossing the remaining blocks, rounded product labels",
-        "content": ["product cut-out centered over two offset color blocks with a side label", "three stacked specification rows with a small circular drink crop", "comparison grid with bold category tabs and one cropped ingredient photo"],
-        "closing": "bold espresso offer block, three small product tokens and an oversized rounded CTA button",
+        "plate": "an unbroken run of modular colour blocks in two alternating tones, with a thin label rail crossing the entire strip",
     },
     {
-        "id": "coffee-field-notes",
-        "name": "咖啡風味手記",
-        "system": "field-notebook education pages, ruled-paper cues, annotated bean diagrams, underlines, numbered callouts and restrained handwritten accents",
-        "cover": "an open-notebook composition viewed from above; headline on the left page, annotated coffee bean and flavor diagram on the right page",
-        "content": ["numbered observation with an annotated macro photo and hand-drawn arrow", "ruled note card with three circled keywords and a bean diagram", "vertical tasting scale beside a clipped field photograph"],
-        "closing": "a signed field-note page with a circled takeaway, small taped photo and handwritten-style CTA underline",
+        "id": "field-notes",
+        "name": "田野筆記",
+        "system": "field-notebook education pages, ruled-paper cues, annotated diagrams, underlines, numbered callouts and restrained handwritten accents",
+        "plate": "continuous ruled-paper lines across the whole strip with a faint margin rule and occasional hand-drawn arrow marks",
     },
     {
         "id": "opening-hour-documentary",
-        "name": "開店紀實時間軸",
+        "name": "紀實時間軸",
         "system": "documentary contact sheet, timestamp labels, cinematic still frames, film perforation details and chronological reading rhythm",
-        "cover": "three horizontal cinematic frames stacked like a contact sheet, a large 07:00 timestamp crossing the frames, headline in a bottom caption strip",
-        "content": ["wide documentary still with timestamp and compact caption underneath", "two-frame before-and-after contact sheet with a time code rail", "vertical timeline connecting one large and two thumbnail frames"],
-        "closing": "final film frame marked 08:00 with a wide caption bar and invitation CTA",
+        "plate": "a continuous film perforation strip along the top and bottom edges with a timecode rail running the full width",
     },
     {
         "id": "mood-menu-bands",
-        "name": "心情選單色帶",
-        "system": "playful mood-selector system, vertical color bands, pill-shaped mood chips, small organic icons and soft color-coded cards",
-        "cover": "five slim vertical mood bands span the page; the headline floats in a cream rounded card across the middle; tiny mood icons sit along the bands",
-        "content": ["one dominant vertical color band with three mood chips and a small drink cut-out", "stack of rounded choice cards with a soft organic marker", "split mood meter with two color fields and a centered recommendation"],
-        "closing": "a fan of mood chips around a central rounded CTA card, without photographic framing",
+        "name": "色帶選單",
+        "system": "playful mood-selector system, vertical color bands, pill-shaped chips, small organic icons and soft color-coded cards",
+        "plate": "a long sequence of slim vertical colour bands shifting hue gradually from one end of the strip to the other",
     },
     {
         "id": "space-guide-map",
-        "name": "座位空間導覽",
-        "system": "architectural guide pages, simplified floor-plan lines, coordinate markers, framed interior views and zone labels",
-        "cover": "a simplified café floor plan fills the background; three numbered location pins connect to small framed interior photos; headline sits in a map legend box",
-        "content": ["one large interior frame paired with a coordinate label and mini floor-plan locator", "two stacked room views linked by a dotted walking path", "zone card with seat icons, light-direction arrow and framed detail photo"],
-        "closing": "mini floor plan with the preferred seat circled, logo as a map key and CTA in a route label",
+        "name": "導覽地圖",
+        "system": "architectural guide pages, simplified floor-plan lines, coordinate markers, framed views and zone labels",
+        "plate": "one continuous simplified floor-plan line drawing extending across the entire strip with a dotted walking path",
     },
     {
-        "id": "brand-archive-scrapbook",
-        "name": "品牌森林剪貼簿",
+        "id": "archive-scrapbook",
+        "name": "品牌剪貼簿",
         "system": "warm archival scrapbook, layered torn paper, taped photographs, botanical pressings, date stamps and restrained handwritten notes",
-        "cover": "one rotated archival café photo taped near the upper-left, a torn sage paper headline layer crossing the lower half, pressed leaf and date stamp",
-        "content": ["layered torn-paper story card with one taped archival photo", "large typewritten quote beside a pressed botanical specimen", "two overlapping snapshots with a handwritten margin note"],
-        "closing": "postcard-like closing page with stamp, small logo, pressed leaf and handwritten CTA",
+        "plate": "a continuous torn-paper edge running horizontally across the strip with layered warm paper tones above and below",
     },
     {
         "id": "faq-conversation-cards",
-        "name": "來店問答卡",
+        "name": "問答卡",
         "system": "structured question-and-answer interface, alternating speech cards, accordion tabs, clear icons and high-legibility sans typography",
-        "cover": "three oversized staggered question bubbles surround a central headline card; a tiny coffee-cup icon acts as the conversation avatar",
-        "content": ["large question tab on top and a contrasting answer card below", "two alternating speech cards with a small supporting photo circle", "accordion-style information stack with one expanded answer"],
-        "closing": "an open question bubble with the CTA as the reply, plus a small centered logo avatar",
+        "plate": "an alternating rhythm of rounded card shapes in two tones marching along the whole strip, with a thin connecting baseline",
     },
     {
         "id": "campaign-poster",
-        "name": "九日收尾活動海報",
-        "system": "confident campaign poster, full-bleed lifestyle image, oversized condensed headline, date badge, offer block and strong action hierarchy",
-        "cover": "full-bleed sunlit café photograph, oversized headline spanning nearly the full width, a high-contrast date badge and a bottom offer strip",
-        "content": ["full-bleed photo with one oversized typographic statement", "bold half-photo half-offer block with a circular date badge", "large numbered benefit over a monochrome lifestyle crop"],
-        "closing": "poster-like offer lockup with huge CTA, date range, logo and a single clear action block",
+        "name": "活動海報",
+        "system": "confident campaign poster, full-bleed imagery, oversized condensed headline, date badge, offer block and strong action hierarchy",
+        "plate": "one bold continuous colour field with a single oversized diagonal band sweeping the full length of the strip",
     },
 ]
 
+INDUSTRY_ROLES = [
+    "封面｜Hook：說出目標客戶心裡那句話",
+    "情境｜建立他現在的處境",
+    "解釋｜為什麼會這樣",
+    "關鍵細節｜一個具體、可驗證的重點",
+    "視覺停頓｜一句短句，大量留白",
+    "比較｜兩個選擇的差別",
+    "證明｜流程、案例或幕後，加上適用條件",
+    "收束｜把整組收成一句結論",
+    "品牌 CTA｜Logo + 一個明確動作",
+]
 
-def nine_slides(slides, industry):
-    """Always return nine useful cards, including a branded closing card."""
-    result = list(slides[:8])
-    while len(result) < 8:
-        result.append(f"內容｜補充一個與{industry}主題直接相關、可實行的重點。")
-    result.append("品牌收尾｜Mori Café · Slow coffee, soft days.｜#MoriCafe #咖啡日常 #慢生活")
-    return result
-
-
-def split_copy(raw, slide_no):
-    if "｜" in raw:
-        lead, body = raw.split("｜", 1)
-    else:
-        lead, body = ("重點", raw)
-    if slide_no == 1:
-        return "TODAY'S PAUSE", body, "讓日常慢一點，也讓選擇更適合自己。"
-    if slide_no == 9:
-        return "MORI CAFÉ", "Slow coffee, soft days.", "收藏這組內容，下次需要休息時再回來。"
-    return lead.upper(), body, "一個小選擇，也能改變今天的節奏。"
-
-CONTENT_STRUCTURES = {
-    2: "an establishing page with one dominant image or diagram and a short context caption anchored below",
-    3: "a 60/40 explanatory split with one clear fact and one supporting visual; no repeated cover composition",
-    4: "a focused detail page with one oversized keyword or number and a small evidence image",
-    5: "a visual breathing-space page: one short statement or mood line with generous negative space and one quiet image",
-    6: "a comparison or choice page using two clearly separated options, labels or visual states",
-    7: "a proof, process or behind-the-scenes page with one main visual and two concise annotations",
-    8: "a recap or bridge page that resolves the story and gives one reason to continue to the final card",
-}
+INDUSTRY_TOPICS = [
+    "品牌定位", "招牌服務", "知識教育", "幕後流程", "選擇指南",
+    "使用情境", "品牌故事", "常見問題", "行動方案",
+]
 
 
-def card_copy(raw, slide_no):
-    """Give each slide only the copy elements its storytelling role needs."""
-    lead, body = raw.split("｜", 1) if "｜" in raw else ("", raw)
-    page = f"頁碼：{slide_no}/9"
-    if slide_no == 1:
-        return (
-            "LOGO：Mori Café\n"
-            f"小主題／KICKER：{lead or '今日主題'}\n"
-            f"大主題／HEADLINE：{body}\n"
-            "滑動提示／SWIPE CUE：向左滑，慢慢看完 →\n"
-            f"{page}"
-        )
-    if slide_no in (2, 3, 4):
-        label = {2: "先從這裡開始", 3: "值得注意", 4: "一個關鍵細節"}[slide_no]
-        return f"段落標籤／SECTION：{lead or label}\n重點文字／STATEMENT：{body}\n{page}"
-    if slide_no == 5:
-        return f"停頓句／PAUSE LINE：{body}\n{page}"
-    if slide_no in (6, 7):
-        label = lead or ("怎麼選" if slide_no == 6 else "再看近一點")
-        return f"段落標籤／SECTION：{label}\n內容／CONTENT：{body}\n{page}"
-    if slide_no == 8:
-        return f"收束句／TAKEAWAY：{body}\n輕提示／SOFT PROMPT：值得的話，先收藏起來。\n{page}"
+def plate_prompt(family, colour_id, palette, cards):
+    """One text-free background strip that will be cut into `cards` cards."""
+    strip_width = CARD_WIDTH * cards
+    prompt = (
+        f"Create ONE wide, seamless, TEXT-FREE background plate for an Instagram carousel. "
+        f"It will be machine-split into {cards} separate {CARD_RATIO} cards of {CARD_WIDTH}×{CARD_HEIGHT} px, "
+        f"so compose it as one continuous horizontal strip that reads left to right "
+        f"(final strip size {strip_width}×{CARD_HEIGHT}). Output the widest aspect ratio this tool "
+        "supports — 16:9 is fine; the strip is fitted afterwards. "
+        f"TEMPLATE FAMILY {family['id']}｜{family['name']}. Design grammar: {family['system']}. "
+        f"CONTINUOUS STRUCTURE — this is the whole point of the plate: {family['plate']}. "
+        f"Colourway {colour_id}: {palette}. Add a soft paper texture and a barely-visible film grain. "
+        f"Every {CARD_WIDTH} px along the strip is a cut line: keep the design either continuous across "
+        f"those cuts or clear of them, and never place a self-contained motif so that it straddles one. "
+        "Leave broad calm areas with no detail — headlines, body copy and logos are typeset in Canva on "
+        "top of this plate, and they need somewhere quiet to land."
+    )
+    return bundle(prompt, PLATE_NEGATIVE, PLATE_RULES)
+
+
+def split_command(source_name, cards):
     return (
-        "LOGO：Mori Café\n"
-        "品牌句／BRAND LINE：Slow coffee, soft days.\n"
-        "CTA：收藏這組內容，下次需要休息時再回來。\n"
-        "HASHTAG：#MoriCafe #咖啡日常 #慢生活\n"
-        f"{page}"
+        f"python3 scripts/split_carousel.py {source_name} --cards {cards}\n"
+        f"→ 輸出 {cards} 張 {CARD_WIDTH}×{CARD_HEIGHT} 卡片 + `_seam_preview.png`。\n"
+        f"先看 seam preview：紅帶是每個切點左右各 {SEAM_DANGER}px 的禁區，"
+        "有裝飾或主體被切開就回頭改母圖，不要硬上。\n"
+        "母圖是抽象紋理才用預設 `--fit stretch`；若母圖有拱門、照片框、物件等可辨識結構，"
+        "改用 `--fit cover`（保幾何但裁掉大部分高度）。"
     )
 
 
-def image_prompt(industry, topic, slide_no, raw, style):
-    if slide_no == 1:
-        layout = style["cover"]
-    elif slide_no == 9:
-        layout = style["closing"]
-    else:
-        accent = style["content"][(slide_no - 2) % len(style["content"])]
-        layout = f"{CONTENT_STRUCTURES[slide_no]}; family-specific treatment: {accent}"
-    copy = card_copy(raw, slide_no)
+def card_prompt(family, role, index, cards, context, colour_id, palette):
+    """The per-card spec: what this card says and which roles it is allowed to show."""
+    lead, body = role.split("｜", 1) if "｜" in role else ("", role)
     prompt = (
-        f"Generate exactly ONE standalone Instagram carousel card, slide {slide_no} of 9. "
-        f"Output only this single {CARD_RATIO} card, never nine cards on one canvas, never a phone mockup and never "
-        "surrounding white canvas. A grid, contact-sheet rhythm or multi-frame layout is allowed only when today's "
-        "named template family explicitly requests it; it must still remain one standalone card. "
-        f"Output aspect ratio {CARD_RATIO}, {CARD_WIDTH}×{CARD_HEIGHT}, edge-to-edge. "
-        "This card belongs to a coordinated nine-card system for "
-        f"{industry}, topic “{topic}”. TEMPLATE FAMILY {style['id']}｜{style['name']} (one of nine deliberately "
-        "different template families). Keep Mori Café's brand DNA consistent, but never reuse another day's cover "
-        "grid, photo mask, information rhythm or decorative device. Family-specific design system: "
-        f"{style['system']}. Shared brand palette: warm cream paper texture, "
-        "espresso brown and muted sage, soft morning sunlight, restrained organic shapes, subtle film grain, "
-        "consistent 80px safe margin, Traditional-Chinese serif paired with a clean sans-serif. "
-        f"Layout: {layout}. Render only the copy roles assigned to this slide—do not add Logo, Mood, CTA or hashtags "
-        f"when they are not listed below. Professionally typeset this Traditional-Chinese sample copy:\n{copy}"
+        f"Typeset card {index}/{cards} of one Instagram carousel set, {CARD_RATIO} at "
+        f"{CARD_WIDTH}×{CARD_HEIGHT} px, edge to edge. Output ONE standalone card. "
+        f"Context: {context}. TEMPLATE FAMILY {family['id']}｜{family['name']}; "
+        f"design grammar: {family['system']}; colourway {colour_id}: {palette}. "
+        f"This card's storytelling role is 「{lead or '內容'}」 and nothing else. "
+        f"Copy to set (Traditional Chinese, Taiwan usage):\n{body}\n"
+        f"Show only the copy roles this role needs. "
+        + (
+            "This is the cover: it must survive as a 160 px thumbnail, so one dominant line, "
+            "and the logo may appear here. "
+            if index == 1 else
+            "Logo, CTA and hashtags belong on the cover and the final card — do not repeat them here. "
+            if index < cards else
+            "This is the closing card: logo, one clear CTA and the hashtag line all belong here. "
+        )
+        + f"Reserve {SEAM_DANGER} px of quiet space on the left and right edges: this card sits next to "
+        "its siblings in a swipe, and anything touching the edge reads as sliced."
     )
     return bundle(prompt, CARD_NEGATIVE, CARD_RULES)
 
 
-def canva_spec(style):
+def canva_spec(family, cards, context):
     return (
-        f"CANVA TEMPLATE SPEC｜Template family: {style['name']} ({style['id']}). "
-        f"{CARD_WIDTH}×{CARD_HEIGHT} px, 9 separate pages. "
-        f"Family design grammar: {style['system']}. Safe margin 80 px. Rebuild each generated reference "
-        "with named editable layers based on what that page actually uses; do not force LOGO, MOOD, CTA or HASHTAG "
-        "onto every page. Use at most two font families and three brand colors. Build page 1 as the hook; pages 2–4 "
-        "establish and explain; page 5 creates visual breathing room; pages 6–7 compare or prove; page 8 recaps; "
-        "page 9 carries the brand and CTA. Use the generated cards only as layout references; replace "
-        "their baked text with editable Canva text and replace photography with its own frame. "
-        "Save as a master design, duplicate before each client edit, then create a Brand Template link for customers."
+        f"CANVA TEMPLATE SPEC｜{family['name']}（{family['id']}）｜{context}. "
+        f"{CARD_WIDTH}×{CARD_HEIGHT} px、{cards} 個獨立頁面。設計語法：{family['system']}。"
+        f"安全邊 80px，切點禁區左右各 {SEAM_DANGER}px。"
+        "把分割出來的卡片當背景，文字全部用可編輯 Canva 文字重打，不要留任何燒進圖裡的字。"
+        "圖層命名要讓買家看得懂：BACKGROUND / HEADLINE / BODY / LABEL / PHOTO FRAME / PAGE / LOGO / CTA。"
+        "最多兩個字型家族、三個品牌色。"
+        "⚠️ 字型只能用可外發的授權（Canva Pro 專屬字型不能用在要交付的模板）。"
+        f"⚠️ 說明書要寫兩句：上傳時把比例從預設 4:5 改成 {CARD_RATIO}；"
+        f"要縮成 6–8 張時，優先刪「視覺停頓」與最後一個並列項，永遠保留封面與 CTA。"
+        "存成 master design，每次客製前先複製，最後產出 Brand Template 連結交付。"
     )
 
 
-def make_brief(day, cycle, day_index):
-    industry = INDUSTRIES[cycle % len(INDUSTRIES)]
-    style = DAY_STYLES[day_index]
-    if cycle == 0:
-        topic, slides = CAFE_DAYS[day_index]
-    else:
-        topics = ["品牌定位", "招牌服務", "知識教育", "幕後流程", "選擇指南", "使用情境", "品牌故事", "常見問題", "行動方案"]
-        topic = topics[day_index]
-        slides = [
-            f"封面｜{industry}九日內容包：{topic}",
-            f"問題｜客戶在接觸{industry}時最常遇到的困難",
-            "觀點｜品牌對這個問題的清楚立場",
-            "方法一｜一個可以立刻實行的步驟",
-            "方法二｜降低客戶理解門檻的具體例子",
-            "證明｜流程、細節、案例或常見結果",
-            "提醒｜避免誇大承諾，加入適用條件",
-            "結尾｜收藏、分享或預約下一步；替換成品牌真實 CTA",
-        ]
-    slides = nine_slides(slides, industry)
-    image_items = [
+def universal_brief(day, family):
+    cards = family["cards"]
+    context = f"百搭 Kit｜{family['name']}（{family['premise']}）"
+    items = [
         {
-            "type": f"IG 圖組・第 {index + 1} 張",
-            "purpose": topic,
-            "engine": "ChatGPT Images",
+            "type": f"母圖・{colour_id}",
+            "purpose": f"{cards} 張連續背景帶",
+            "engine": "ChatGPT Images / Imagen",
             "status": "prompt",
-            "text": image_prompt(industry, topic, index + 1, slide, style),
+            "text": plate_prompt(family, colour_id, palette, cards),
         }
-        for index, slide in enumerate(slides)
+        for colour_id, palette in COLOURWAYS
     ]
+    items.append({
+        "type": "分割指令",
+        "purpose": f"母圖 → {cards} 張卡片",
+        "engine": "split_carousel.py",
+        "status": "tool",
+        "text": split_command(f"{family['id']}_warm-neutral.png", cards),
+    })
+    items.extend({
+        "type": f"圖卡文字・第 {index} 張",
+        "purpose": family["name"],
+        "engine": "Canva",
+        "status": "prompt",
+        "text": card_prompt(family, role, index, cards, context, *COLOURWAYS[0]),
+    } for index, role in enumerate(family["roles"], 1))
+    items.append({
+        "type": "Canva 拆件規格",
+        "purpose": f"可販售模板｜{family['name']}",
+        "engine": "Canva Pro",
+        "status": "prompt",
+        "text": canva_spec(family, cards, context),
+    })
     return {
         "date": day.isoformat(),
         "stream": "carousel",
-        "title": f"IG Carousel 九日包｜{industry} Day {day_index + 1}｜{style['name']}",
-        "focus": topic,
-        "meta": f"第 {day_index + 1}/9 套｜{style['name']} · 9 張獨立 4:5 圖卡",
-        "summary": f"本輪 9 天鎖定「{industry}」，九天使用九套不重複設計系統。今天是「{style['name']}」：同品牌色彩、字體與 Logo 語言，但封面、圖片框、資訊層級及裝飾均與其他天不同。",
-        "items": image_items + [
-            {"type": "Canva 拆件規格", "purpose": f"可販售模板｜{style['name']}", "engine": "Canva Pro", "status": "prompt", "text": canva_spec(style)},
-        ],
+        "title": f"IG 百搭 Kit｜{family['name']}｜{cards} 張 × 3 配色",
+        "focus": family["premise"],
+        "meta": f"百搭 {UNIVERSAL_FAMILIES.index(family) + 1}/5 套｜{cards} 張 {CARD_RATIO}｜3 配色",
+        "summary": (
+            f"「{family['name']}」是結構型模板，任何行業都能套。今天產出 3 張無文字母圖（一色一張）、"
+            f"切成 {cards} 張 {CARD_WIDTH}×{CARD_HEIGHT}，再到 Canva 上字。"
+            "五款做完就是一個可上架的 Kit，不必等行業研究。"
+        ),
+        "items": items,
     }
+
+
+def industry_brief(day, industry_index, round_index):
+    # One day is one finished product, so the industry advances daily. Each round of
+    # nine covers every industry on one topic, and the visual family is offset by the
+    # round so the same industry does not come back looking identical.
+    industry = INDUSTRIES[industry_index % len(INDUSTRIES)]
+    topic = INDUSTRY_TOPICS[round_index % len(INDUSTRY_TOPICS)]
+    style = DAY_STYLES[(industry_index + round_index) % len(DAY_STYLES)]
+    cards = DEFAULT_CARDS
+    context = f"{industry}｜{topic}"
+    items = [
+        {
+            "type": f"母圖・{colour_id}",
+            "purpose": f"{cards} 張連續背景帶",
+            "engine": "ChatGPT Images / Imagen",
+            "status": "prompt",
+            "text": plate_prompt(style, colour_id, palette, cards),
+        }
+        for colour_id, palette in COLOURWAYS[:1]
+    ]
+    items.append({
+        "type": "分割指令",
+        "purpose": f"母圖 → {cards} 張卡片",
+        "engine": "split_carousel.py",
+        "status": "tool",
+        "text": split_command(f"{style['id']}_{industry}.png", cards),
+    })
+    items.extend({
+        "type": f"圖卡文字・第 {index} 張",
+        "purpose": context,
+        "engine": "Canva",
+        "status": "prompt",
+        "text": card_prompt(style, role, index, cards, context, *COLOURWAYS[0]),
+    } for index, role in enumerate(INDUSTRY_ROLES, 1))
+    items.append({
+        "type": "Canva 拆件規格",
+        "purpose": f"可販售模板｜{industry}",
+        "engine": "Canva Pro",
+        "status": "prompt",
+        "text": canva_spec(style, cards, context),
+    })
+    return {
+        "date": day.isoformat(),
+        "stream": "carousel",
+        "title": f"IG 行業包｜{industry}｜{style['name']}",
+        "focus": topic,
+        "meta": f"第 {round_index + 1} 輪・{industry_index + 1}/9 家｜{cards} 張 {CARD_RATIO}",
+        "summary": (
+            f"買家導向行業「{industry}」，今天用「{style['name']}」這套設計語法做一組完整可賣的 {cards} 張。"
+            "一天一個產品：母圖 → 分割 → Canva 上字，不再九天磨一個品牌。"
+        ),
+        "items": items,
+    }
+
+
+def make_brief(day):
+    """Phase 1 is the universal kit; everything after that is industry packs."""
+    if day < INDUSTRY_EPOCH:
+        offset = max(0, (day - UNIVERSAL_EPOCH).days)
+        return universal_brief(day, UNIVERSAL_FAMILIES[offset % len(UNIVERSAL_FAMILIES)])
+    delta = (day - INDUSTRY_EPOCH).days
+    return industry_brief(day, delta % len(INDUSTRIES), delta // len(INDUSTRIES))
 
 
 def main():
     payload = json.loads(DATA.read_text())
-    today = date.today()
-    delta = max(0, (today - EPOCH).days)
-    cycle = delta // 9
-    cycle_start = EPOCH + timedelta(days=cycle * 9)
     by_date = {brief["date"]: brief for brief in payload.get("briefs", [])}
-    for day_index in range(9):
-        day = cycle_start + timedelta(days=day_index)
-        if day.isoformat() in LOCKED_DATES and day.isoformat() in by_date:
-            continue
-        by_date[day.isoformat()] = make_brief(day, cycle, day_index)
+    start = max(date.today(), UNIVERSAL_EPOCH)
+    for offset in range(14):
+        day = start + timedelta(days=offset)
+        by_date[day.isoformat()] = make_brief(day)
     payload["briefs"] = sorted(by_date.values(), key=lambda item: item["date"])
     payload["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    print(f"Carousel cycle ready: {INDUSTRIES[cycle % len(INDUSTRIES)]}, {cycle_start} through {cycle_start + timedelta(days=8)}")
+    print(f"Carousel queue ready: {start} → {start + timedelta(days=13)}")
+    print(f"  百搭 Kit {UNIVERSAL_EPOCH} → {INDUSTRY_EPOCH - timedelta(days=1)}，之後進行業包")
 
 
 if __name__ == "__main__":

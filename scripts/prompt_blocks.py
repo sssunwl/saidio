@@ -234,6 +234,33 @@ CARD_RULES = (
     "depends on a decorative shape that cannot be moved."
 )
 
+PLATE_NEGATIVE = (
+    "NO TEXT OF ANY KIND — no letters, words, numbers, page numbers, headlines, captions, labels, "
+    "lorem ipsum, fake glyphs, handwriting or signage in any language. No logo, watermark, signature or "
+    "AI-tool badge. No human figure, face, hand, animal or recognizable branded product. No card "
+    "borders, frames, crop marks, seam guides, gutters, drop-shadowed panels or anything that reads as "
+    "a divided grid of separate cards. No phone mockup, no presentation slide, no surrounding canvas. "
+    "No high-detail focal subject and no photographic centrepiece — a plate is a stage, not a picture. "
+    "No hard vignette, heavy noise, neon glow or blown-out highlight that would fight typography."
+)
+
+PLATE_RULES = (
+    "1. This plate is a background only. Text is typeset on top of it later, so more than half of the "
+    "surface must stay quiet enough to read 36 px body copy against.\n"
+    "2. Compose as one continuous strip. Any structural element — rule, band, path, torn edge, gradient "
+    "— must run unbroken from the left edge to the right edge.\n"
+    "3. Self-contained motifs must not straddle a cut line. Either repeat them on a rhythm that clears "
+    "the cuts, or let the design be genuinely continuous instead.\n"
+    "4. Keep contrast low and even along the whole strip: a plate that is dark at one end and pale at "
+    "the other produces cards that no longer look like a set.\n"
+    "5. Hold one palette and one texture for the entire plate. Colour variation is delivered as a "
+    "separate colourway plate, not as drift inside one plate.\n"
+    "6. Output the widest aspect ratio the tool offers at the highest available resolution; the strip is "
+    "fitted and cut afterwards by scripts/split_carousel.py.\n"
+    "7. Detail level matters more than pixel count here: the plate is stretched several times its "
+    "generated width, which soft texture survives and fine structure does not."
+)
+
 VIDEO_RULES = (
     "1. The camera is locked; architecture, furniture and solid props hold their exact position and "
     "scale for the whole clip.\n"
@@ -267,8 +294,10 @@ def blocks_for(stream, item_type):
     if stream == "suntravel":
         return BROLL_NEGATIVE, BROLL_RULES
     if stream == "carousel":
-        if "Canva" in label:
+        if "Canva" in label or "分割" in label:
             return None
+        if "母圖" in label:
+            return PLATE_NEGATIVE, PLATE_RULES
         return CARD_NEGATIVE, CARD_RULES
     if stream == "capychill":
         if "音樂" in label:

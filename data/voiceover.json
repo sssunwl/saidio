@@ -1,6 +1,6 @@
 {
   "stream": "voiceover",
-  "updatedAt": "2026-07-25T09:18:00+09:00",
+  "updatedAt": "2026-07-27T09:18:00+09:00",
   "briefs": [
     {
       "date": "2026-07-20",
@@ -348,6 +348,64 @@
         }
       ],
       "date": "2026-07-25",
+      "stream": "voiceover"
+    },
+    {
+      "title": "理性投資與資產配置：V-INVEST 專業解說語音包",
+      "focus": "投資解說",
+      "meta": "Gemini R&D · 4 腳本 + 2 音效 · 聲線 V-INVEST",
+      "summary": "本資源包提供四篇針對不同投資核心觀念的理性解說腳本，搭配兩款低調沉穩的辦公與數據環境音效，旨在建立專業且值得信賴的財經旁白質感。",
+      "items": [
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "【PROMPT】\n投資並非一朝一夕的投機，而是與時間做朋友。複利的效果，就像是滾雪球，在前期或許不明顯，但只要方向正確、持續累積，時間自然會幫你將微小的資金，轉化為不可忽視的財富。保持耐心，讓時間為你的資產增值。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "【PROMPT】\n在追求獲利的同時，你是否先看清了底線？市場總是充滿波動，優秀的投資人不會試圖預測每一次的起伏，而是透過嚴格的風險控管，確保自己在極端行情下依然能留在場內。控制風險，才是長期獲利的起點。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "【PROMPT】\n不要把所有雞蛋放在同一個籃子裡，這句老生常談，是投資市場中唯一的免費午餐。透過跨資產、跨區域的多元配置，我們能有效降低單一事件對資產的衝擊，在波動的市場中，建立一個抗震且穩健的投資組合。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
+        },
+        {
+          "type": "旁白腳本",
+          "purpose": "投資解說",
+          "engine": "AI Studio TTS",
+          "voice": "V-INVEST",
+          "status": "prompt",
+          "text": "【PROMPT】\n當市場情緒高漲時，保持警惕；當市場陷入恐慌時，尋找價值。市場的週期循環往復，唯有抽離情緒、回歸基本面分析，才能在噪音不斷的財經世界中，做出理性的決策。投資，是一場克服人性弱點的修行。\n\n【NEGATIVE PROMPT｜禁止項】\n禁止：任何藝人、歌手、頻道、品牌、作品名稱或可辨識的引用句；受版權保護的原文、歌詞、詩句或台詞。禁止醫療、法律、投資的保證性說法（保證獲利、一定有效、永久根治），禁止恐嚇式開場與急迫話術。禁止 emoji、Markdown 記號、括號內的舞台指示、英文填充詞、網址與標籤——TTS 會照字唸出來。禁止繞口的長數字串與生僻專有名詞；禁止簡體字、日文漢字與中國大陸用語。禁止一句超過 30 字不換氣，禁止全篇同一句型重複。睡眠故事另禁：黑暗、走失、受傷、死亡、追逐等任何驚嚇元素。\n\n【RULES｜產出規則】\n1. 全篇用台灣繁體中文口語，唸得出來才算過關：寫完自己默唸一次，卡住的地方就改短。\n2. 嚴格照指定秒數與字數；中文朗讀約每秒 3.5 字，超出就刪，不要靠加快語速硬塞。\n3. 聲線只能用 VOICES.md 裡該角色已鎖定的那一個 voice，不可臨時換人；雙人稿以 [F]／[M] 標示發話者。\n4. 用標點控制節奏：短句用逗號，換氣用句號，需要停 2–4 秒的地方寫 …（停頓）…，不要用刪節號代替停頓。\n5. 開頭 5 秒內就要讓聽者知道這段在講什麼，結尾留一句可獨立成立的收束句，不接下集預告。\n6. 稿子必須自帶上下文，抽出來單獨播也聽得懂，不依賴畫面或前一段。\n7. 交付 48 kHz 單聲道 mp3／wav，語音目標 -16 LUFS，真峰值留 1 dB 以上餘裕，頭尾各留 0.3 秒靜音。\n8. 存檔時記錄工具、voice 名稱、生成日期與授權方案，檔名用 YYYYMMDD＋聲線代碼。"
+        },
+        {
+          "type": "環境音",
+          "purpose": "投資解說",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "【PROMPT】\nLow-frequency ambient hum of a modern, quiet corporate financial office. Soft sound of distant keyboard typing, occasional pages turning, muted air conditioning white noise. Calm, focused, and professional atmosphere. No music, 45 seconds, seamless loop.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
+        },
+        {
+          "type": "環境音",
+          "purpose": "投資解說",
+          "engine": "SFX",
+          "voice": "",
+          "status": "prompt",
+          "text": "【PROMPT】\nSubtle electronic data room ambience, extremely low-volume server hum, occasional gentle digital beeps or processing clicks representing data analysis, very clean and high-tech, futuristic but calm, 30 seconds, seamless loop.\n\n【NEGATIVE PROMPT｜禁止項】\nNo music, melody, harmony, chord progression, rhythmic groove or musical instrument. No human voice, whisper, breath, footstep dialogue or crowd chatter with intelligible words. No recognizable media, franchise, game or film sound design; no copyrighted or third-party samples; no sonic logo. No sudden transient, door slam, thunder crack, siren, alarm, phone notification or clipping peak. No fade-in or fade-out, no build, no one-shot event that cannot repeat, no stereo image that collapses in mono.\n\n【RULES｜產出規則】\n1. Deliver a steady-state ambience bed that sounds identical at 0:05 and at 0:50 — a listener must not be able to tell where the loop starts.\n2. Honour the stated duration; keep the first and last 2 seconds at matched level and spectrum so the file loops with a short crossfade and no seam.\n3. Keep the 200 Hz–4 kHz narration band open: this bed always sits under a voiceover.\n4. Layer at most three separable elements (broad bed / mid detail / occasional far accent) and keep each in its own frequency range and stereo position.\n5. Master around -20 LUFS integrated with at least 3 dB true-peak headroom — ambience is a bed, not a feature.\n6. High-pass below 30 Hz and keep it mono-compatible; most listeners are on phone speakers.\n7. Deliver stereo 48 kHz WAV where the tool allows, and log tool, generation date and licence plan before the file leaves R&D."
+        }
+      ],
+      "date": "2026-07-27",
       "stream": "voiceover"
     }
   ]

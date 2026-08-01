@@ -1,0 +1,37 @@
+{
+  "project": "OBcar Project",
+  "updatedAt": "2026-08-01T00:00:00+09:00",
+  "deliverablesPerVehicle": ["stationary_360_drone", "okinawa_coastal_driving_drone"],
+  "totals": {
+    "vehicles": 23,
+    "masterVideos": 46,
+    "stationary360Clips": 69,
+    "completedMasterVideos": 0
+  },
+  "statusValues": ["needs_spec", "needs_references", "ready", "in_production", "qa", "complete"],
+  "vehicles": [
+    {"id":"01-move-canbus","make":"Daihatsu","model":"Move Canbus","variant":"","seats":4,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"02-suzuki-hustler","make":"Suzuki","model":"Hustler","variant":"","seats":4,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"03-mitsubishi-delica","make":"Mitsubishi","model":"Delica","variant":"TBD","seats":4,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"04-jimny-660","make":"Suzuki","model":"Jimny","variant":"660cc","seats":4,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"05-jimny-1500","make":"Suzuki","model":"Jimny","variant":"1500cc / market name TBD","seats":4,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"06-suzuki-solio","make":"Suzuki","model":"Solio","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"07-sienta-gen2","make":"Toyota","model":"Sienta","variant":"second generation","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"08-honda-freed","make":"Honda","model":"Freed","variant":"generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"09-yaris-cross","make":"Toyota","model":"Yaris Cross","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"10-toyota-raize","make":"Toyota","model":"Raize","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"11-toyota-prius","make":"Toyota","model":"Prius","variant":"generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"12-sienta-gen3","make":"Toyota","model":"Sienta","variant":"third generation","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"13-freed-gen3","make":"Honda","model":"Freed","variant":"third generation standard body","seats":5,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"14-honda-stepwgn","make":"Honda","model":"Step WGN","variant":"generation TBD","seats":8,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"15-voxy-80","make":"Toyota","model":"Voxy","variant":"80 series","seats":7,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"16-voxy-90","make":"Toyota","model":"Voxy","variant":"90 series; seat configuration TBD","seats":"7-8","identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"17-nissan-serena","make":"Nissan","model":"Serena","variant":"generation TBD","seats":8,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"18-vellfire-20","make":"Toyota","model":"Vellfire","variant":"20 series","seats":7,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"19-alphard-30-8","make":"Toyota","model":"Alphard","variant":"30 series / 8-seat","seats":8,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"20-alphard-30-7","make":"Toyota","model":"Alphard","variant":"30 series / 7-seat","seats":7,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"21-alphard-40-7","make":"Toyota","model":"Alphard","variant":"40 series / 7-seat","seats":7,"identityStatus":"needs_references","status":"needs_references"},
+    {"id":"22-range-rover","make":"Land Rover","model":"Range Rover","variant":"model and generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
+    {"id":"23-porsche-718","make":"Porsche","model":"718","variant":"Cayman or Boxster TBD","seats":2,"identityStatus":"needs_spec","status":"needs_spec"}
+  ]
+}

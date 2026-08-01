@@ -266,6 +266,8 @@ h1,h2,h3{letter-spacing:-.03em;margin:0}
 .project{background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-radius:14px;padding:16px}
 .project h3{font-size:15px;margin:10px 0 6px}
 .project p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.project-link{display:inline-block;margin-top:10px;color:var(--text);font-size:12px;text-decoration:none;opacity:.82}
+.project-link:hover{opacity:1;text-decoration:underline}
 .tag{font:9.5px "DM Mono",monospace;padding:4px 8px;border-radius:999px;
   border:1px solid var(--glass-line);color:var(--muted)}
 .tag.active{color:var(--capychill);border-color:rgba(111,232,166,.45)}

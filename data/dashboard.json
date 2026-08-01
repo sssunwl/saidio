@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-07-27T09:12:00+09:00",
+  "updatedAt": "2026-08-01T14:44:00+09:00",
   "metrics": [
     {
       "label": "進行中製作",
-      "value": "03"
+      "value": "04"
     },
     {
       "label": "已歸檔 brief",
@@ -19,6 +19,13 @@
     }
   ],
   "projects": [
+    {
+      "name": "OBcar Project",
+      "state": "進行中",
+      "progress": 0,
+      "summary": "23 款租賃車各製作 1 支定點 360°航拍與 1 支沖繩海邊道路跟拍，共 46 支主交付；先鎖定實車身分與同一 360°場景，再逐款生成。",
+      "href": "https://github.com/sssunwl/saidio/tree/main/projects/obcar"
+    },
     {
       "name": "投資頻道",
       "state": "進行中",

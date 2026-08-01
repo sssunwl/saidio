@@ -418,7 +418,8 @@ function renderStrategy() {
     const cls = p.state === "進行中" ? "active" : p.state === "暫停" ? "hold" : "";
     return `<article class="project"><span class="tag ${cls}">${esc(p.state)}</span>
       <h3>${esc(p.name)}</h3><p>${esc(p.summary)}</p>
-      <div class="progress"><i style="width:${Number(p.progress) || 0}%"></i></div></article>`;
+      <div class="progress"><i style="width:${Number(p.progress) || 0}%"></i></div>
+      ${p.href ? `<a class="project-link" href="${esc(p.href)}" target="_blank" rel="noopener">查看製作清單 →</a>` : ""}</article>`;
   }).join("");
   $("#radar-list").innerHTML = (d.radar || []).map(r =>
     `<div class="signal"><time>${esc(r.date)}</time><strong>${esc(r.title)}</strong><p>${esc(r.detail)}</p></div>`).join("");

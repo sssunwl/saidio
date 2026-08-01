@@ -24,11 +24,11 @@
       "id": "02",
       "name": "Suzuki Hustler",
       "seats": "4",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／年式待實車照"
+      "model": "second-generation Suzuki Hustler kei crossover (MR52S/MR92S, 2020 onwards)",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 35-15。全長3,395／全寬1,475／全高1,680／軸距2,460mm"
     },
     {
       "id": "03",
@@ -44,31 +44,31 @@
       "id": "04",
       "name": "Suzuki Jimny 660cc",
       "seats": "4",
-      "model": "",
+      "model": "fourth-generation Suzuki Jimny kei off-roader (JB64W, 2018 onwards)",
       "colour": "",
       "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／套件待實車照"
+      "promptsGenerated": true,
+      "note": "JB64W；2018 起只有這一個世代，與 05 的外觀差別只在葉子板寬度"
     },
     {
       "id": "05",
       "name": "Suzuki Jimny 1500cc",
       "seats": "4",
-      "model": "",
+      "model": "fourth-generation Suzuki Jimny Sierra (JB74W, 2018 onwards, 1.5-litre)",
       "colour": "",
       "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "市場名稱（Jimny Sierra?）待確認"
+      "promptsGenerated": true,
+      "note": "JB74W；日規名稱是 Jimny Sierra，與 04 共用車體、差在寬葉子板"
     },
     {
       "id": "06",
       "name": "Suzuki Solio",
       "seats": "5",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／年式待實車照"
+      "model": "current-generation Suzuki Solio compact tall wagon (2020 onwards)",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 21-08。全長3,710／全寬1,625／全高1,745mm；精確底盤代號（暫定 MA36S／MA46S）待覆核，不影響開工"
     },
     {
       "id": "07",
@@ -78,7 +78,7 @@
       "colour": "",
       "hasReferencePhotos": false,
       "promptsGenerated": false,
-      "note": "前後期／套件待實車照"
+      "note": "NSP170G／NHP170G；拍照時答一題：前期（2015–2018，下擺黑色折線）還是後期（2018/9 起，保桿與頭燈改款）？"
     },
     {
       "id": "08",
@@ -88,7 +88,7 @@
       "colour": "",
       "hasReferencePhotos": false,
       "promptsGenerated": false,
-      "note": "世代待確認（與 13 區分）"
+      "note": "拍照時答一題：跟 13 一樣是三代（2024 起）還是二代 GB5／GB7（2016–2024）？若同為三代就跟 13 合併，不另開一台"
     },
     {
       "id": "09",
@@ -114,11 +114,11 @@
       "id": "11",
       "name": "Toyota Prius",
       "seats": "5",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／年式待確認"
+      "model": "fifth-generation Toyota Prius (MXWH60, 2022 onwards, \"Hybrid Reborn\" design)",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 74-57。全長4,599／全寬1,782／全高1,420–1,435／軸距2,750mm，車高極低直接鎖定 60 系"
     },
     {
       "id": "12",
@@ -144,101 +144,121 @@
       "id": "14",
       "name": "Honda Stepwagon",
       "seats": "8",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／年式／套件待確認"
+      "model": "current-generation Honda Stepwagon Spada (RP6–RP8, 2022 onwards)",
+      "colour": "dark blue",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認（片內字卡即寫 Spada），車牌 37-72。全長4,800／全寬1,750／全高1,840／軸距2,890mm"
     },
     {
       "id": "15",
       "name": "Toyota Voxy 80系",
       "seats": "7",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "前後期／套件待實車照"
+      "model": "facelifted Toyota Voxy 80-series (ZRR80W/ZWR80W, 2017 onwards)",
+      "colour": "dark navy",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 88-88（與 20 號車牌相同數字純屬巧合，非同一台）。全長4,695／全寬1,730／全高1,895／軸距2,850mm"
     },
     {
       "id": "16",
       "name": "Toyota Voxy 90系",
       "seats": "7–8",
-      "model": "",
+      "model": "fourth-generation Toyota Voxy (R90 series, 2022 onwards)",
       "colour": "",
       "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "座椅配置／套件待確認"
+      "promptsGenerated": true,
+      "note": "R90（ZWR90W／MZRA90W），2022/1 起，無前後期之分；7 或 8 座不影響外觀"
     },
     {
       "id": "17",
       "name": "Nissan Serena",
       "seats": "8",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "世代／年式／套件待確認"
+      "model": "fourth-generation Nissan Serena (C28, 2022 onwards)",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 77-1。全長4,765／全寬1,715／全高1,870／軸距2,870mm。⚠️ Toyota Noah 是本車款的後備代用車，不是官網另一個獨立車型，不要另開 OBcar 項目"
     },
     {
       "id": "18",
       "name": "Toyota Vellfire 20系",
       "seats": "7",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "前後期／套件待實車照"
+      "model": "first-generation Toyota Vellfire (ANH20W/GGH20W, 2008–2015)",
+      "colour": "dark grey",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認，車牌 71-44。全長4,850／全寬1,830／全高1,890／軸距2,950mm；前期／後期改款細節兩者尺寸相同，以照片為準，不影響開工"
     },
     {
       "id": "19",
       "name": "Toyota Alphard 30系",
       "seats": "8",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "8座；前後期／套件待實車照"
+      "model": "third-generation Toyota Alphard 30-series facelift, standard grade (AGH30W, 2018 onwards)",
+      "colour": "gloss black",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片實拍確認：車牌 84-35，素色保桿無包邊，字卡寫「可容納7~8人」。與 20（車牌 88-88，SC 包邊）是不同的兩台實車"
     },
     {
       "id": "20",
       "name": "Toyota Alphard 30系",
       "seats": "7",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "7座；外觀可能與 19 共用同一套圖"
+      "model": "third-generation Toyota Alphard 30-series facelift, seven-seat SC aero grade (AGH30W, 2018 onwards)",
+      "colour": "gloss black",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "30系後期 SC（エアロボディ）＋包邊套件、7 座、黑色，車牌 88-88。影片自報規格：全長 4,945／全寬 1,850／全高 1,880–1,950／軸距 3,000mm"
     },
     {
       "id": "21",
       "name": "Toyota Alphard 40系",
       "seats": "7",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "套件待實車照"
+      "model": "fourth-generation Toyota Alphard (AH40 series, 2023 onwards)",
+      "colour": "black",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "AH40（AGH40W），2023/6 起，無前後期之分。實拍照＋影片來自 footage/AL40，車牌 347 む77"
     },
     {
       "id": "22",
-      "name": "Range Rover",
+      "name": "Range Rover Evoque",
       "seats": "5",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "完整型號待確認（Sport／Evoque／Velar？）"
+      "model": "first-generation Range Rover Evoque (L538, 2011–2019)",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片自報尺寸全長4,365／軸距2,660mm，精確對應 L538 原廠數據（L551 是 4,371／2,681mm），且門把非隱藏式，判定為 L538"
     },
     {
       "id": "23",
-      "name": "Porsche 718",
+      "name": "Porsche 718 Boxster",
       "seats": "2",
-      "model": "",
-      "colour": "",
-      "hasReferencePhotos": false,
-      "promptsGenerated": false,
-      "note": "Cayman／Boxster 待確認"
+      "model": "Porsche 718 Boxster (982, 2016 onwards), soft top",
+      "colour": "white with red leather interior",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "車尾徽標清楚寫「718」；全車照片皆敞篷、酒紅內裝。素材：final/OB_Porsche718_202606.mp4"
+    },
+    {
+      "id": "24",
+      "name": "Honda N-One",
+      "seats": "4",
+      "model": "Honda N-One kei car, round headlamps with a two-tone black roof",
+      "colour": "white with black roof",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片來源：footage/1）介紹輕車三兄弟/None（白）。SS：N-One 產出優先度低，先做圖不急著做影片"
+    },
+    {
+      "id": "25",
+      "name": "Honda N-BOX",
+      "seats": "4",
+      "model": "Honda N-BOX kei tall wagon, standard (non-Custom) grade",
+      "colour": "white",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "影片自報尺寸：全長3,395／全寬1,475／全高1,790／軸距2,520mm。SS：N-BOX 產出優先度低，先做圖不急著做影片。另有三兄弟版重複素材（不同色），以此為準"
     }
   ]
 }

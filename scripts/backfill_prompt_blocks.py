@@ -24,6 +24,7 @@ FILES = {
     "suntravel.json": "suntravel",
     "carousel.json": "carousel",
     "capychill.json": "capychill",
+    "obcar.json": "obcar",
 }
 
 # The ten-track albums for these days are already generated and published; re-issuing

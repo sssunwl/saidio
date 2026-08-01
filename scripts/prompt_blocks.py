@@ -323,6 +323,72 @@ VIDEO_RULES = (
 )
 
 
+# ── OBcar（Okiblues 車隊）────────────────────────────────────
+# v2 鐵則第 3 條：禁止詞只寫一次，放 negative 欄。正文只寫「要什麼」——擴散模型
+# 讀到 turntable / rotating 會先把那個概念帶進潛空間再嘗試壓抑，念越多次越容易招來它。
+# 所以這裡三條 negative 各自只有一行，不再依鏡頭疊加。
+OBCAR_STILL_NEGATIVE = (
+    "text, signage, japanese characters, licence plate characters, watermark, caption, collage, "
+    "multiple views, extra vehicles, people, wheel stop, pole in frame, fisheye, wide-angle stretching, "
+    "altered wheels, altered headlights, altered badges, roof rails, wheel-arch cladding, body kit, "
+    "lowered stance, car parked across two bays, wrong generation, wrong trim level"
+)
+
+OBCAR_ORBIT_NEGATIVE = (
+    "turntable, rotating car, car pivoting, wheels turning, car sliding, car drifting, frozen background, "
+    "background without parallax, digital zoom, camera passing through the car, sudden reversal, "
+    "morphing bodywork, changing wheels, text"
+)
+
+OBCAR_COAST_NEGATIVE = (
+    "car sliding sideways, drifting, changing lanes, sudden acceleration, wobbling horizon, digital zoom, "
+    "orbiting a stationary car, turntable, morphing bodywork, changing wheels, changing colour, "
+    "right-side traffic, readable road signs, licence plate characters, captions"
+)
+
+# 這一線的 RULES 是給操作者看的驗收步驟，不是給模型的指令：每條都停在「這關過了才往下」。
+OBCAR_RULES = {
+    "anchor169": ("1. 每次都上傳同一組實車照，這是車款唯一真相。\n"
+                  "2. 一次只生一張；先批准車款身分與停車幾何再往下。\n"
+                  "3. 批准後這張就是本車的場景主定錨，之後每個鏡頭都要附上它。"),
+    "anchor916": ("1. 上傳「已批准的 16:9 A01」＋同一組實車照。\n"
+                  "2. 原生重生 9:16，不要裁 16:9，也不要外擴。\n"
+                  "3. 全車、四輪、陰影、海平線都要落在中央 4:5 內才算過。"),
+    "orbit_first": ("1. 首幀＝已批准的 A01；只生 10 秒。\n"
+                    "2. 先驗三件事：車沒轉、輪胎沒滑、背景有真實視差。\n"
+                    "3. 這段過了才做 P2，不要三段一起生。"),
+    "orbit_next": ("1. 首幀＝上一段的尾幀（Flow 直接按「延伸」最穩）。\n"
+                   "2. 只生 10 秒，方向不可反轉，速度與高度要接得上。\n"
+                   "3. P1+P2+P3 直接剪接約 30 秒；要柔一點就加兩個 0.3 秒疊化。"),
+    "coast_still": ("1. 上傳同一組實車照；三張定格圖要同一天光、同一段海岸。\n"
+                    "2. 一次只生一張，先批准車款與車道方向（左側通行）。\n"
+                    "3. 三張都批准後才開始動畫化。"),
+    "coast_clip": ("1. 上傳對應的已批准定格圖，只生 10 秒。\n"
+                   "2. 車速穩定、不變換車道；靠近或拉遠必須是實體飛行，不是變焦。\n"
+                   "3. 成片順序固定：高空接近 → 海側平行 → 低空拉遠。"),
+}
+
+
+def obcar_blocks(item_type):
+    """OBcar 靠鏡頭代碼決定規則，不靠生成器自己記得傳哪一組。
+
+    代碼寫在 item 的 type 裡（A01／P1–P3／R01a-c／R02a-c），所以 build_obcar_data.py
+    與 backfill 查的是同一張表；日後加鏡頭只要在這裡補一行。
+    """
+    label = item_type or ""
+    if "A01" in label:
+        return OBCAR_STILL_NEGATIVE, OBCAR_RULES["anchor916" if "9:16" in label else "anchor169"]
+    if "P1" in label:
+        return OBCAR_ORBIT_NEGATIVE, OBCAR_RULES["orbit_first"]
+    if "P2" in label or "P3" in label:
+        return OBCAR_ORBIT_NEGATIVE, OBCAR_RULES["orbit_next"]
+    if "R01" in label:
+        return OBCAR_STILL_NEGATIVE, OBCAR_RULES["coast_still"]
+    if "R02" in label:
+        return OBCAR_COAST_NEGATIVE, OBCAR_RULES["coast_clip"]
+    return None
+
+
 # One mapping from an item's stream + type to its blocks, so the generators and the
 # backfill script can never drift apart on which rules a given prompt gets.
 def blocks_for(stream, item_type):
@@ -350,4 +416,6 @@ def blocks_for(stream, item_type):
         return None
     if stream == "music":
         return MUSIC_NEGATIVE, MUSIC_RULES
+    if stream == "obcar":
+        return obcar_blocks(label)
     return None

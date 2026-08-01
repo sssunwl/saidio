@@ -18,7 +18,11 @@ Flow 的「延伸」直接支援），連續性由影片自己保證，不靠七
 """
 
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from prompt_blocks import blocks_for, bundle  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -31,23 +35,37 @@ VEHICLES = [
          colour="",
          body_note="Keep the exact Canbus round-lamp face and two-tone roof treatment shown in the photographs; do not swap between the Stripes and Theory front ends.",
          note="LA850S；待實車照確認前臉版本與車色"),
-    dict(id="02", name="Suzuki Hustler", seats="4", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／年式待實車照"),
+    dict(id="02", name="Suzuki Hustler", seats="4", ready=True, refs=True,
+         model="second-generation Suzuki Hustler kei crossover (MR52S/MR92S, 2020 onwards)",
+         colour="white",
+         body_note="Keep the exact square-bezel round headlamps, bold HUSTLER hood lettering, black wheel-arch cladding and roof rails shown in the photographs — the boxy retro-SUV face, not the rounder first-generation front.",
+         note="影片實拍確認，車牌 35-15。全長3,395／全寬1,475／全高1,680／軸距2,460mm"),
     dict(id="03", name="Mitsubishi Delica Mini", seats="4", ready=True, refs=False,
          model="Mitsubishi Delica Mini kei tall wagon (B34A/B35A, 2023 onwards)",
          colour="",
          body_note="Keep the exact Delica Mini square face, stacked lamp units and black lower cladding shown in the photographs; it is not a Delica D:5 and not a Delica D:2.",
          note="按 4 座判定為 Delica Mini；若實際是 D:5／D:2 請改 model"),
-    dict(id="04", name="Suzuki Jimny 660cc", seats="4", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／套件待實車照"),
-    dict(id="05", name="Suzuki Jimny 1500cc", seats="4", ready=False, refs=False,
-         model="", colour="", body_note="", note="市場名稱（Jimny Sierra?）待確認"),
-    dict(id="06", name="Suzuki Solio", seats="5", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／年式待實車照"),
+    dict(id="04", name="Suzuki Jimny 660cc", seats="4", ready=True, refs=False,
+         model="fourth-generation Suzuki Jimny kei off-roader (JB64W, 2018 onwards)",
+         colour="",
+         body_note="Keep the exact upright slotted grille, round headlamps, flat clamshell bonnet, square wheel arches and body-on-frame stance shown in the photographs. This is the narrow kei-class Jimny: plain arches, no flared over-fenders — that is the Sierra.",
+         note="JB64W；2018 起只有這一個世代，與 05 的外觀差別只在葉子板寬度"),
+    dict(id="05", name="Suzuki Jimny 1500cc", seats="4", ready=True, refs=False,
+         model="fourth-generation Suzuki Jimny Sierra (JB74W, 2018 onwards, 1.5-litre)",
+         colour="",
+         body_note="Keep the exact black flared over-fenders, wider track and 15-inch wheels shown in the photographs. This is the wide-body Sierra, not the narrow kei Jimny.",
+         note="JB74W；日規名稱是 Jimny Sierra，與 04 共用車體、差在寬葉子板"),
+    dict(id="06", name="Suzuki Solio", seats="5", ready=True, refs=True,
+         model="current-generation Suzuki Solio compact tall wagon (2020 onwards)",
+         colour="white",
+         body_note="Keep the exact chrome bar linking the swept headlamps, sliding rear doors and tall-wagon roofline shown in the photographs.",
+         note="影片實拍確認，車牌 21-08。全長3,710／全寬1,625／全高1,745mm；精確底盤代號（暫定 MA36S／MA46S）待覆核，不影響開工"),
     dict(id="07", name="Toyota Sienta 二代", seats="5", ready=False, refs=False,
-         model="", colour="", body_note="", note="前後期／套件待實車照"),
+         model="", colour="", body_note="",
+         note="NSP170G／NHP170G；拍照時答一題：前期（2015–2018，下擺黑色折線）還是後期（2018/9 起，保桿與頭燈改款）？"),
     dict(id="08", name="Honda Freed", seats="5", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代待確認（與 13 區分）"),
+         model="", colour="", body_note="",
+         note="拍照時答一題：跟 13 一樣是三代（2024 起）還是二代 GB5／GB7（2016–2024）？若同為三代就跟 13 合併，不另開一台"),
     dict(id="09", name="Toyota Yaris Cross", seats="5", ready=True, refs=False,
          model="Toyota Yaris Cross compact crossover (MXPB/MXPJ10, 2020 onwards, Japanese-market front end)",
          colour="",
@@ -58,8 +76,11 @@ VEHICLES = [
          colour="",
          body_note="Keep the exact Raize face, roof-rail presence or absence and wheel design shown in the photographs; it is not a RAV4 and not a Rocky-badged car.",
          note="待實車照確認年式／套件"),
-    dict(id="11", name="Toyota Prius", seats="5", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／年式待確認"),
+    dict(id="11", name="Toyota Prius", seats="5", ready=True, refs=True,
+         model="fifth-generation Toyota Prius (MXWH60, 2022 onwards, \"Hybrid Reborn\" design)",
+         colour="white",
+         body_note="Keep the exact extremely low coupe-like roofline, hidden rear door handle in the C-pillar, and split headlamp/DRL signature shown in the photographs — this is the 60-series, not the taller 50-series.",
+         note="影片實拍確認，車牌 74-57。全長4,599／全寬1,782／全高1,420–1,435／軸距2,750mm，車高極低直接鎖定 60 系"),
     dict(id="12", name="Toyota Sienta 三代", seats="5", ready=True, refs=False,
          model="third-generation Toyota Sienta compact minivan (MXPC10/MXPL10, 2022 onwards), five-seat version",
          colour="",
@@ -70,26 +91,68 @@ VEHICLES = [
          colour="muted blue-grey metallic",
          body_note="Standard body, not the Crosstar version: smooth bumpers, no roof rails, no wheel-arch cladding. Keep the slim horizontal chrome trim running through the Honda emblem, the twin rectangular upper DRL modules and the exact two-tone factory wheels.",
          note="Demo 車；實車照已收；16:9 A01 v2 已批准"),
-    dict(id="14", name="Honda Stepwagon", seats="8", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／年式／套件待確認"),
-    dict(id="15", name="Toyota Voxy 80系", seats="7", ready=False, refs=False,
-         model="", colour="", body_note="", note="前後期／套件待實車照"),
-    dict(id="16", name="Toyota Voxy 90系", seats="7–8", ready=False, refs=False,
-         model="", colour="", body_note="", note="座椅配置／套件待確認"),
-    dict(id="17", name="Nissan Serena", seats="8", ready=False, refs=False,
-         model="", colour="", body_note="", note="世代／年式／套件待確認"),
-    dict(id="18", name="Toyota Vellfire 20系", seats="7", ready=False, refs=False,
-         model="", colour="", body_note="", note="前後期／套件待實車照"),
-    dict(id="19", name="Toyota Alphard 30系", seats="8", ready=False, refs=False,
-         model="", colour="", body_note="", note="8座；前後期／套件待實車照"),
-    dict(id="20", name="Toyota Alphard 30系", seats="7", ready=False, refs=False,
-         model="", colour="", body_note="", note="7座；外觀可能與 19 共用同一套圖"),
-    dict(id="21", name="Toyota Alphard 40系", seats="7", ready=False, refs=False,
-         model="", colour="", body_note="", note="套件待實車照"),
-    dict(id="22", name="Range Rover", seats="5", ready=False, refs=False,
-         model="", colour="", body_note="", note="完整型號待確認（Sport／Evoque／Velar？）"),
-    dict(id="23", name="Porsche 718", seats="2", ready=False, refs=False,
-         model="", colour="", body_note="", note="Cayman／Boxster 待確認"),
+    dict(id="14", name="Honda Stepwagon", seats="8", ready=True, refs=True,
+         model="current-generation Honda Stepwagon Spada (RP6–RP8, 2022 onwards)",
+         colour="dark blue",
+         body_note="Keep the exact sharp split LED headlamp signature and black mesh lower grille of the Spada trim shown in the photographs, not the rounder pre-2022 face.",
+         note="影片實拍確認（片內字卡即寫 Spada），車牌 37-72。全長4,800／全寬1,750／全高1,840／軸距2,890mm"),
+    dict(id="15", name="Toyota Voxy 80系", seats="7", ready=True, refs=True,
+         model="facelifted Toyota Voxy 80-series (ZRR80W/ZWR80W, 2017 onwards)",
+         colour="dark navy",
+         body_note="Keep the exact large vertical-slat chrome grille and blue-accented hybrid badge shown in the photographs — the post-2017 facelift face, not the plainer pre-2017 nose.",
+         note="影片實拍確認，車牌 88-88（與 20 號車牌相同數字純屬巧合，非同一台）。全長4,695／全寬1,730／全高1,895／軸距2,850mm"),
+    dict(id="16", name="Toyota Voxy 90系", seats="7–8", ready=True, refs=False,
+         model="fourth-generation Toyota Voxy (R90 series, 2022 onwards)",
+         colour="",
+         body_note="Keep the exact full-width black grille that spans the whole nose, the slim horizontal headlamp signature, sliding-door layout and factory wheels shown in the photographs; do not draw the chrome-heavy 80-series face.",
+         note="R90（ZWR90W／MZRA90W），2022/1 起，無前後期之分；7 或 8 座不影響外觀"),
+    dict(id="17", name="Nissan Serena", seats="8", ready=True, refs=True,
+         model="fourth-generation Nissan Serena (C28, 2022 onwards)",
+         colour="white",
+         body_note="Keep the exact V-Motion chrome grille and sharp T-shaped LED headlamp signature shown in the photographs — the C28 face, not the rounder C27.",
+         note="影片實拍確認，車牌 77-1。全長4,765／全寬1,715／全高1,870／軸距2,870mm。"
+              "⚠️ Toyota Noah 是本車款的後備代用車，不是官網另一個獨立車型，不要另開 OBcar 項目"),
+    dict(id="18", name="Toyota Vellfire 20系", seats="7", ready=True, refs=True,
+         model="first-generation Toyota Vellfire (ANH20W/GGH20W, 2008–2015)",
+         colour="dark grey",
+         body_note="Keep the exact three-slat chrome grille, twin projector headlamps and wood-trim dashboard shown in the photographs.",
+         note="影片實拍確認，車牌 71-44。全長4,850／全寬1,830／全高1,890／軸距2,950mm；前期／後期改款細節兩者尺寸相同，以照片為準，不影響開工"),
+    dict(id="19", name="Toyota Alphard 30系", seats="8", ready=True, refs=True,
+         model="third-generation Toyota Alphard 30-series facelift, standard grade (AGH30W, 2018 onwards)",
+         colour="gloss black",
+         body_note="Standard-grade facelift face: plain body-colour bumper with no aero lip, exactly as photographed. This is a different physical car from 20 (SC aero, seven-seat) — do not swap their reference photos.",
+         note="影片實拍確認：車牌 84-35，素色保桿無包邊，字卡寫「可容納7~8人」。與 20（車牌 88-88，SC 包邊）是不同的兩台實車"),
+    dict(id="20", name="Toyota Alphard 30系", seats="7", ready=True, refs=True,
+         model="third-generation Toyota Alphard 30-series facelift, seven-seat SC aero grade (AGH30W, 2018 onwards)",
+         colour="gloss black",
+         body_note="Facelift SC aero grade: keep the tall vertical-fin chrome grille running down into the bumper, and the chrome-edged aero lip around the front bumper and sills, exactly as photographed. Not the plain X or G bumper.",
+         note="30系後期 SC（エアロボディ）＋包邊套件、7 座、黑色，車牌 88-88。影片自報規格：全長 4,945／全寬 1,850／全高 1,880–1,950／軸距 3,000mm"),
+    dict(id="21", name="Toyota Alphard 40系", seats="7", ready=True, refs=True,
+         model="fourth-generation Toyota Alphard (AH40 series, 2023 onwards)",
+         colour="black",
+         body_note="Keep the exact tall two-tier chrome mesh grille filling almost the whole nose, the slim upper lamp signature and squared shoulder line shown in the photographs. This is the 40-series: it does not have the 30-series single-tier stacked lamp cluster.",
+         note="AH40（AGH40W），2023/6 起，無前後期之分。實拍照＋影片來自 footage/AL40，車牌 347 む77"),
+    dict(id="22", name="Range Rover Evoque", seats="5", ready=True, refs=True,
+         model="first-generation Range Rover Evoque (L538, 2011–2019)",
+         colour="white",
+         body_note="Keep the conventional protruding door handles and rounded wheel-arch shown in the photographs — this is the pre-facelift L538, not the later flush-handle L551.",
+         note="影片自報尺寸全長4,365／軸距2,660mm，精確對應 L538 原廠數據（L551 是 4,371／2,681mm），且門把非隱藏式，判定為 L538"),
+    dict(id="23", name="Porsche 718 Boxster", seats="2", ready=True, refs=True,
+         model="Porsche 718 Boxster (982, 2016 onwards), soft top",
+         colour="white with red leather interior",
+         body_note="Soft-top convertible with the roof lowered, exactly as photographed — this is the Boxster, not the fixed-roof Cayman.",
+         note="車尾徽標清楚寫「718」；全車照片皆敞篷、酒紅內裝。素材：final/OB_Porsche718_202606.mp4"),
+    # 官網車隊表是 25 車型，主檔原本只有 23 —— 這兩台是漏的。
+    dict(id="24", name="Honda N-One", seats="4", ready=True, refs=True,
+         model="Honda N-One kei car, round headlamps with a two-tone black roof",
+         colour="white with black roof",
+         body_note="Keep the exact round headlamp shape, centred grille badge and black roof shown in the photographs.",
+         note="影片來源：footage/1）介紹輕車三兄弟/None（白）。SS：N-One 產出優先度低，先做圖不急著做影片"),
+    dict(id="25", name="Honda N-BOX", seats="4", ready=True, refs=True,
+         model="Honda N-BOX kei tall wagon, standard (non-Custom) grade",
+         colour="white",
+         body_note="Keep the exact slim single-bar chrome grille and headlamp shape shown in the photographs; this is the standard grade, not the chrome-heavy Custom front end.",
+         note="影片自報尺寸：全長3,395／全寬1,475／全高1,790／軸距2,520mm。SS：N-BOX 產出優先度低，先做圖不急著做影片。另有三兄弟版重複素材（不同色），以此為準"),
 ]
 
 
@@ -174,34 +237,8 @@ The drone keeps this photograph's framing and tracks the car through real space.
 
 Photoreal Japanese automotive and travel commercial, gimbal-smooth, no zoom."""
 
-# ── Negative（每種一行，只寫一次）───────────────────────────
-NEG_STILL = ("text, signage, japanese characters, licence plate characters, watermark, caption, collage, "
-             "multiple views, extra vehicles, people, wheel stop, pole in frame, fisheye, wide-angle stretching, "
-             "altered wheels, altered headlights, altered badges, roof rails, wheel-arch cladding, body kit, "
-             "lowered stance, car parked across two bays, wrong generation, wrong trim level")
-NEG_ORBIT = ("turntable, rotating car, car pivoting, wheels turning, car sliding, car drifting, frozen background, "
-             "background without parallax, digital zoom, camera passing through the car, sudden reversal, "
-             "morphing bodywork, changing wheels, text")
-NEG_COAST = ("car sliding sideways, drifting, changing lanes, sudden acceleration, wobbling horizon, digital zoom, "
-             "orbiting a stationary car, turntable, morphing bodywork, changing wheels, changing colour, "
-             "right-side traffic, readable road signs, licence plate characters, captions")
-
-# ── Rules（給人看的操作規則）────────────────────────────────
-RULES = {
-    "anchor169": "1. 每次都上傳同一組實車照，這是車款唯一真相。\n2. 一次只生一張；先批准車款身分與停車幾何再往下。\n3. 批准後這張就是本車的場景主定錨，之後每個鏡頭都要附上它。",
-    "anchor916": "1. 上傳「已批准的 16:9 A01」＋同一組實車照。\n2. 原生重生 9:16，不要裁 16:9，也不要外擴。\n3. 全車、四輪、陰影、海平線都要落在中央 4:5 內才算過。",
-    "orbit_first": "1. 首幀＝已批准的 A01；只生 10 秒。\n2. 先驗三件事：車沒轉、輪胎沒滑、背景有真實視差。\n3. 這段過了才做 P2，不要三段一起生。",
-    "orbit_next": "1. 首幀＝上一段的尾幀（Flow 直接按「延伸」最穩）。\n2. 只生 10 秒，方向不可反轉，速度與高度要接得上。\n3. P1+P2+P3 直接剪接約 30 秒；要柔一點就加兩個 0.3 秒疊化。",
-    "coast_still": "1. 上傳同一組實車照；三張定格圖要同一天光、同一段海岸。\n2. 一次只生一張，先批准車款與車道方向（左側通行）。\n3. 三張都批准後才開始動畫化。",
-    "coast_clip": "1. 上傳對應的已批准定格圖，只生 10 秒。\n2. 車速穩定、不變換車道；靠近或拉遠必須是實體飛行，不是變焦。\n3. 成片順序固定：高空接近 → 海側平行 → 低空拉遠。",
-}
-
-
-def bundle(prompt, negative, rules):
-    """每條 Prompt 都自帶三段，單獨複製即完整。"""
-    return "\n".join(["【PROMPT】", prompt.strip(), "",
-                      "【NEGATIVE PROMPT｜禁止項】", negative.strip(), "",
-                      "【RULES｜產出規則】", rules.strip()])
+# Negative 與 RULES 已搬進 scripts/prompt_blocks.py（OBCAR_* 區塊），由鏡頭代碼查表。
+# 改規則只改那裡，backfill 與這支生成器才不會各寫一份、慢慢走鐘。
 
 
 def still(v, aspect, scene, cam):
@@ -213,36 +250,33 @@ def clip_format(aspect):
     return VERTICAL_CLIP if aspect == "9:16" else LANDSCAPE_CLIP
 
 
+def item(v, aspect, item_type, engine, prompt):
+    """一條 Prompt。negative 與 rules 一律由 type 裡的鏡頭代碼查 prompt_blocks 決定。"""
+    pair = blocks_for("obcar", item_type)
+    if pair is None:
+        raise ValueError(f"prompt_blocks 沒有這個鏡頭代碼的規則：{item_type}")
+    return {
+        "type": item_type,
+        "purpose": f"{v['name']}｜{v['seats']}座" + ("" if v["refs"] else "｜⚠️ 實車照未到"),
+        "engine": engine, "status": "prompt", "aspect": aspect, "vehicle": v["id"],
+        "text": bundle(prompt, *pair),
+    }
+
+
 def vehicle_items(v, aspect):
     """一台車、一個比例＝10 條 Prompt。"""
-    tag = f"{v['name']}｜{v['seats']}座" + ("" if v["refs"] else "｜⚠️ 實車照未到")
     img_engine, vid_engine = "ChatGPT Images", "Google Flow Lite"
-    out = [{
-        "type": f"OBcar 圖・{aspect} A01 停車場定錨圖",
-        "purpose": tag, "engine": img_engine, "status": "prompt", "aspect": aspect, "vehicle": v["id"],
-        "text": bundle(still(v, aspect, PARKING, PARKING_CAM), NEG_STILL,
-                       RULES["anchor916" if aspect == "9:16" else "anchor169"]),
-    }]
-    for index, (code, label, leg) in enumerate(ORBIT_LEGS):
-        out.append({
-            "type": f"OBcar 影片・{aspect} {code} 360°環繞 {label}",
-            "purpose": tag, "engine": vid_engine, "status": "prompt", "aspect": aspect, "vehicle": v["id"],
-            "text": bundle(f"{ORBIT.format(leg=leg)}\n\n{clip_format(aspect)}", NEG_ORBIT,
-                           RULES["orbit_first" if index == 0 else "orbit_next"]),
-        })
+    out = [item(v, aspect, f"OBcar 圖・{aspect} A01 停車場定錨圖", img_engine,
+                still(v, aspect, PARKING, PARKING_CAM))]
+    for code, label, leg in ORBIT_LEGS:
+        out.append(item(v, aspect, f"OBcar 影片・{aspect} {code} 360°環繞 {label}", vid_engine,
+                        f"{ORBIT.format(leg=leg)}\n\n{clip_format(aspect)}"))
     for key, label, cam, _ in COAST_SHOTS:
-        out.append({
-            "type": f"OBcar 圖・{aspect} R01{key} 海邊定格圖 {label}",
-            "purpose": tag, "engine": img_engine, "status": "prompt", "aspect": aspect, "vehicle": v["id"],
-            "text": bundle(still(v, aspect, COAST, cam), NEG_STILL, RULES["coast_still"]),
-        })
+        out.append(item(v, aspect, f"OBcar 圖・{aspect} R01{key} 海邊定格圖 {label}", img_engine,
+                        still(v, aspect, COAST, cam)))
     for key, label, _, move in COAST_SHOTS:
-        out.append({
-            "type": f"OBcar 影片・{aspect} R02{key} 海邊跟拍 {label}",
-            "purpose": tag, "engine": vid_engine, "status": "prompt", "aspect": aspect, "vehicle": v["id"],
-            "text": bundle(f"{COAST_CLIP.format(move=move)}\n\n{clip_format(aspect)}", NEG_COAST,
-                           RULES["coast_clip"]),
-        })
+        out.append(item(v, aspect, f"OBcar 影片・{aspect} R02{key} 海邊跟拍 {label}", vid_engine,
+                        f"{COAST_CLIP.format(move=move)}\n\n{clip_format(aspect)}"))
     return out
 
 
@@ -257,6 +291,25 @@ TASK_OVERRIDES = {
     "13": {"spec": "done", "references": "done", "anchor169": "done", "orbitClips169": "doing"},
     "01": {"spec": "done"}, "03": {"spec": "done"}, "09": {"spec": "done"},
     "10": {"spec": "done"}, "12": {"spec": "done"},
+    # 2026-08-01 補鎖：主推五款到齊。這四台的世代由車名本身唯一指定，沒有前後期歧義，
+    # 所以不必等實車照就能鎖 spec —— 但實車照仍是車款身分的唯一真相，拍到才能開生成。
+    "04": {"spec": "done"}, "05": {"spec": "done"},
+    "16": {"spec": "done"}, "21": {"spec": "done"},
+    # 2026-08-02：Okiblues 車隊實拍影片（小林影片/、footage/AL40、footage/輕車三兄弟）
+    # 抽幀比對後鎖定的七台，references 也一併標 done，因為抽出來的幀就是實車照。
+    "19": {"spec": "done", "references": "done"},
+    "20": {"spec": "done", "references": "done"},
+    "22": {"spec": "done", "references": "done"},
+    "23": {"spec": "done", "references": "done"},
+    "24": {"spec": "done", "references": "done"},
+    "25": {"spec": "done", "references": "done"},
+    "02": {"spec": "done", "references": "done"},
+    "06": {"spec": "done", "references": "done"},
+    "11": {"spec": "done", "references": "done"},
+    "14": {"spec": "done", "references": "done"},
+    "15": {"spec": "done", "references": "done"},
+    "17": {"spec": "done", "references": "done"},
+    "18": {"spec": "done", "references": "done"},
 }
 
 

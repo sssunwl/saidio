@@ -25,7 +25,8 @@ class ProjectBriefsTest(unittest.TestCase):
     def test_obcar_tracker_covers_every_vehicle_and_delivery_step(self):
         data = obcar.build()
         tracker = data["tracker"]
-        self.assertEqual(len(tracker["vehicles"]), 23)
+        # 官網車隊表(sona.sssuni.com/okiblues)寫 25 車型,主檔必須跟它一致。
+        self.assertEqual(len(tracker["vehicles"]), 25)
         # v2 拿掉七角度那一步,每個比例剩 6 步。
         self.assertEqual(len(tracker["defaultTasks"]), 15)
         self.assertNotIn("angles169", tracker["defaultTasks"])
@@ -66,7 +67,7 @@ class ProjectBriefsTest(unittest.TestCase):
         later = [i for i in orbit if " P2 " in i["type"] or " P3 " in i["type"]]
         self.assertTrue(all("上一段的尾幀" in i["text"] for i in later))
 
-    def test_obcar_prompts_stay_short_enough_to_scale_to_23_vehicles(self):
+    def test_obcar_prompts_stay_short_enough_to_scale_to_the_whole_fleet(self):
         # 舊版一條 5,200 字、一台車 130,000 字,23 台根本貼不完。
         # 最長的是 9:16 定錨圖(車款卡+場景+直式衍生規則),其餘都在 1,600 字上下。
         items = [i for b in obcar.build()["briefs"] for i in b["items"]]
@@ -94,6 +95,31 @@ class ProjectBriefsTest(unittest.TestCase):
         # 直式定錨必須從已批准的 16:9 衍生,不是各自重新設計場景。
         anchors = [i for i in items if "A01" in i["type"]]
         self.assertTrue(all("approved 16:9 frame" in i["text"] for i in anchors))
+
+    def test_obcar_rules_come_only_from_prompt_blocks(self):
+        # 合流的重點:規則有第二份副本就一定會走鐘。生成器不准自己寫 negative/rules,
+        # 每條都必須查得到 prompt_blocks 的表,而且落地的字串要一模一樣。
+        expected = {
+            "A01": blocks.OBCAR_STILL_NEGATIVE,
+            "P1": blocks.OBCAR_ORBIT_NEGATIVE, "P2": blocks.OBCAR_ORBIT_NEGATIVE,
+            "P3": blocks.OBCAR_ORBIT_NEGATIVE,
+            "R01": blocks.OBCAR_STILL_NEGATIVE, "R02": blocks.OBCAR_COAST_NEGATIVE,
+        }
+        items = [i for b in obcar.build()["briefs"] for i in b["items"]]
+        for item in items:
+            self.assertTrue(blocks.is_bundled(item["text"]), item["type"])
+            code = next(c for c in expected if c in item["type"])
+            self.assertIn(expected[code], item["text"], item["type"])
+            self.assertIsNotNone(blocks.blocks_for("obcar", item["type"]), item["type"])
+        self.assertFalse(hasattr(obcar, "NEG_STILL"), "negative 不該再留在生成器裡")
+        self.assertFalse(hasattr(obcar, "RULES"), "rules 不該再留在生成器裡")
+
+    def test_obcar_vertical_anchor_gets_the_vertical_rules(self):
+        # A01 是唯一一個規則隨比例改變的鏡頭,查表用的是 type 裡的「9:16」字樣。
+        _, landscape = blocks.blocks_for("obcar", "OBcar 圖・16:9 A01 停車場定錨圖")
+        _, vertical = blocks.blocks_for("obcar", "OBcar 圖・9:16 A01 停車場定錨圖")
+        self.assertIn("批准後這張就是本車的場景主定錨", landscape)
+        self.assertIn("已批准的 16:9 A01", vertical)
 
     def test_every_capychill_item_is_a_self_contained_package(self):
         # A single copy has to carry the prompt, the negative list and the rules,

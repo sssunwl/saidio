@@ -33,17 +33,33 @@ class ProjectBriefsTest(unittest.TestCase):
 
     def test_obcar_demo_is_self_contained_and_closes_a_real_orbit(self):
         items = obcar.build()["briefs"][0]["items"]
-        self.assertEqual(len(items), 13)
+        self.assertEqual(len(items), 17)
         self.assertEqual(len([i for i in items if "Step 0" in i["type"] and "圖" in i["type"]]), 8)
         for item in items:
             self.assertIn("【PROMPT】", item["text"], item["type"])
             self.assertIn("【NEGATIVE PROMPT｜禁止項】", item["text"], item["type"])
             self.assertIn("【RULES｜產出規則】", item["text"], item["type"])
-        orbit = next(i["text"] for i in items if "360°相鄰段" in i["type"])
-        self.assertIn("seven separate clips", orbit)
-        self.assertIn("07→01", orbit)
+        orbit = next(i["text"] for i in items if "360°三段環繞" in i["type"])
+        self.assertIn("exactly three 10-second", orbit)
+        self.assertIn("05→01", orbit)
         self.assertIn("central 31.6 percent", orbit)
         self.assertTrue(any("原生9:16" in i["type"] for i in items))
+
+    def test_obcar_images_accept_optional_scenery_and_default_to_okinawa(self):
+        items = obcar.build()["briefs"][0]["items"]
+        images = [item for item in items if "圖・" in item["type"]]
+        self.assertEqual(len(images), 11)
+        self.assertTrue(all(item["engine"] == "ChatGPT Images" for item in images))
+        for item in images:
+            self.assertIn("If no scenery photograph is supplied", item["text"])
+            self.assertIn("northern Okinawa", item["text"])
+
+    def test_obcar_final_films_are_three_flow_lite_clips(self):
+        items = obcar.build()["briefs"][0]["items"]
+        coast = [item for item in items if "海邊" in item["type"] and "影片" in item["type"] and "原生" not in item["type"]]
+        self.assertEqual(len(coast), 3)
+        self.assertTrue(all("10-second" in item["text"] for item in coast))
+        self.assertTrue(all(item["engine"] == "Google Flow Lite" for item in coast))
 
     def test_every_capychill_item_is_a_self_contained_package(self):
         # A single copy has to carry the prompt, the negative list and the rules,

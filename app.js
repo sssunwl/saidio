@@ -403,7 +403,7 @@ function obcarTrackerHTML(tracker) {
     <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。9:16 欄位代表直式交付；先做 16:9，再經裁切 QA，裁不好的鏡頭才用下方「原生 9:16 重構」Prompt。</p>
     <div class="ob-table-wrap"><table class="ob-table">
       <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="4">360° · 16:9</th><th colspan="2">360° · 9:16</th><th colspan="3">海邊 · 16:9</th><th colspan="2">海邊 · 9:16</th><th rowspan="2">總 QA</th></tr>
-      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>7片段</th><th>成片</th><th>裁切QA</th><th>直式</th><th>定格</th><th>片段</th><th>成片</th><th>裁切QA</th><th>直式</th></tr></thead>
+      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>3×10秒</th><th>成片</th><th>裁切QA</th><th>直式</th><th>3定格</th><th>3×10秒</th><th>成片</th><th>裁切QA</th><th>直式</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
   </section>`;

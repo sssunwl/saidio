@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T15:10:00+09:00",
+  "updatedAt": "2026-08-01T16:31:00+09:00",
   "metrics": [
     {
       "label": "進行中製作",
@@ -23,7 +23,7 @@
       "name": "OBcar Project",
       "state": "進行中",
       "progress": 0,
-      "summary": "23 款租賃車各製作定點 360°與沖繩海邊跟拍，兩種影片各交付 16:9、9:16，共 92 個規格成片；Freed 三代先做 Demo 驗證百搭 Prompt。",
+      "summary": "23 款租賃車各製作約30秒定點360°與沖繩海邊跟拍，兩種影片各交付16:9、9:16；Freed三代先以 ChatGPT 生圖＋Flow Lite 3×10秒驗證。",
       "href": "https://github.com/sssunwl/saidio/tree/main/projects/obcar"
     },
     {

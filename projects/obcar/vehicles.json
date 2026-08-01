@@ -6,7 +6,7 @@
     "vehicles": 23,
     "videoConcepts": 46,
     "aspectRatioDeliverables": 92,
-    "stationary360Clips": 161,
+    "stationary360Clips": 69,
     "completedAspectRatioDeliverables": 0
   },
   "statusValues": ["needs_spec", "needs_references", "ready", "in_production", "qa", "complete"],

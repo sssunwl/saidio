@@ -68,7 +68,7 @@ Front-right three-quarter view. Camera azimuth 325 degrees from the vehicle's fo
 
 ## 2. 定點 360°影片模板
 
-每段放入物理上相容的 start frame 與 end frame。完整 360°依同一方向生成七段：Angle 01→02、02→03、03→04、04→05、05→06、06→07，以及 07 經車頭回到 01。
+每段放入物理上相容的 start frame 與 end frame。Google Flow Lite 的 30 秒完整 360°分成三段各 10 秒：Angle 01→03 經左側、03→05 經車尾、05→01 經右側與車頭。其餘角度圖用來鎖定中途外觀、背景與物理方向，不必各自生成一段影片。
 
 ```text
 Use the uploaded start frame and end frame as strict visual anchors.

@@ -277,8 +277,11 @@ h1,h2,h3{letter-spacing:-.03em;margin:0}
 .ob-total{display:flex;flex-direction:column;align-items:flex-end}
 .ob-total strong{font:700 22px "DM Mono",monospace;color:var(--obcar)}
 .ob-total span{font-size:10px;color:var(--faint)}
+.ob-ratio-switch{display:inline-flex;gap:4px;padding:4px;margin-top:6px;border:1px solid var(--glass-line);border-radius:11px;background:rgba(255,255,255,.025)}
+.ob-ratio-switch button{appearance:none;border:0;border-radius:8px;padding:7px 12px;background:transparent;color:var(--muted);font:500 11px "DM Sans",sans-serif;cursor:pointer}
+.ob-ratio-switch button.active{background:var(--obcar);color:#07111a;font-weight:700}
 .ob-table-wrap{overflow:auto;border:1px solid var(--glass-line);border-radius:13px;margin-top:14px;max-height:66vh}
-.ob-table{width:100%;min-width:1280px;border-collapse:separate;border-spacing:0;font-size:11px}
+.ob-table{width:100%;min-width:980px;border-collapse:separate;border-spacing:0;font-size:11px}
 .ob-table th,.ob-table td{padding:8px 7px;border-right:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line);text-align:center;background:rgba(8,9,23,.78)}
 .ob-table thead th{position:sticky;top:0;z-index:3;color:var(--obcar);font:500 10px "DM Mono",monospace;background:#11152a}
 .ob-table thead tr:nth-child(2) th{top:32px}

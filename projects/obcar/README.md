@@ -4,7 +4,7 @@
 
 ## 完成定義
 
-每款車必須依序通過：實車身分鎖定 → 主場景定錨圖 → 7 個一致角度 → 3 段 10 秒完整 360° clip → 3 張海邊道路定格圖 → 3 段 10 秒海邊跟拍 → 16:9／9:16 裁切與原生重構判定 → 車款一致性 QA → 成片輸出。正式逐車完成表與 Freed 三代 Demo Prompt 都在 Saidio 的「產線 → OBcar」；靜態資料源是 [`data/obcar.json`](../../data/obcar.json)，由 [`build_obcar_data.py`](../../scripts/build_obcar_data.py) 產生。通用長版說明仍保留在 [`PROMPTS.md`](PROMPTS.md)。
+每款車必須依序通過：實車身分鎖定 → 16:9與9:16各自的主場景定錨圖 → 每個比例各7個一致角度 → 每個比例各3段10秒完整360° clip → 每個比例各3張海邊道路定格圖 → 每個比例各3段10秒海邊跟拍 → 車款一致性與4:5安全區QA → 成片輸出。正式逐車完成表與 Freed 三代 Demo Prompt 都在 Saidio 的「產線 → OBcar」；可用比例按鈕切換全部23款車的表格與Prompt。靜態資料源是 [`data/obcar.json`](../../data/obcar.json)，由 [`build_obcar_data.py`](../../scripts/build_obcar_data.py) 產生。
 
 360°片的物理原則是「車與地面接觸點完全鎖定，只有攝影機移動」；海邊片則相反，車輛沿正確的左側車道前進，攝影機平滑追蹤。兩條片都不得用數位縮放冒充實體運鏡，也不得讓車身、輪圈、燈具、世代或套件在幀間變形。
 
@@ -50,4 +50,4 @@
 
 ## 目前進度
 
-OBcar 正式產線、逐車完成表與 Freed 三代 17 個 Demo Prompt 已建立，實際影片尚未生成，所以 dashboard 進度從 0% 開始。圖片以 ChatGPT Images 為主；有風景照時作為環境參考，沒有時使用 Prompt 內的沖繩預設背景。下一個可執行動作是上傳 Freed 三代實車參考照，依 Step 01 起逐項生成與回報。
+OBcar 正式產線、逐車完成表與 Freed 三代28個Demo Prompt已建立：16:9與9:16各14條，而且每條均自帶Negative與Rules。Freed實車參考照已收到，第一張16:9定錨圖經檢查後標成待重生；新版Prompt已補強車頭鍍鉻飾條、燈組、輪圈、單一車格平行停放及簡化背景。圖片以ChatGPT Images為主；有風景照時作為環境參考，沒有時使用Prompt內的沖繩預設背景。

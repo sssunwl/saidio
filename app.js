@@ -32,7 +32,7 @@ const LANES = [
 ];
 const LANE_ORDER = ["image", "motion", "audio", "text"];
 
-const state = { briefs: [], dashboard: null, streamData: {}, filter: "all", month: new Date(), selected: null };
+const state = { briefs: [], dashboard: null, streamData: {}, filter: "all", obcarAspect: "16:9", month: new Date(), selected: null };
 
 /* ── 正規化:把兩種 schema 收斂成同一個形狀 ───────────────── */
 function normItem(raw, stream) {
@@ -40,7 +40,7 @@ function normItem(raw, stream) {
   if (raw && typeof raw === "object") {
     if (raw.text) return {
       type: raw.type || "Prompt", purpose: raw.purpose || "", engine: raw.engine || "",
-      text: raw.text, generation: raw.generation || null, stream,
+      text: raw.text, generation: raw.generation || null, aspect: raw.aspect || "", stream,
     };
     // 音樂線的結構化 prompt 物件 → 攤平成可讀文字
     const skip = new Set(["id", "type"]);
@@ -301,7 +301,7 @@ function itemLabel(it) {
 function cardHTML(it, units, i) {
   const generic = !it.type || it.type === "Prompt";
   const title = generic ? (itemLabel(it) || "Prompt") : it.type;
-  return `<div class="pcell"><article class="pcard">
+  return `<div class="pcell" data-aspect="${esc(it.aspect || "")}"><article class="pcard">
     <div class="pc-head">
       <span class="pc-no">${String(i + 1).padStart(2, "0")}</span>
       <span class="pc-type" title="${esc(title)}">${esc(title)}</span>
@@ -372,6 +372,7 @@ function openLine(key) {
       ? list.map((b, i) => `<p class="batch-date">${esc(b.date)}</p>${groupHTML(b, i === 0)}`).join("")
       : `<div class="glass panel"><div class="empty">這條線還沒有紀錄。</div></div>`);
   wire();
+  if (key === "obcar") wireObcarAspect();
 }
 
 const OBCAR_STATUS = {
@@ -387,26 +388,45 @@ function obcarStatusCell(value) {
 
 function obcarTrackerHTML(tracker) {
   if (!tracker?.vehicles?.length) return "";
-  const fields = ["spec", "references", "anchor169", "angles169", "orbitClips169", "orbitMaster169",
-    "orbitCropQa", "orbit916", "coastStill169", "coastClip169", "coastMaster169", "coastCropQa", "coast916", "finalQa"];
-  const total = tracker.vehicles.length * fields.length;
+  const fields169 = ["anchor169", "angles169", "orbitClips169", "orbitMaster169", "coastStills169", "coastClips169", "coastMaster169"];
+  const fields916 = ["anchor916", "angles916", "orbitClips916", "orbitMaster916", "coastStills916", "coastClips916", "coastMaster916"];
+  const allFields = ["spec", "references", ...fields169, ...fields916, "finalQa"];
+  const total = tracker.vehicles.length * allFields.length;
   const tasksOf = v => ({ ...(tracker.defaultTasks || {}), ...(v.tasks || {}) });
-  const done = tracker.vehicles.reduce((n, v) => n + fields.filter(f => tasksOf(v)[f] === "done").length, 0);
-  const rows = tracker.vehicles.map(v => {
-    const tasks = tasksOf(v);
-    return `<tr><th scope="row"><span class="ob-id">${esc(v.id)}</span><strong>${esc(v.name)}</strong><small>${esc(v.seats)}座 · ${esc(v.note || "")}</small></th>
-      ${fields.map(f => obcarStatusCell(tasks[f])).join("")}</tr>`;
-  }).join("");
+  const done = tracker.vehicles.reduce((n, v) => n + allFields.filter(f => tasksOf(v)[f] === "done").length, 0);
+  const table = (aspect, fields) => {
+    const rows = tracker.vehicles.map(v => {
+      const tasks = tasksOf(v);
+      return `<tr><th scope="row"><span class="ob-id">${esc(v.id)}</span><strong>${esc(v.name)}</strong><small>${esc(v.seats)}座 · ${esc(v.note || "")}</small></th>
+        ${obcarStatusCell(tasks.spec)}${obcarStatusCell(tasks.references)}${fields.map(f => obcarStatusCell(tasks[f])).join("")}${obcarStatusCell(tasks.finalQa)}</tr>`;
+    }).join("");
+    return `<div class="ob-table-wrap" data-ob-table="${aspect}"><table class="ob-table ob-table-ratio">
+      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="4">360° · ${aspect}</th><th colspan="3">海邊 · ${aspect}</th><th rowspan="2">總 QA</th></tr>
+      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>3×10秒</th><th>成片</th><th>3定格</th><th>3×10秒</th><th>成片</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+  };
   return `<section class="glass panel ob-tracker" style="--c:var(--obcar)">
     <div class="ob-track-head"><div><p class="eyebrow">逐車完成表</p><h3>23 車款 × 兩種影片 × 兩種比例</h3></div>
       <div class="ob-total"><strong>${done}/${total}</strong><span>步驟完成</span></div></div>
-    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。9:16 欄位代表直式交付；先做 16:9，再經裁切 QA，裁不好的鏡頭才用下方「原生 9:16 重構」Prompt。</p>
-    <div class="ob-table-wrap"><table class="ob-table">
-      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="4">360° · 16:9</th><th colspan="2">360° · 9:16</th><th colspan="3">海邊 · 16:9</th><th colspan="2">海邊 · 9:16</th><th rowspan="2">總 QA</th></tr>
-      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>3×10秒</th><th>成片</th><th>裁切QA</th><th>直式</th><th>3定格</th><th>3×10秒</th><th>成片</th><th>裁切QA</th><th>直式</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table></div>
+    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。16:9與9:16都是原生母版；直式影片的車與重要物件全程留在中央4:5安全區。</p>
+    <div class="ob-ratio-switch" role="group" aria-label="OBcar畫面比例">
+      <button data-ob-aspect="16:9">16:9 橫式</button><button data-ob-aspect="9:16">9:16 直式 · 4:5安全區</button>
+    </div>
+    ${table("16:9", fields169)}${table("9:16", fields916)}
   </section>`;
+}
+
+function wireObcarAspect() {
+  const apply = () => {
+    $$('[data-ob-aspect]').forEach(b => b.classList.toggle("active", b.dataset.obAspect === state.obcarAspect));
+    $$('[data-ob-table]').forEach(t => t.hidden = t.dataset.obTable !== state.obcarAspect);
+    $$('#line-detail .pcell[data-aspect]').forEach(c => {
+      const aspect = c.dataset.aspect;
+      c.hidden = Boolean(aspect && aspect !== state.obcarAspect);
+    });
+  };
+  $$('[data-ob-aspect]').forEach(b => b.onclick = () => { state.obcarAspect = b.dataset.obAspect; apply(); });
+  apply();
 }
 
 /* ── 歸檔 ─────────────────────────────────────────────── */

@@ -32,6 +32,7 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertEqual(tracker["vehicles"][12]["name"], "Honda Freed 三代")
         self.assertEqual(tracker["vehicles"][12]["tasks"]["references"], "done")
         self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor169"], "review")
+        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor916"], "review")
 
     def test_obcar_demo_is_self_contained_and_closes_a_real_orbit(self):
         items = obcar.build()["briefs"][0]["items"]

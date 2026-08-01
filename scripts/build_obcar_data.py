@@ -173,7 +173,7 @@ VEHICLES = [
     ("10", "Toyota Raize", "5", "年式／套件待實車照"),
     ("11", "Toyota Prius", "5", "世代／年式待確認"),
     ("12", "Toyota Sienta 三代", "5", "年式／套件待實車照"),
-    ("13", "Honda Freed 三代", "5", "Demo；參考照已收到；16:9定錨待重生"),
+    ("13", "Honda Freed 三代", "5", "Demo；L01/V01 v1已生成；停車線待修正"),
     ("14", "Honda Stepwagon", "8", "世代／年式／套件待確認"),
     ("15", "Toyota Voxy 80系", "7", "前後期／套件待實車照"),
     ("16", "Toyota Voxy 90系", "7–8", "座椅配置／套件待確認"),
@@ -220,10 +220,10 @@ def build():
     items = ratio_items("16:9", "L") + ratio_items("9:16", "V")
     tracker_vehicles = []
     for ident, name, seats, note in VEHICLES:
-        tasks = {"spec": "done", "references": "done", "anchor169": "review"} if ident == "13" else {}
+        tasks = {"spec": "done", "references": "done", "anchor169": "review", "anchor916": "review"} if ident == "13" else {}
         tracker_vehicles.append({"id": ident, "name": name, "seats": seats, "note": note, "tasks": tasks})
     return {
-        "updatedAt": "2026-08-01T17:20:00+09:00",
+        "updatedAt": "2026-08-01T18:10:00+09:00",
         "tracker": {"defaultTasks": DEFAULT_TASKS, "vehicles": tracker_vehicles},
         "briefs": [{
             "date": "2026-08-01", "stream": "obcar",

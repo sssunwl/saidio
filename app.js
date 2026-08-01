@@ -210,7 +210,13 @@ function renderToday() {
 ------------------------------------------------------- */
 function groupHTML(b, open = true) {
   const c = STREAMS[b.stream];
-  const allText = b.items.map(it => `【${it.type}】\n${it.text}`).join("\n\n──────────────────\n\n");
+  const joinedText = items => items.map(it => `【${it.type}】\n${it.text}`).join("\n\n──────────────────\n\n");
+  const allText = joinedText(b.items);
+  const landscapeItems = b.items.filter(it => it.aspect === "16:9");
+  const verticalItems = b.items.filter(it => it.aspect === "9:16");
+  const obCopyAttrs = landscapeItems.length && verticalItems.length
+    ? ` data-ob-copy-landscape="${clip(joinedText(landscapeItems))}" data-ob-copy-vertical="${clip(joinedText(verticalItems))}"`
+    : "";
   const lanes = LANE_ORDER
     .map(k => LANES.find(L => L.key === k))
     .map(L => ({ L, items: b.items.filter(it => laneOf(it) === L.key) }))
@@ -222,7 +228,7 @@ function groupHTML(b, open = true) {
       <h3>${esc(c.label)}</h3>
       <span class="group-title">${esc(b.title)}${b.focus ? ` — ${esc(b.focus)}` : ""}</span>
       <span class="group-count">${b.items.length} PROMPT</span>
-      <button class="copy-btn copy-all" data-copy="${clip(allText)}">複製全部</button>
+      <button class="copy-btn copy-all" data-copy="${clip(allText)}"${obCopyAttrs}>複製全部</button>
       <span class="caret">▾</span>
     </div>
     <div class="group-body">
@@ -368,7 +374,7 @@ function openLine(key) {
       <p class="eyebrow" style="color:${c.color}">${esc(c.label)}</p>
       <p class="muted">${esc(c.desc)}</p>
       <p class="muted small">工具:<a href="${c.tool}" target="_blank" rel="noopener" style="color:${c.color}">${esc(c.tool)}</a></p>
-    </div>` + (key === "obcar" ? obcarTrackerHTML(state.streamData.obcar?.tracker) : "") + (list.length
+    </div>` + (key === "obcar" ? obcarTrackerHTML(state.streamData.obcar?.tracker) + obcarPromptFilterHTML() : "") + (list.length
       ? list.map((b, i) => `<p class="batch-date">${esc(b.date)}</p>${groupHTML(b, i === 0)}`).join("")
       : `<div class="glass panel"><div class="empty">這條線還沒有紀錄。</div></div>`);
   wire();
@@ -379,6 +385,23 @@ const OBCAR_STATUS = {
   todo: ["待做", "·"], doing: ["製作中", "◌"], review: ["待檢查", "?"],
   done: ["完成", "✓"], blocked: ["卡住", "!"], na: ["不適用", "—"],
 };
+
+function obcarRatioSwitchHTML(label) {
+  return `<div class="ob-ratio-control">
+    ${label ? `<span>${esc(label)}</span>` : ""}
+    <div class="ob-ratio-switch" role="group" aria-label="OBcar畫面比例">
+      <button data-ob-aspect="16:9">16:9 橫式</button><button data-ob-aspect="9:16">9:16 直式 · 4:5安全區</button>
+    </div>
+  </div>`;
+}
+
+function obcarPromptFilterHTML() {
+  return `<section class="glass panel ob-prompt-filter">
+    <div><p class="eyebrow">PROMPT 顯示</p><h3>只顯示目前選擇的比例</h3></div>
+    ${obcarRatioSwitchHTML("切換 Prompt")}
+    <strong class="ob-prompt-count" data-ob-prompt-count>14 PROMPT</strong>
+  </section>`;
+}
 
 function obcarStatusCell(value) {
   const key = OBCAR_STATUS[value] ? value : "todo";
@@ -409,9 +432,7 @@ function obcarTrackerHTML(tracker) {
     <div class="ob-track-head"><div><p class="eyebrow">逐車完成表</p><h3>23 車款 × 兩種影片 × 兩種比例</h3></div>
       <div class="ob-total"><strong>${done}/${total}</strong><span>步驟完成</span></div></div>
     <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。16:9與9:16都是原生母版；直式影片的車與重要物件全程留在中央4:5安全區。</p>
-    <div class="ob-ratio-switch" role="group" aria-label="OBcar畫面比例">
-      <button data-ob-aspect="16:9">16:9 橫式</button><button data-ob-aspect="9:16">9:16 直式 · 4:5安全區</button>
-    </div>
+    ${obcarRatioSwitchHTML("切換完成表")}
     ${table("16:9", fields169)}${table("9:16", fields916)}
   </section>`;
 }
@@ -420,10 +441,38 @@ function wireObcarAspect() {
   const apply = () => {
     $$('[data-ob-aspect]').forEach(b => b.classList.toggle("active", b.dataset.obAspect === state.obcarAspect));
     $$('[data-ob-table]').forEach(t => t.hidden = t.dataset.obTable !== state.obcarAspect);
+    let visibleCount = 0;
     $$('#line-detail .pcell[data-aspect]').forEach(c => {
       const aspect = c.dataset.aspect;
       c.hidden = Boolean(aspect && aspect !== state.obcarAspect);
+      if (aspect && !c.hidden) visibleCount += 1;
     });
+    $$('#line-detail .fam').forEach(f => {
+      const cards = [...f.querySelectorAll('.pcell[data-aspect]')];
+      f.hidden = Boolean(cards.length && cards.every(c => c.hidden));
+    });
+    $$('#line-detail .lane').forEach(lane => {
+      const cards = [...lane.querySelectorAll('.pcell[data-aspect]')];
+      const shown = cards.filter(c => !c.hidden).length;
+      if (cards.some(c => c.dataset.aspect)) {
+        lane.hidden = shown === 0;
+        const count = lane.querySelector('.lane-count');
+        if (count) count.textContent = `${shown} 條`;
+      }
+    });
+    $$('#line-detail .group').forEach(group => {
+      const cards = [...group.querySelectorAll('.pcell[data-aspect]')];
+      if (!cards.some(c => c.dataset.aspect)) return;
+      const shown = cards.filter(c => !c.hidden).length;
+      const count = group.querySelector('.group-count');
+      if (count) count.textContent = `${shown} PROMPT`;
+      const copyAll = group.querySelector('.copy-all[data-ob-copy-landscape]');
+      if (copyAll) {
+        copyAll.dataset.copy = state.obcarAspect === "9:16" ? copyAll.dataset.obCopyVertical : copyAll.dataset.obCopyLandscape;
+        copyAll.textContent = `複製${state.obcarAspect}全部`;
+      }
+    });
+    $$('[data-ob-prompt-count]').forEach(x => x.textContent = `${visibleCount} PROMPT`);
   };
   $$('[data-ob-aspect]').forEach(b => b.onclick = () => { state.obcarAspect = b.dataset.obAspect; apply(); });
   apply();

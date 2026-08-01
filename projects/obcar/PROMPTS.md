@@ -1,6 +1,8 @@
 # OBcar 共用生成指令
 
-以下模板把車款身分與運鏡規則分開。每次先從實車參考照整理 `{{VEHICLE_IDENTITY_LOCK}}`，再替換 `{{MAKE_MODEL}}`、`{{SEATS}}`、`{{CAMERA_POSITION}}` 或 `{{DRONE_CAMERA_VIEW}}`。不能只替換車名：車色、世代、前後期、外觀套件、燈具、輪圈、門縫、徽章與車身比例都必須寫進 identity lock。
+以下是通用長版模板；目前實際測試版本以 Saidio「產線 → OBcar」內可單獨複製的 Freed 三代 Demo Prompt 為準。每次先從實車參考照整理 `{{VEHICLE_IDENTITY_LOCK}}`，再替換 `{{MAKE_MODEL}}`、`{{SEATS}}`、`{{CAMERA_POSITION}}` 或 `{{DRONE_CAMERA_VIEW}}`。不能只替換車名：車色、世代、前後期、外觀套件、燈具、輪圈、門縫、徽章與車身比例都必須寫進 identity lock。
+
+雙規格策略是先生成 16:9 主版本，同時保護畫面中央約 31.6% 寬度的 9:16 走廊。只有完整車身、四輪、車影與必要道路資訊能在整支片逐幀保留時，才直接裁成 9:16；若裁切令車太小、切掉車頭車尾或破壞運鏡，就依 Demo 的原生 9:16 重構 Prompt 另生直式版本。
 
 ## 1. 多角度定格圖共用模板
 
@@ -66,7 +68,7 @@ Front-right three-quarter view. Camera azimuth 325 degrees from the vehicle's fo
 
 ## 2. 定點 360°影片模板
 
-每段放入物理上相容的 start frame 與 end frame。標準三段為 Angle 01→02、02→03、03→04；若要完整 360°，可沿相同方向續接 04→05→06→07→01。
+每段放入物理上相容的 start frame 與 end frame。完整 360°依同一方向生成七段：Angle 01→02、02→03、03→04、04→05、05→06、06→07，以及 07 經車頭回到 01。
 
 ```text
 Use the uploaded start frame and end frame as strict visual anchors.

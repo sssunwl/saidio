@@ -12,14 +12,15 @@ const $$ = s => [...document.querySelectorAll(s)];
 const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 const STREAMS = {
+  obcar:      { label: "OBcar",       icon: "◇", color: "var(--obcar)",      file: "data/obcar.json",      desc: "23 款車的 360°定點航拍與沖繩海邊跟拍；含 16:9、9:16 雙規格與逐車進度。", tool: "https://labs.google/fx/tools/flow" },
   capychill: { label: "CapyChill",   icon: "◍", color: "var(--capychill)", file: "data/capychill.json", desc: "Lo-fi 水豚長片:每日專輯音樂、概念圖與低風險微動畫。", tool: "https://labs.google/fx/tools/flow" },
   carousel:  { label: "IG Carousel", icon: "▤", color: "var(--carousel)",  file: "data/carousel.json",  desc: "一天一個可販售產品:母圖 → 分割 → Canva 上字。", tool: "https://www.canva.com" },
   music:     { label: "音樂",        icon: "♪", color: "var(--music)",     file: "data/dashboard.json", desc: "每日 10 條可重複使用的配樂 prompt,供各頻道剪輯取用。", tool: "https://aistudio.google.com" },
   suntravel: { label: "旅遊",        icon: "▷", color: "var(--suntravel)", file: "data/suntravel.json", desc: "沖繩海島到城市街景的 B-roll 與 Flow 影片 prompt。", tool: "https://labs.google/fx/tools/flow" },
   voiceover: { label: "旁白",        icon: "◗", color: "var(--voiceover)", file: "data/voiceover.json", desc: "投資解說、旅遊導覽、冥想引導與睡眠故事的腳本與聲線。", tool: "https://aistudio.google.com" },
 };
-// CapyChill 與 IG Carousel 是現在真的在推的兩條,排最前面。
-const ORDER = ["capychill", "carousel", "music", "suntravel", "voiceover"];
+// OBcar 是目前要逐車驗證的客戶製作線,排最前面。
+const ORDER = ["obcar", "capychill", "carousel", "music", "suntravel", "voiceover"];
 
 // 一條 brief 內的項目先分到三個橫排(圖 / 微動畫 / 音樂),剩下的落到「文字」。
 // 陣列順序 = 比對優先序(「影片」不能被「圖」搶走);顯示順序另外由 LANE_ORDER 決定。
@@ -31,7 +32,7 @@ const LANES = [
 ];
 const LANE_ORDER = ["image", "motion", "audio", "text"];
 
-const state = { briefs: [], dashboard: null, filter: "all", month: new Date(), selected: null };
+const state = { briefs: [], dashboard: null, streamData: {}, filter: "all", month: new Date(), selected: null };
 
 /* ── 正規化:把兩種 schema 收斂成同一個形狀 ───────────────── */
 function normItem(raw, stream) {
@@ -67,6 +68,7 @@ async function load() {
       const res = await fetch(cfg.file, { cache: "no-store" });
       if (!res.ok) throw new Error(res.status);
       const json = await res.json();
+      state.streamData[key] = json;
       if (key === "music") state.dashboard = json;
       return (json.briefs || []).map(b => normBrief(b, key));
     } catch (e) { console.warn(`[saidio] ${key} 載入失敗`, e); return []; }
@@ -366,10 +368,45 @@ function openLine(key) {
       <p class="eyebrow" style="color:${c.color}">${esc(c.label)}</p>
       <p class="muted">${esc(c.desc)}</p>
       <p class="muted small">工具:<a href="${c.tool}" target="_blank" rel="noopener" style="color:${c.color}">${esc(c.tool)}</a></p>
-    </div>` + (list.length
+    </div>` + (key === "obcar" ? obcarTrackerHTML(state.streamData.obcar?.tracker) : "") + (list.length
       ? list.map((b, i) => `<p class="batch-date">${esc(b.date)}</p>${groupHTML(b, i === 0)}`).join("")
       : `<div class="glass panel"><div class="empty">這條線還沒有紀錄。</div></div>`);
   wire();
+}
+
+const OBCAR_STATUS = {
+  todo: ["待做", "·"], doing: ["製作中", "◌"], review: ["待檢查", "?"],
+  done: ["完成", "✓"], blocked: ["卡住", "!"], na: ["不適用", "—"],
+};
+
+function obcarStatusCell(value) {
+  const key = OBCAR_STATUS[value] ? value : "todo";
+  const [label, mark] = OBCAR_STATUS[key];
+  return `<td><span class="ob-status ob-${key}" title="${label}" aria-label="${label}">${mark}</span></td>`;
+}
+
+function obcarTrackerHTML(tracker) {
+  if (!tracker?.vehicles?.length) return "";
+  const fields = ["spec", "references", "anchor169", "angles169", "orbitClips169", "orbitMaster169",
+    "orbitCropQa", "orbit916", "coastStill169", "coastClip169", "coastMaster169", "coastCropQa", "coast916", "finalQa"];
+  const total = tracker.vehicles.length * fields.length;
+  const tasksOf = v => ({ ...(tracker.defaultTasks || {}), ...(v.tasks || {}) });
+  const done = tracker.vehicles.reduce((n, v) => n + fields.filter(f => tasksOf(v)[f] === "done").length, 0);
+  const rows = tracker.vehicles.map(v => {
+    const tasks = tasksOf(v);
+    return `<tr><th scope="row"><span class="ob-id">${esc(v.id)}</span><strong>${esc(v.name)}</strong><small>${esc(v.seats)}座 · ${esc(v.note || "")}</small></th>
+      ${fields.map(f => obcarStatusCell(tasks[f])).join("")}</tr>`;
+  }).join("");
+  return `<section class="glass panel ob-tracker" style="--c:var(--obcar)">
+    <div class="ob-track-head"><div><p class="eyebrow">逐車完成表</p><h3>23 車款 × 兩種影片 × 兩種比例</h3></div>
+      <div class="ob-total"><strong>${done}/${total}</strong><span>步驟完成</span></div></div>
+    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。9:16 欄位代表直式交付；先做 16:9，再經裁切 QA，裁不好的鏡頭才用下方「原生 9:16 重構」Prompt。</p>
+    <div class="ob-table-wrap"><table class="ob-table">
+      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="4">360° · 16:9</th><th colspan="2">360° · 9:16</th><th colspan="3">海邊 · 16:9</th><th colspan="2">海邊 · 9:16</th><th rowspan="2">總 QA</th></tr>
+      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>7片段</th><th>成片</th><th>裁切QA</th><th>直式</th><th>定格</th><th>片段</th><th>成片</th><th>裁切QA</th><th>直式</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </section>`;
 }
 
 /* ── 歸檔 ─────────────────────────────────────────────── */

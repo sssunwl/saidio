@@ -4,9 +4,10 @@
   "deliverablesPerVehicle": ["stationary_360_drone", "okinawa_coastal_driving_drone"],
   "totals": {
     "vehicles": 23,
-    "masterVideos": 46,
-    "stationary360Clips": 69,
-    "completedMasterVideos": 0
+    "videoConcepts": 46,
+    "aspectRatioDeliverables": 92,
+    "stationary360Clips": 161,
+    "completedAspectRatioDeliverables": 0
   },
   "statusValues": ["needs_spec", "needs_references", "ready", "in_production", "qa", "complete"],
   "vehicles": [

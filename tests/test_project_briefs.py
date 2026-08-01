@@ -18,9 +18,33 @@ carousel = load_script("generate_carousel_briefs")
 voiceover = load_script("generate_voiceover_brief")
 suntravel = load_script("generate_suntravel_brief")
 blocks = load_script("prompt_blocks")
+obcar = load_script("build_obcar_data")
 
 
 class ProjectBriefsTest(unittest.TestCase):
+    def test_obcar_tracker_covers_every_vehicle_and_delivery_step(self):
+        data = obcar.build()
+        tracker = data["tracker"]
+        self.assertEqual(len(tracker["vehicles"]), 23)
+        self.assertEqual(len(tracker["defaultTasks"]), 14)
+        self.assertIn("orbit916", tracker["defaultTasks"])
+        self.assertIn("coast916", tracker["defaultTasks"])
+        self.assertEqual(tracker["vehicles"][12]["name"], "Honda Freed 三代")
+
+    def test_obcar_demo_is_self_contained_and_closes_a_real_orbit(self):
+        items = obcar.build()["briefs"][0]["items"]
+        self.assertEqual(len(items), 13)
+        self.assertEqual(len([i for i in items if "Step 0" in i["type"] and "圖" in i["type"]]), 8)
+        for item in items:
+            self.assertIn("【PROMPT】", item["text"], item["type"])
+            self.assertIn("【NEGATIVE PROMPT｜禁止項】", item["text"], item["type"])
+            self.assertIn("【RULES｜產出規則】", item["text"], item["type"])
+        orbit = next(i["text"] for i in items if "360°相鄰段" in i["type"])
+        self.assertIn("seven separate clips", orbit)
+        self.assertIn("07→01", orbit)
+        self.assertIn("central 31.6 percent", orbit)
+        self.assertTrue(any("原生9:16" in i["type"] for i in items))
+
     def test_every_capychill_item_is_a_self_contained_package(self):
         # A single copy has to carry the prompt, the negative list and the rules,
         # otherwise the rules only exist in someone's memory.

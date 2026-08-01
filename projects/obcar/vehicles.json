@@ -1,38 +1,244 @@
 {
   "project": "OBcar Project",
-  "updatedAt": "2026-08-01T00:00:00+09:00",
-  "deliverablesPerVehicle": ["stationary_360_drone", "okinawa_coastal_driving_drone"],
-  "totals": {
-    "vehicles": 23,
-    "videoConcepts": 46,
-    "aspectRatioDeliverables": 92,
-    "stationary360Clips": 69,
-    "completedAspectRatioDeliverables": 0
+  "updatedAt": "2026-08-01T21:00:00+09:00",
+  "deliverablesPerVehicle": [
+    "stationary_360_drone",
+    "okinawa_coastal_driving_drone"
+  ],
+  "assetsPerVehiclePerAspect": {
+    "stills": 4,
+    "clips": 6
   },
-  "statusValues": ["needs_spec", "needs_references", "ready", "in_production", "qa", "complete"],
   "vehicles": [
-    {"id":"01-move-canbus","make":"Daihatsu","model":"Move Canbus","variant":"","seats":4,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"02-suzuki-hustler","make":"Suzuki","model":"Hustler","variant":"","seats":4,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"03-mitsubishi-delica","make":"Mitsubishi","model":"Delica","variant":"TBD","seats":4,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"04-jimny-660","make":"Suzuki","model":"Jimny","variant":"660cc","seats":4,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"05-jimny-1500","make":"Suzuki","model":"Jimny","variant":"1500cc / market name TBD","seats":4,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"06-suzuki-solio","make":"Suzuki","model":"Solio","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"07-sienta-gen2","make":"Toyota","model":"Sienta","variant":"second generation","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"08-honda-freed","make":"Honda","model":"Freed","variant":"generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"09-yaris-cross","make":"Toyota","model":"Yaris Cross","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"10-toyota-raize","make":"Toyota","model":"Raize","variant":"","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"11-toyota-prius","make":"Toyota","model":"Prius","variant":"generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"12-sienta-gen3","make":"Toyota","model":"Sienta","variant":"third generation","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"13-freed-gen3","make":"Honda","model":"Freed","variant":"third generation standard body","seats":5,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"14-honda-stepwgn","make":"Honda","model":"Step WGN","variant":"generation TBD","seats":8,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"15-voxy-80","make":"Toyota","model":"Voxy","variant":"80 series","seats":7,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"16-voxy-90","make":"Toyota","model":"Voxy","variant":"90 series; seat configuration TBD","seats":"7-8","identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"17-nissan-serena","make":"Nissan","model":"Serena","variant":"generation TBD","seats":8,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"18-vellfire-20","make":"Toyota","model":"Vellfire","variant":"20 series","seats":7,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"19-alphard-30-8","make":"Toyota","model":"Alphard","variant":"30 series / 8-seat","seats":8,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"20-alphard-30-7","make":"Toyota","model":"Alphard","variant":"30 series / 7-seat","seats":7,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"21-alphard-40-7","make":"Toyota","model":"Alphard","variant":"40 series / 7-seat","seats":7,"identityStatus":"needs_references","status":"needs_references"},
-    {"id":"22-range-rover","make":"Land Rover","model":"Range Rover","variant":"model and generation TBD","seats":5,"identityStatus":"needs_spec","status":"needs_spec"},
-    {"id":"23-porsche-718","make":"Porsche","model":"718","variant":"Cayman or Boxster TBD","seats":2,"identityStatus":"needs_spec","status":"needs_spec"}
+    {
+      "id": "01",
+      "name": "Daihatsu Move Canbus",
+      "seats": "4",
+      "model": "third-generation Daihatsu Move Canbus kei tall wagon (LA850S, 2022 onwards)",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": true,
+      "note": "LA850S；待實車照確認前臉版本與車色"
+    },
+    {
+      "id": "02",
+      "name": "Suzuki Hustler",
+      "seats": "4",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／年式待實車照"
+    },
+    {
+      "id": "03",
+      "name": "Mitsubishi Delica Mini",
+      "seats": "4",
+      "model": "Mitsubishi Delica Mini kei tall wagon (B34A/B35A, 2023 onwards)",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": true,
+      "note": "按 4 座判定為 Delica Mini；若實際是 D:5／D:2 請改 model"
+    },
+    {
+      "id": "04",
+      "name": "Suzuki Jimny 660cc",
+      "seats": "4",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／套件待實車照"
+    },
+    {
+      "id": "05",
+      "name": "Suzuki Jimny 1500cc",
+      "seats": "4",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "市場名稱（Jimny Sierra?）待確認"
+    },
+    {
+      "id": "06",
+      "name": "Suzuki Solio",
+      "seats": "5",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／年式待實車照"
+    },
+    {
+      "id": "07",
+      "name": "Toyota Sienta 二代",
+      "seats": "5",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "前後期／套件待實車照"
+    },
+    {
+      "id": "08",
+      "name": "Honda Freed",
+      "seats": "5",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代待確認（與 13 區分）"
+    },
+    {
+      "id": "09",
+      "name": "Toyota Yaris Cross",
+      "seats": "5",
+      "model": "Toyota Yaris Cross compact crossover (MXPB/MXPJ10, 2020 onwards, Japanese-market front end)",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": true,
+      "note": "待實車照確認年式／套件"
+    },
+    {
+      "id": "10",
+      "name": "Toyota Raize",
+      "seats": "5",
+      "model": "Toyota Raize compact SUV (A200A/A210A, 2019 onwards)",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": true,
+      "note": "待實車照確認年式／套件"
+    },
+    {
+      "id": "11",
+      "name": "Toyota Prius",
+      "seats": "5",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／年式待確認"
+    },
+    {
+      "id": "12",
+      "name": "Toyota Sienta 三代",
+      "seats": "5",
+      "model": "third-generation Toyota Sienta compact minivan (MXPC10/MXPL10, 2022 onwards), five-seat version",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": true,
+      "note": "五座版；待實車照確認年式／套件"
+    },
+    {
+      "id": "13",
+      "name": "Honda Freed 三代",
+      "seats": "5",
+      "model": "standard-body third-generation Honda Freed e:HEV (2024 onwards)",
+      "colour": "muted blue-grey metallic",
+      "hasReferencePhotos": true,
+      "promptsGenerated": true,
+      "note": "Demo 車；實車照已收；16:9 A01 v2 已批准"
+    },
+    {
+      "id": "14",
+      "name": "Honda Stepwagon",
+      "seats": "8",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／年式／套件待確認"
+    },
+    {
+      "id": "15",
+      "name": "Toyota Voxy 80系",
+      "seats": "7",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "前後期／套件待實車照"
+    },
+    {
+      "id": "16",
+      "name": "Toyota Voxy 90系",
+      "seats": "7–8",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "座椅配置／套件待確認"
+    },
+    {
+      "id": "17",
+      "name": "Nissan Serena",
+      "seats": "8",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "世代／年式／套件待確認"
+    },
+    {
+      "id": "18",
+      "name": "Toyota Vellfire 20系",
+      "seats": "7",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "前後期／套件待實車照"
+    },
+    {
+      "id": "19",
+      "name": "Toyota Alphard 30系",
+      "seats": "8",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "8座；前後期／套件待實車照"
+    },
+    {
+      "id": "20",
+      "name": "Toyota Alphard 30系",
+      "seats": "7",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "7座；外觀可能與 19 共用同一套圖"
+    },
+    {
+      "id": "21",
+      "name": "Toyota Alphard 40系",
+      "seats": "7",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "套件待實車照"
+    },
+    {
+      "id": "22",
+      "name": "Range Rover",
+      "seats": "5",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "完整型號待確認（Sport／Evoque／Velar？）"
+    },
+    {
+      "id": "23",
+      "name": "Porsche 718",
+      "seats": "2",
+      "model": "",
+      "colour": "",
+      "hasReferencePhotos": false,
+      "promptsGenerated": false,
+      "note": "Cayman／Boxster 待確認"
+    }
   ]
 }

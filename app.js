@@ -12,7 +12,7 @@ const $$ = s => [...document.querySelectorAll(s)];
 const fmt = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 const STREAMS = {
-  obcar:      { label: "OBcar",       icon: "◇", color: "var(--obcar)",      file: "data/obcar.json",      desc: "23 款車的 360°定點航拍與沖繩海邊跟拍；含 16:9、9:16 雙規格與逐車進度。", tool: "https://labs.google/fx/tools/flow" },
+  obcar:      { label: "OBcar",       icon: "◇", color: "var(--obcar)",      file: "data/obcar.json",      desc: "23 款車的 360°定點航拍與沖繩海邊跟拍。v2 三層 Prompt：一張定錨圖＋三段接力，每車每比例 10 條。", tool: "https://labs.google/fx/tools/flow" },
   capychill: { label: "CapyChill",   icon: "◍", color: "var(--capychill)", file: "data/capychill.json", desc: "Lo-fi 水豚長片:每日專輯音樂、概念圖與低風險微動畫。", tool: "https://labs.google/fx/tools/flow" },
   carousel:  { label: "IG Carousel", icon: "▤", color: "var(--carousel)",  file: "data/carousel.json",  desc: "一天一個可販售產品:母圖 → 分割 → Canva 上字。", tool: "https://www.canva.com" },
   music:     { label: "音樂",        icon: "♪", color: "var(--music)",     file: "data/dashboard.json", desc: "每日 10 條可重複使用的配樂 prompt,供各頻道剪輯取用。", tool: "https://aistudio.google.com" },
@@ -411,8 +411,8 @@ function obcarStatusCell(value) {
 
 function obcarTrackerHTML(tracker) {
   if (!tracker?.vehicles?.length) return "";
-  const fields169 = ["anchor169", "angles169", "orbitClips169", "orbitMaster169", "coastStills169", "coastClips169", "coastMaster169"];
-  const fields916 = ["anchor916", "angles916", "orbitClips916", "orbitMaster916", "coastStills916", "coastClips916", "coastMaster916"];
+  const fields169 = ["anchor169", "orbitClips169", "orbitMaster169", "coastStills169", "coastClips169", "coastMaster169"];
+  const fields916 = ["anchor916", "orbitClips916", "orbitMaster916", "coastStills916", "coastClips916", "coastMaster916"];
   const allFields = ["spec", "references", ...fields169, ...fields916, "finalQa"];
   const total = tracker.vehicles.length * allFields.length;
   const tasksOf = v => ({ ...(tracker.defaultTasks || {}), ...(v.tasks || {}) });
@@ -424,14 +424,14 @@ function obcarTrackerHTML(tracker) {
         ${obcarStatusCell(tasks.spec)}${obcarStatusCell(tasks.references)}${fields.map(f => obcarStatusCell(tasks[f])).join("")}${obcarStatusCell(tasks.finalQa)}</tr>`;
     }).join("");
     return `<div class="ob-table-wrap" data-ob-table="${aspect}"><table class="ob-table ob-table-ratio">
-      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="4">360° · ${aspect}</th><th colspan="3">海邊 · ${aspect}</th><th rowspan="2">總 QA</th></tr>
-      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>7角度</th><th>3×10秒</th><th>成片</th><th>3定格</th><th>3×10秒</th><th>成片</th></tr></thead>
+      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="3">360° · ${aspect}</th><th colspan="3">海邊 · ${aspect}</th><th rowspan="2">總 QA</th></tr>
+      <tr><th>規格</th><th>實車照</th><th>定錨</th><th>3段接力</th><th>成片</th><th>3定格</th><th>3×10秒</th><th>成片</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
   };
   return `<section class="glass panel ob-tracker" style="--c:var(--obcar)">
     <div class="ob-track-head"><div><p class="eyebrow">逐車完成表</p><h3>23 車款 × 兩種影片 × 兩種比例</h3></div>
       <div class="ob-total"><strong>${done}/${total}</strong><span>步驟完成</span></div></div>
-    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。16:9與9:16都是原生母版；直式影片的車與重要物件全程留在中央4:5安全區。</p>
+    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。先把 16:9 做完批准，9:16 再用批准的 16:9 當場景參考原生重生；直式的車與重要物件全程留在中央4:5安全區。</p>
     ${obcarRatioSwitchHTML("切換完成表")}
     ${table("16:9", fields169)}${table("9:16", fields916)}
   </section>`;

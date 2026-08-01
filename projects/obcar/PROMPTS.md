@@ -1,190 +1,62 @@
-# OBcar 共用生成指令
+# OBcar Prompt 架構 v2
 
-以下是通用長版模板；目前實際測試版本以 Saidio「產線 → OBcar」內可單獨複製的 Freed 三代 Demo Prompt 為準。每次先從實車參考照整理 `{{VEHICLE_IDENTITY_LOCK}}`，再替換 `{{MAKE_MODEL}}`、`{{SEATS}}`、`{{CAMERA_POSITION}}` 或 `{{DRONE_CAMERA_VIEW}}`。不能只替換車名：車色、世代、前後期、外觀套件、燈具、輪圈、門縫、徽章與車身比例都必須寫進 identity lock。
+> 實際可複製的 Prompt 在 Saidio「產線 → OBcar」，由
+> [`scripts/build_obcar_data.py`](../../scripts/build_obcar_data.py) 產生。
+> 這份文件說明架構為什麼長這樣，改 Prompt 請改腳本，不要手寫。
 
-雙規格現在採兩套原生母版，不再由16:9裁成9:16。車款身分、固定場景、光線、天氣與運鏡方向共用，但攝影機距離與構圖各自設計。9:16的完整車身、四輪、車影、道路方向與重要物件，必須全程留在中央4:5安全區；1080×1920畫面中就是1080×1350、y=285至1635，上下各約14.8%只放可裁掉的天空、遠景或空道路。
+## v1 為什麼要換掉
 
-## 1. 多角度定格圖共用模板
+v1 一條 Prompt 5,200 字、一台車 28 條、合計 130,508 字。23 台就是約 300 萬字，
+產不完也貼不完。而且長度本身沒有換到品質，因為裡面有四層重複：
 
-```text
-Use all uploaded real vehicle photographs as strict immutable vehicle references.
+| v1 的做法 | 問題 |
+|---|---|
+| 每條都寫 1,300 字描述頭燈、輪圈、徽章 | 這件事該由上傳的實車照完成；形容詞贏不過參考圖 |
+| 每條都重建一次沖繩停車場 | 有批准的定錨圖之後，附圖就好 |
+| 每條都念 30 次 rotating / turntable / spinning | 擴散模型處理否定詞是「先把概念叫進來再壓抑」，重複反而提高出現機率 |
+| 每台車 14 張角度圖 | 這些圖最後只當影片首尾幀；影片本來就能用上一段尾幀接續 |
 
-Create one photorealistic automotive reference frame of the exact same {{MAKE_MODEL}}, {{SEATS}} seats.
+## v2 三層
 
-VEHICLE IDENTITY — SINGLE SOURCE OF TRUTH:
-{{VEHICLE_IDENTITY_LOCK}}
-
-This is one fixed real-world vehicle parked inside one fixed, spatially coherent 360-degree environment. The vehicle remains locked to the exact same world coordinates, parking position and compass direction in every image. The four tyre contact points stay attached to the exact same points on the asphalt. The steering angle, wheels, doors, bonnet and tailgate do not move. Only the physical camera changes position around the stationary vehicle.
-
-Buildings, road edges, parking lines, seawalls, lamp posts, trees, hills, coastline and horizon remain fixed in world space. Reconstruct the same location from the requested camera position with physically correct occlusion, perspective and parallax. Foreground objects shift more than distant objects; different sides of buildings may be revealed; parking lines converge differently; reflections update with the camera position. Never paste the same flat background behind a differently angled car.
-
-DEFAULT ENVIRONMENT:
-A geographically believable quiet seaside public parking area in northern Okinawa, Japan: clean Japanese asphalt, realistic white parking lines, a low concrete or stone seawall, calm blue-green sea, curved coastline, lush subtropical hills, simple dark lamp posts, sparse distant traffic and natural afternoon light. No generic resort, California or Mediterranean styling. The vehicle is never parked on sand.
-
-CAMERA POSITION:
-{{CAMERA_POSITION}}
-
-LIGHTING LOCK:
-Keep the exact same time of day, sun direction, weather, clouds, colour temperature, exposure and road condition across the full series. Vehicle and environmental shadows stay attached to their physical objects and remain consistent with one sun position.
-
-TEXT POLICY:
-No readable Japanese or English text, place names, shop names, road-sign wording, licence plate characters, prices, captions or watermarks. Any unavoidable sign is blank, turned away, hidden, distant or naturally out of focus. Use a plain blank white promotional licence plate. Preserve authentic factory badges only when supplied by the real references; do not invent or mutate them.
-
-OUTPUT:
-One single photorealistic automotive reference frame. Premium Japanese automotive advertising photography. No collage, contact sheet, labels, fisheye, extreme wide-angle stretching or motion blur.
-
-STRICTLY FORBIDDEN:
-rotating the vehicle, turntable photography, car spinning or pivoting, changing compass direction, changing tyre positions relative to parking lines, copying one flat background behind every view, mirroring, impossible coastline movement, nearby objects fixed in screen coordinates, missing parallax, inconsistent road or building orientation, changing sun direction, rotating the vehicle shadow, fake text, licence plate mutation, vehicle morphing, changing body length, height, doors, headlights, taillights or wheels.
-
-The visible change in vehicle angle must come only from the camera physically moving inside the same fixed three-dimensional environment.
+```
+Layer 1  CAR CARD   每台車一段，配 3–5 張實車照
+Layer 2  ANCHOR     每車每比例 4 張批准圖（A01 停車 + R01a/b/c 海邊）
+Layer 3  SHOT       每顆鏡頭 3–6 行，其餘靠附上的批准圖
 ```
 
-### 七個標準角度
+每條輸出仍自帶 `【PROMPT】`／`【NEGATIVE PROMPT】`／`【RULES】`，
+單獨複製即完整（全站共同規則）。最長的 9:16 定錨圖約 2,800 字，
+其餘約 1,600 字，平均比 v1 少約七成。
 
-依序逐張生成；每張都帶入主場景定錨圖、所有實車照及上一張批准圖。
+## 每台車的資產
 
-```text
-ANGLE 01 — FRONT LEFT
-Front-left three-quarter view. Camera azimuth 35 degrees left of the vehicle's forward direction, radius 4.5 metres, height 0.9 metres, 50mm full-frame equivalent. Complete vehicle visible.
+| 代號 | 內容 | 數量 |
+|---|---|---:|
+| A01 | 停車場定錨圖（前左 45°） | 1 |
+| P1 / P2 / P3 | 360°環繞三段接力，各 10 秒 | 3 |
+| R01a / b / c | 海邊定格圖：高空遠景、海側平行、低空後方 | 3 |
+| R02a / b / c | 對應的海邊跟拍影片，各 10 秒 | 3 |
 
-ANGLE 02 — LEFT PROFILE
-Perfect left-side profile. Camera perpendicular to the left side, radius 5 metres, height 1.1 metres, 60mm full-frame equivalent. Wheels align naturally in perspective.
+**每比例 4 圖 + 6 片。** v1 是 14 圖 + 6 片。
 
-ANGLE 03 — REAR LEFT
-Rear-left three-quarter view. Camera azimuth 145 degrees from the vehicle's forward direction, radius 4.5 metres, height 0.95 metres, 50mm full-frame equivalent.
+360° 不再需要七角度：P1 用批准的 A01 當首幀，P2 用 P1 的尾幀，P3 用 P2 的尾幀
+（Flow 直接按「延伸」）。連續性由影片自己保證，不靠七張圖互相對齊。
 
-ANGLE 04 — REAR
-Perfect centred rear view. Camera aligned with the longitudinal centre line, radius 5 metres, height 1 metre, 60mm full-frame equivalent. Rear design appears symmetrical.
+## 兩個比例的關係
 
-ANGLE 05 — REAR RIGHT
-Rear-right three-quarter view. Camera azimuth 215 degrees from the vehicle's forward direction, radius 4.5 metres, height 0.95 metres, 50mm full-frame equivalent.
+**16:9 先做完並批准，9:16 才開工。** 9:16 的定錨圖 Prompt 明確要求上傳已批准的
+16:9 當場景參考，只換構圖、不重新設計場景——這樣兩個比例才是同一個空間。
+直式的車、四輪、陰影與海平線全程鎖在中央 4:5（1080×1920 裡的 1080×1350，
+y=285 至 1635），上下 14.8% 只放可被平台裁掉的天空或空路。
 
-ANGLE 06 — RIGHT PROFILE
-Perfect right-side profile. Camera perpendicular to the right side, radius 5 metres, height 1.1 metres, 60mm full-frame equivalent.
+## 要加一台車
 
-ANGLE 07 — FRONT RIGHT
-Front-right three-quarter view. Camera azimuth 325 degrees from the vehicle's forward direction, radius 4.5 metres, height 0.9 metres, 50mm full-frame equivalent.
-```
+在 `build_obcar_data.py` 的 `VEHICLES` 填三個欄位再把 `ready` 改成 `True`：
 
-## 2. 定點 360°影片模板
+- `model` — **唯一必須人工確認的欄位**。寫錯世代，模型就照舊知識畫另一台車。
+- `colour` — 留空代表「以實車照為準」，通常留空即可。
+- `body_note` — 只寫「照片可能看不出、但必須鎖住」的那一件事（例：不是 Crosstar）。
 
-每段放入物理上相容的 start frame 與 end frame。Google Flow Lite 的 30 秒完整 360°分成三段各 10 秒：Angle 01→03 經左側、03→05 經車尾、05→01 經右側與車頭。其餘角度圖用來鎖定中途外觀、背景與物理方向，不必各自生成一段影片。
+然後 `python3 scripts/build_obcar_data.py`，網站資料與車款主檔一起更新。
 
-```text
-Use the uploaded start frame and end frame as strict visual anchors.
-
-Create a continuous photorealistic drone-camera movement between the two views of the exact same {{MAKE_MODEL}}.
-
-IMPORTANT PHYSICAL RULE:
-The vehicle is a fixed real-world object parked on the ground. The four tyre contact points, parking lines and vehicle shadow remain locked to the exact same physical coordinates throughout the clip. The vehicle does not translate, rotate, pivot, slide or float. Wheels do not roll and steering does not change.
-
-This is NOT a rotating turntable product shot.
-
-Only the physical camera travels through real three-dimensional space, like a stabilized cinematic drone flying around a stationary parked car. Infer the shortest natural flight path from the exact start-camera position to the exact end-camera position. Use real camera translation, a gentle continuous curve in one direction, approximately 0.8–2 metres camera height when compatible with the frames, a natural 40–50mm full-frame equivalent perspective and physically correct foreground/background parallax. Parking lines, coastline and nearby objects visibly shift through perspective.
-
-No digital zoom, camera teleportation, movement through the vehicle, sudden reversal or orbit around a car that secretly rotates to face the camera. The changing vehicle view must be caused entirely by camera travel.
-
-VEHICLE IDENTITY LOCK:
-{{VEHICLE_IDENTITY_LOCK}}
-
-Preserve the exact same parking bay, asphalt, parking lines, seawall, coastline, sea, hills, buildings, sky, sunlight and shadows. Do not add, remove or move background objects. The first frame closely matches the supplied start image; the final frame closely matches the supplied end image. Maintain gentle camera movement through the final frame so the next clip can continue naturally.
-
-No readable signs, Japanese text, English text, licence plate characters, generated captions or watermarks. Keep signs blank, distant, hidden or naturally out of focus.
-
-STRICTLY FORBIDDEN:
-rotating turntable shot, vehicle rotating toward camera, pivoting or spinning in place, sliding over parking lines, wheels moving relative to asphalt, shadow rotating independently, static background while the vehicle angle changes, fake 2D image rotation, digital pan across a still, zoom-only movement, warped geometry, morphing wheels or camera teleportation.
-
-The background must show real parallax caused by physical camera travel. The car remains completely fixed to the ground.
-```
-
-## 3. 海邊道路定格圖模板
-
-```text
-Use all uploaded real vehicle photographs as strict immutable references. The photographs are the single source of truth.
-
-Create a premium photorealistic automotive advertising image featuring the exact same {{MAKE_MODEL}}, {{SEATS}} seats.
-
-VEHICLE IDENTITY LOCK:
-{{VEHICLE_IDENTITY_LOCK}}
-
-Do not change the generation, body variant, trim, paint, grille, lights, bumpers, wheels, tyres, mirrors, windows, door seams, handles, taillights, hatch, badges or ride height. Do not add roof rails, wheel-arch cladding, body kits, spoilers, oversized wheels or accessories absent from the references.
-
-Show the vehicle driving safely along a geographically believable coastal road in northern Okinawa, Japan: calm blue-green sea, curved coastline, low seawall, lush subtropical hills, clean Japanese asphalt, correct white road markings, left-side traffic and sparse ordinary traffic. No high-rise skyline, generic California or Mediterranean coastline, fantasy tropical beach or driving on sand.
-
-DRONE CAMERA VIEW:
-{{DRONE_CAMERA_VIEW}}
-
-Use bright natural Okinawa afternoon light, realistic reflections and road shadow, believable sky and clouds, restrained colour, photorealistic Japanese automotive-commercial styling and sufficient road ahead. No text, captions, watermarks, readable road signs or licence plate characters.
-```
-
-### 海邊鏡頭選項
-
-```text
-A — HIGH WIDE ESTABLISHING
-Very high wide aerial view, about 60 metres above the road, behind and diagonally toward the ocean side, 24mm equivalent. Vehicle small but identifiable; coastline dominates.
-
-B — MEDIUM REAR TRACKING (DEFAULT)
-Rear three-quarter drone view, about 12 metres above and 18 metres behind, slightly toward the ocean side, 35mm equivalent. Balanced vehicle, road and coastline.
-
-C — ELEVATED SIDE TRACKING
-About 8 metres above the road, parallel on the ocean side, full side and front three-quarter angle, 50mm equivalent. Vehicle is the main subject.
-
-D — CLOSE FRONT THREE-QUARTER
-About 4 metres above and 7 metres ahead, camera faces backward, 50mm equivalent. Vehicle fills about 55 percent of frame.
-
-E — LOW REAR TRACKING
-About 1.8 metres above and 6 metres behind, 70mm equivalent. Emphasize rear design, lights and wheels while retaining coastline.
-
-F — TOP DOWN
-Near-vertical top-down view, about 25 metres above. Vehicle follows the correct lane between sea and green hillside; no distorted proportions.
-```
-
-## 4. 海邊道路影片模板
-
-```text
-Animate the supplied image into a premium photorealistic automotive drone shot.
-
-The exact {{MAKE_MODEL}} drives forward at a safe, steady road speed along the coastal road in northern Okinawa, following the correct left-side traffic lane. Wheels rotate forward at the correct speed, tyres remain attached to the road, the body follows the lane and suspension shows subtle realistic movement. The vehicle does not slide sideways, rotate independently, drift, change lanes or accelerate aggressively.
-
-The drone preserves the reference image's visual angle and composition while physically flying through real three-dimensional space. Use stabilized tracking, realistic forward motion, constant or gently changing distance, smooth altitude control and natural background parallax. Coastline, road markings and light poles pass naturally. No sudden zoom, teleportation, stationary-car orbit or turntable effect.
-
-VEHICLE IDENTITY LOCK:
-{{VEHICLE_IDENTITY_LOCK}}
-
-Preserve the blue-green sea, curved coastline, seawall, green hills, Japanese markings, natural daylight, left-side traffic and stable horizon. No vehicle morphing, colour change, wheel redesign, changing body length, extra doors, readable signs, licence plate characters, captions or watermarks.
-
-Photorealistic Japanese automotive and travel commercial.
-```
-
-## 5. 可附加的海邊 Camera Motion
-
-```text
-DISTANT TO CLOSE:
-Begin as a wide aerial establishing shot. The drone gradually descends and accelerates gently toward the moving vehicle, ending in a medium rear three-quarter tracking view. No digital zoom; size change comes only from flying closer.
-
-CLOSE TO WIDE:
-Begin close in a rear three-quarter tracking view. The drone climbs and flies backward, revealing coastline, road, sea and hills. The vehicle keeps a steady speed and becomes smaller only because of physical camera travel.
-
-LOW REAR TO HIGH AERIAL:
-Begin at a low rear three-quarter angle. Climb smoothly while continuing to follow, ending in a high diagonal aerial landscape view with continuous parallax.
-
-OCEAN-SIDE TO FRONT:
-Fly parallel on the ocean side. Begin in a medium-wide side profile, then move closer and slightly forward to an elevated front three-quarter tracking angle. Stay outside the driving lane; no sudden orbit or independent vehicle rotation.
-```
-
-## 6. 每款車的 identity lock 最低格式
-
-```text
-- exact make, model, market name, generation and model year
-- exact body style and factory trim; standard/crossover/aero distinction
-- exact seat configuration where externally relevant
-- exact paint colour and finish
-- exact grille/front panel, headlight/DRL and bumper design
-- exact factory wheel design, tyre dimensions and ride height
-- exact mirrors, window shape, pillars and black/chrome trim
-- exact door count, sliding-door seams, handles and fuel-door position
-- exact rear hatch, rear window, taillights, bumper and factory badge placement
-- no accessories not visible in the approved real references
-```
-
-若其中任何一欄無法從照片或客戶資料確定，該車維持 `needs_spec` 或 `needs_references`，不要用模型常識補空白。
+沒有實車照就不要開工：CAR CARD 少了照片這個錨，模型一定自己發明車。

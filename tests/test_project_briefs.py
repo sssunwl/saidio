@@ -26,51 +26,74 @@ class ProjectBriefsTest(unittest.TestCase):
         data = obcar.build()
         tracker = data["tracker"]
         self.assertEqual(len(tracker["vehicles"]), 23)
-        self.assertEqual(len(tracker["defaultTasks"]), 17)
+        # v2 拿掉七角度那一步,每個比例剩 6 步。
+        self.assertEqual(len(tracker["defaultTasks"]), 15)
+        self.assertNotIn("angles169", tracker["defaultTasks"])
         self.assertIn("orbitClips916", tracker["defaultTasks"])
         self.assertIn("coastStills916", tracker["defaultTasks"])
         self.assertEqual(tracker["vehicles"][12]["name"], "Honda Freed 三代")
         self.assertEqual(tracker["vehicles"][12]["tasks"]["references"], "done")
-        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor169"], "review")
-        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor916"], "review")
+        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor169"], "done")
 
-    def test_obcar_demo_is_self_contained_and_closes_a_real_orbit(self):
-        items = obcar.build()["briefs"][0]["items"]
-        self.assertEqual(len(items), 28)
-        self.assertEqual(len([i for i in items if i["aspect"] == "16:9"]), 14)
-        self.assertEqual(len([i for i in items if i["aspect"] == "9:16"]), 14)
-        for item in items:
-            self.assertIn("【PROMPT】", item["text"], item["type"])
-            self.assertIn("【NEGATIVE PROMPT｜禁止項】", item["text"], item["type"])
-            self.assertIn("【RULES｜產出規則】", item["text"], item["type"])
-        orbits = [i for i in items if "360°三段環繞" in i["type"]]
-        self.assertEqual(len(orbits), 2)
-        self.assertTrue(all("exactly three 10-second" in i["text"] for i in orbits))
-        self.assertTrue(all("05→" in i["text"] for i in orbits))
+    def test_obcar_gives_every_ready_vehicle_its_own_batch(self):
+        briefs = obcar.build()["briefs"]
+        ready = [v for v in obcar.VEHICLES if v["ready"]]
+        self.assertEqual(len(briefs), len(ready))
+        self.assertTrue(all(b["items"] and len(b["items"]) == 20 for b in briefs))
+        for brief, vehicle in zip(briefs, ready):
+            self.assertIn(vehicle["name"], brief["title"])
+            self.assertEqual(len([i for i in brief["items"] if i["aspect"] == "16:9"]), 10)
+            self.assertEqual(len([i for i in brief["items"] if i["aspect"] == "9:16"]), 10)
 
-    def test_obcar_images_accept_optional_scenery_and_default_to_okinawa(self):
+    def test_obcar_every_prompt_is_self_contained_and_names_its_own_car(self):
+        for brief in obcar.build()["briefs"]:
+            vehicle = next(v for v in obcar.VEHICLES if v["id"] == brief["items"][0]["vehicle"])
+            for item in brief["items"]:
+                self.assertIn("【PROMPT】", item["text"], item["type"])
+                self.assertIn("【NEGATIVE PROMPT｜禁止項】", item["text"], item["type"])
+                self.assertIn("【RULES｜產出規則】", item["text"], item["type"])
+                # 靜態圖必須帶車款身分;影片靠附上的批准圖,不重述車款。
+                if "圖・" in item["type"]:
+                    self.assertIn(vehicle["model"], item["text"], item["type"])
+
+    def test_obcar_orbit_is_three_chained_legs_not_seven_angles(self):
         items = obcar.build()["briefs"][0]["items"]
-        images = [item for item in items if "圖・" in item["type"]]
-        self.assertEqual(len(images), 20)
-        self.assertTrue(all(item["engine"] == "ChatGPT Images" for item in images))
-        for item in images:
-            self.assertIn("If no scenery photograph is supplied", item["text"])
-            self.assertIn("northern Okinawa", item["text"])
+        orbit = [i for i in items if "360°環繞" in i["type"]]
+        self.assertEqual(len(orbit), 6)  # 兩個比例各三段
+        self.assertTrue(all(i["engine"] == "Google Flow Lite" for i in orbit))
+        first = [i for i in orbit if " P1 " in i["type"]]
+        self.assertTrue(all("已批准的 A01" in i["text"] for i in first))
+        later = [i for i in orbit if " P2 " in i["type"] or " P3 " in i["type"]]
+        self.assertTrue(all("上一段的尾幀" in i["text"] for i in later))
+
+    def test_obcar_prompts_stay_short_enough_to_scale_to_23_vehicles(self):
+        # 舊版一條 5,200 字、一台車 130,000 字,23 台根本貼不完。
+        # 最長的是 9:16 定錨圖(車款卡+場景+直式衍生規則),其餘都在 1,600 字上下。
+        items = [i for b in obcar.build()["briefs"] for i in b["items"]]
+        self.assertTrue(max(len(i["text"]) for i in items) < 3000)
+        self.assertTrue(sum(len(i["text"]) for i in items) / len(items) < 2000)
+
+    def test_obcar_stills_default_to_okinawa(self):
+        images = [i for b in obcar.build()["briefs"] for i in b["items"] if "圖・" in i["type"]]
+        self.assertTrue(all(i["engine"] == "ChatGPT Images" for i in images))
+        self.assertTrue(all("northern Okinawa" in i["text"] for i in images))
 
     def test_obcar_final_films_are_three_flow_lite_clips(self):
         items = obcar.build()["briefs"][0]["items"]
-        coast = [item for item in items if "海邊" in item["type"] and "影片" in item["type"]]
+        coast = [item for item in items if "海邊跟拍" in item["type"]]
         self.assertEqual(len(coast), 6)
-        self.assertTrue(all("10-second" in item["text"] for item in coast))
+        self.assertTrue(all("10 seconds" in item["text"] for item in coast))
         self.assertTrue(all(item["engine"] == "Google Flow Lite" for item in coast))
 
     def test_obcar_vertical_prompts_keep_action_inside_four_by_five(self):
-        items = [item for item in obcar.build()["briefs"][0]["items"] if item["aspect"] == "9:16"]
-        self.assertEqual(len(items), 14)
+        items = [i for b in obcar.build()["briefs"] for i in b["items"] if i["aspect"] == "9:16"]
+        self.assertEqual(len(items), 10 * len([v for v in obcar.VEHICLES if v["ready"]]))
         for item in items:
             self.assertIn("centred 4:5", item["text"], item["type"])
             self.assertIn("1080×1350", item["text"], item["type"])
-            self.assertIn("top", item["text"].lower(), item["type"])
+        # 直式定錨必須從已批准的 16:9 衍生,不是各自重新設計場景。
+        anchors = [i for i in items if "A01" in i["type"]]
+        self.assertTrue(all("approved 16:9 frame" in i["text"] for i in anchors))
 
     def test_every_capychill_item_is_a_self_contained_package(self):
         # A single copy has to carry the prompt, the negative list and the rules,

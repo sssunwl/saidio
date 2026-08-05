@@ -69,10 +69,12 @@ class ProjectBriefsTest(unittest.TestCase):
 
     def test_obcar_prompts_stay_short_enough_to_scale_to_the_whole_fleet(self):
         # 舊版一條 5,200 字、一台車 130,000 字,23 台根本貼不完。
-        # 最長的是 9:16 定錨圖(車款卡+場景+直式衍生規則),其餘都在 1,600 字上下。
+        # 最長的是 9:16 定錨圖(車款卡+場景+直式衍生規則)。
+        # 2026-08-05 上修:玻璃反光、環境寫實、車頭車尾鎖定三段是實拍驗收出來的必要條件,
+        # 不是裝飾;仍遠低於舊版 5,200,單條照樣一次貼得完。
         items = [i for b in obcar.build()["briefs"] for i in b["items"]]
-        self.assertTrue(max(len(i["text"]) for i in items) < 3000)
-        self.assertTrue(sum(len(i["text"]) for i in items) / len(items) < 2000)
+        self.assertTrue(max(len(i["text"]) for i in items) < 3800)
+        self.assertTrue(sum(len(i["text"]) for i in items) / len(items) < 2600)
 
     def test_obcar_stills_default_to_okinawa(self):
         images = [i for b in obcar.build()["briefs"] for i in b["items"] if "圖・" in i["type"]]

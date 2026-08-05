@@ -331,7 +331,10 @@ OBCAR_STILL_NEGATIVE = (
     "text, signage, japanese characters, licence plate characters, watermark, caption, collage, "
     "multiple views, extra vehicles, people, wheel stop, pole in frame, fisheye, wide-angle stretching, "
     "altered wheels, altered headlights, altered badges, roof rails, wheel-arch cladding, body kit, "
-    "lowered stance, car parked across two bays, wrong generation, wrong trim level"
+    "lowered stance, car parked across two bays, wrong generation, wrong trim level, "
+    "visible driver, visible passenger, clear see-through windscreen exposing empty seats, "
+    "lit cabin interior, oversaturated water, uniform plastic-looking foliage, CG render look, "
+    "video-game lighting, HDR halo, airless over-clean background"
 )
 
 OBCAR_ORBIT_NEGATIVE = (
@@ -340,13 +343,20 @@ OBCAR_ORBIT_NEGATIVE = (
     "morphing bodywork, changing wheels, double exposure, ghosting, transparent overlapping car, "
     "two versions of the car blended together, car flipping to face the opposite direction mid-clip, "
     "front and rear of the car visible at the same time, instant viewpoint jump, viewpoint teleport, "
-    "car identity swap, redrawn car body, text"
+    "car identity swap, redrawn car body, visible driver, visible passenger, "
+    "clear see-through windscreen exposing empty seats, oversaturated water, "
+    "uniform plastic-looking foliage, CG render look, HDR halo, text"
 )
 
 OBCAR_COAST_NEGATIVE = (
     "car sliding sideways, drifting, changing lanes, sudden acceleration, wobbling horizon, digital zoom, "
     "orbiting a stationary car, turntable, morphing bodywork, changing wheels, changing colour, "
-    "right-side traffic, readable road signs, licence plate characters, captions"
+    "right-side traffic, readable road signs, licence plate characters, captions, "
+    "drone overtaking the car, camera circling to the opposite end of the car, "
+    "rear view turning into a front view, front view turning into a rear view, "
+    "car flipping to face the opposite direction mid-clip, instant viewpoint jump, "
+    "visible driver, visible passenger, clear see-through windscreen exposing empty seats, "
+    "oversaturated water, uniform plastic-looking foliage, CG render look, HDR halo"
 )
 
 # 這一線的 RULES 是給操作者看的驗收步驟，不是給模型的指令：每條都停在「這關過了才往下」。
@@ -373,7 +383,10 @@ OBCAR_RULES = {
                     "3. 三張都批准後才開始動畫化。"),
     "coast_clip": ("1. 上傳對應的已批准定格圖，只生 10 秒。\n"
                    "2. 車速穩定、不變換車道；靠近或拉遠必須是實體飛行，不是變焦。\n"
-                   "3. 成片順序固定：高空接近 → 海側平行 → 低空拉遠。"),
+                   "3. 成片順序固定：高空接近 → 海側平行 → 低空拉遠。\n"
+                   "4. 驗收先看車頭車尾：定格圖是車尾就整段都要是車尾。Flow 很愛自己繞到車頭，"
+                   "看到轉向直接重下，不要將就。\n"
+                   "5. 玻璃要是反光的，看得進車廂就是失敗——空駕駛座在近景會很怪。"),
 }
 
 

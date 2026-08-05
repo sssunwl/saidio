@@ -157,6 +157,12 @@ VEHICLES = [
 
 
 # ── Layer 1：CAR CARD（每條 Prompt 的開頭）──────────────────
+# 車上不放人,但空駕駛座在近景會很怪。真實車廣的做法是讓玻璃反射天空——
+# 玻璃讀起來是「反光」而不是「透明」,就沒有人該不該在裡面的問題。
+GLASS = ("Glass: windscreen and front side windows carry a bright reflection of sky and coastline "
+         "so the cabin is not legible; factory privacy glass behind the B-pillar. No occupant visible.")
+
+
 def car_card(v):
     colour = f", in {v['colour']} paint" if v["colour"] else ", in its exact photographed colour"
     note = f" {v['body_note']}" if v["body_note"] else ""
@@ -164,16 +170,25 @@ def car_card(v):
         f"CAR: the exact vehicle in the uploaded photographs — {v['model']}{colour}.\n"
         "The photographs override all model knowledge and all general knowledge of this "
         "nameplate. Keep its exact face, lights, grille, wheels, badges, ride height, body "
-        f"length and door layout. Do not restyle it and do not upgrade the trim level.{note}"
+        f"length and door layout. Do not restyle it and do not upgrade the trim level.{note}\n"
+        f"{GLASS}"
     )
 
 
 # ── Layer 2：場景 ───────────────────────────────────────────
+# 背景太乾淨會露餡。真實照片的線索是：遠景有空氣霧、植被雜、水泥柏油有風化、
+# 全場只有一個太陽方向。這段兩個場景共用。
+REALISM = ("Photographic realism: atmospheric haze softens the far headland, foliage varies in "
+           "species and tone, concrete and asphalt carry real weathering and repair marks, and a "
+           "single consistent sun direction lights everything.")
+
 PARKING = """Photoreal Japanese automotive advertising photograph.
 
 The car is parked, engine off, centred in ONE marked bay of a quiet seaside public parking area in northern Okinawa: clean asphalt, two straight white bay lines, a low concrete seawall, calm blue-green sea, curved coastline, green subtropical hills, bright natural afternoon sun.
 
 Parking geometry: the car's long axis is parallel to both bay lines, all four tyres sit well inside them, no white line runs under the body or bumpers, and the front wheels point straight ahead. Nothing else stands near the car — no wheel stop, no pole, no bollard, no people, no other vehicle."""
+
+PARKING = f"{PARKING}\n\n{REALISM}"
 
 PARKING_CAM = ("front-left three-quarter, about 35 degrees left of the nose, 1.1 metres high, "
                "50–65mm equivalent. Whole car, all four tyres and its attached shadow visible, "
@@ -182,6 +197,8 @@ PARKING_CAM = ("front-left three-quarter, about 35 degrees left of the nose, 1.1
 COAST = """Photoreal automotive advertising drone photograph.
 
 The car drives along a coastal road in northern Okinawa — left-hand traffic, in the correct lane. Blue-green sea and a low seawall on one side, green subtropical hills on the other, clean Japanese asphalt, correct white road markings, bright afternoon light, sparse distant traffic."""
+
+COAST = f"{COAST}\n\n{REALISM}"
 
 COAST_SHOTS = [
     ("a", "高空遠景",
@@ -236,6 +253,8 @@ ORBIT_LEGS = [
 COAST_CLIP = """Animate this photograph. The car drives forward at a steady safe speed in the same lane: wheels rolling at the correct speed, tyres attached to the road, subtle suspension movement, body following the curve of the road.
 
 The drone keeps this photograph's framing and tracks the car through real space. Coastline, road markings and roadside poles pass naturally through frame. {move}
+
+Whichever end of the car faces camera in the uploaded photograph — nose or tail — keeps facing camera for the whole clip. The drone stays on that side and never overtakes the car, cuts across it, or circles round to show the opposite end. Keep the cabin glass reflective and unoccupied exactly as the photograph has it.
 
 Photoreal Japanese automotive and travel commercial, gimbal-smooth, no zoom."""
 

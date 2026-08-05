@@ -223,6 +223,8 @@ Only the camera moves. A stabilised drone slides smoothly leftwards through real
 
 Real parallax does all the work: the bay lines converge in a new direction, the seawall, coastline and hills shift behind the car as the camera travels, and reflections move across the paint.
 
+The car itself is one unchanging physical object for the whole clip — same body, same badges, same silhouette. It is never redrawn, replaced or shown from an impossible opposite angle partway through the move; whichever side is currently facing camera stays the only side visible, changing gradually and only as far as the camera's own travel explains.
+
 Photoreal Japanese car commercial, gimbal-smooth, one continuous direction, no zoom. Keep the camera moving through the last frame so the next clip can continue from it."""
 
 ORBIT_LEGS = [

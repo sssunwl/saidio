@@ -337,7 +337,10 @@ OBCAR_STILL_NEGATIVE = (
 OBCAR_ORBIT_NEGATIVE = (
     "turntable, rotating car, car pivoting, wheels turning, car sliding, car drifting, frozen background, "
     "background without parallax, digital zoom, camera passing through the car, sudden reversal, "
-    "morphing bodywork, changing wheels, text"
+    "morphing bodywork, changing wheels, double exposure, ghosting, transparent overlapping car, "
+    "two versions of the car blended together, car flipping to face the opposite direction mid-clip, "
+    "front and rear of the car visible at the same time, instant viewpoint jump, viewpoint teleport, "
+    "car identity swap, redrawn car body, text"
 )
 
 OBCAR_COAST_NEGATIVE = (
@@ -356,10 +359,15 @@ OBCAR_RULES = {
                   "3. 全車、四輪、陰影、海平線都要落在中央 4:5 內才算過。"),
     "orbit_first": ("1. 首幀＝已批准的 A01；只生 10 秒。\n"
                     "2. 先驗三件事：車沒轉、輪胎沒滑、背景有真實視差。\n"
-                    "3. 這段過了才做 P2，不要三段一起生。"),
+                    "3. 這段過了才做 P2，不要三段一起生。\n"
+                    "4. 工具吐出來的長度要是 10 秒；如果它自己跳到 20 秒以上（代表工具把三段一次做完了），"
+                    "整段當失敗丟掉重下，不要剪短將就——一次要求鏡頭轉太大角度，模型最容易用「換一台朝別的方向的車」"
+                    "頂替真的繞過去，10 秒內的疊影瞬變通常就是這樣來的。"),
     "orbit_next": ("1. 首幀＝上一段的尾幀（Flow 直接按「延伸」最穩）。\n"
                    "2. 只生 10 秒，方向不可反轉，速度與高度要接得上。\n"
-                   "3. P1+P2+P3 直接剪接約 30 秒；要柔一點就加兩個 0.3 秒疊化。"),
+                   "3. P1+P2+P3 直接剪接約 30 秒；要柔一點就加兩個 0.3 秒疊化。\n"
+                   "4. 同上：長度必須是 10 秒，跳太長直接重下。逐段生成、逐段驗收，"
+                   "是唯一能防住「頭尾疊影瞬變」的做法。"),
     "coast_still": ("1. 上傳同一組實車照；三張定格圖要同一天光、同一段海岸。\n"
                     "2. 一次只生一張，先批准車款與車道方向（左側通行）。\n"
                     "3. 三張都批准後才開始動畫化。"),

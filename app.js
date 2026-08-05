@@ -210,6 +210,10 @@ function renderToday() {
 ------------------------------------------------------- */
 function groupHTML(b, open = true) {
   const c = STREAMS[b.stream];
+  // 標題的「｜」前段是主體(OBcar 就是車款名),手機版只留這一段才分得出哪組是哪台車。
+  const [mainTitle, ...restTitle] = String(b.title || "").split("｜");
+  const subTitle = [restTitle.join("｜"), b.focus].filter(Boolean).join(" — ");
+  const anchor = b.stream === "obcar" ? ` id="${obSlug(mainTitle)}"` : "";
   const joinedText = items => items.map(it => `【${it.type}】\n${it.text}`).join("\n\n──────────────────\n\n");
   const allText = joinedText(b.items);
   const landscapeItems = b.items.filter(it => it.aspect === "16:9");
@@ -222,11 +226,11 @@ function groupHTML(b, open = true) {
     .map(L => ({ L, items: b.items.filter(it => laneOf(it) === L.key) }))
     .filter(x => x.items.length);
 
-  return `<section class="glass group ${open ? "" : "collapsed"}" style="--c:${c.color}">
+  return `<section${anchor} class="glass group ${open ? "" : "collapsed"}" style="--c:${c.color}">
     <div class="group-head">
       <span class="group-badge"></span>
       <h3>${esc(c.label)}</h3>
-      <span class="group-title">${esc(b.title)}${b.focus ? ` — ${esc(b.focus)}` : ""}</span>
+      <span class="group-title"><b class="group-name">${esc(mainTitle)}</b>${subTitle ? `<span class="group-sub">｜${esc(subTitle)}</span>` : ""}</span>
       <span class="group-count">${b.items.length} PROMPT</span>
       <button class="copy-btn copy-all" data-copy="${clip(allText)}"${obCopyAttrs}>複製全部</button>
       <span class="caret">▾</span>
@@ -378,13 +382,17 @@ function openLine(key) {
       ? list.map((b, i) => `<p class="batch-date">${esc(b.date)}</p>${groupHTML(b, i === 0)}`).join("")
       : `<div class="glass panel"><div class="empty">這條線還沒有紀錄。</div></div>`);
   wire();
-  if (key === "obcar") wireObcarAspect();
+  if (key === "obcar") { wireObcarAspect(); wireObcarJump(); }
 }
 
 const OBCAR_STATUS = {
   todo: ["待做", "·"], doing: ["製作中", "◌"], review: ["待檢查", "?"],
   done: ["完成", "✓"], blocked: ["卡住", "!"], na: ["不適用", "—"],
 };
+
+// 完成表的車款 ←→ 下方 prompt 組,靠車款名對應(brief 標題「｜」前段 = tracker 的 name)。
+const obSlug = s => "ob-" + String(s).trim().toLowerCase()
+  .replace(/\s+/g, "-").replace(/[^\w一-鿿-]/g, "");
 
 function obcarRatioSwitchHTML(label) {
   return `<div class="ob-ratio-control">
@@ -417,21 +425,28 @@ function obcarTrackerHTML(tracker) {
   const total = tracker.vehicles.length * allFields.length;
   const tasksOf = v => ({ ...(tracker.defaultTasks || {}), ...(v.tasks || {}) });
   const done = tracker.vehicles.reduce((n, v) => n + allFields.filter(f => tasksOf(v)[f] === "done").length, 0);
+  // 有對應 prompt 組的車款才做成可跳轉按鈕,沒有的照舊只是文字。
+  const hasPrompts = new Set(state.briefs
+    .filter(b => b.stream === "obcar")
+    .map(b => String(b.title || "").split("｜")[0].trim()));
   const table = (aspect, fields) => {
     const rows = tracker.vehicles.map(v => {
       const tasks = tasksOf(v);
-      return `<tr><th scope="row"><span class="ob-id">${esc(v.id)}</span><strong>${esc(v.name)}</strong><small>${esc(v.seats)}座 · ${esc(v.note || "")}</small></th>
+      const name = hasPrompts.has(String(v.name).trim())
+        ? `<button class="ob-jump" data-ob-jump="${obSlug(v.name)}" title="跳到 ${esc(v.name)} 的 Prompt">${esc(v.name)}<span class="ob-jump-mark">↓</span></button>`
+        : `<strong>${esc(v.name)}</strong>`;
+      return `<tr><th scope="row"><span class="ob-id">${esc(v.id)}</span>${name}<small>${esc(v.seats)}座 · ${esc(v.note || "")}</small></th>
         ${obcarStatusCell(tasks.spec)}${obcarStatusCell(tasks.references)}${fields.map(f => obcarStatusCell(tasks[f])).join("")}${obcarStatusCell(tasks.finalQa)}</tr>`;
     }).join("");
     return `<div class="ob-table-wrap" data-ob-table="${aspect}"><table class="ob-table ob-table-ratio">
-      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="3">360° · ${aspect}</th><th colspan="3">海邊 · ${aspect}</th><th rowspan="2">總 QA</th></tr>
+      <thead><tr><th rowspan="2">車款</th><th colspan="2">準備</th><th colspan="3">360° · ${aspect}</th><th colspan="3">海邊 · ${aspect}</th><th rowspan="2" title="總 QA">QA</th></tr>
       <tr><th>規格</th><th>實車照</th><th>定錨</th><th>3段接力</th><th>成片</th><th>3定格</th><th>3×10秒</th><th>成片</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
   };
   return `<section class="glass panel ob-tracker" style="--c:var(--obcar)">
     <div class="ob-track-head"><div><p class="eyebrow">逐車完成表</p><h3>23 車款 × 兩種影片 × 兩種比例</h3></div>
       <div class="ob-total"><strong>${done}/${total}</strong><span>步驟完成</span></div></div>
-    <p class="muted small">✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。先把 16:9 做完批准，9:16 再用批准的 16:9 當場景參考原生重生；直式的車與重要物件全程留在中央4:5安全區。</p>
+    <p class="muted small">點車款名可直接跳到那台車的 Prompt。✓ 完成　◌ 製作中　? 待檢查　! 卡住　· 待做。先把 16:9 做完批准，9:16 再用批准的 16:9 當場景參考原生重生；直式的車與重要物件全程留在中央4:5安全區。</p>
     ${obcarRatioSwitchHTML("切換完成表")}
     ${table("16:9", fields169)}${table("9:16", fields916)}
   </section>`;
@@ -476,6 +491,22 @@ function wireObcarAspect() {
   };
   $$('[data-ob-aspect]').forEach(b => b.onclick = () => { state.obcarAspect = b.dataset.obAspect; apply(); });
   apply();
+}
+
+// 完成表 → 該車 prompt 組。目標組預設是收起的,先展開再捲,並閃一下讓人看到停在哪。
+function wireObcarJump() {
+  $$("[data-ob-jump]").forEach(btn => btn.onclick = () => {
+    const target = document.getElementById(btn.dataset.obJump);
+    if (!target) return;
+    target.classList.remove("collapsed");
+    target.classList.add("ob-flash");
+    setTimeout(() => target.classList.remove("ob-flash"), 1400);
+    // 上方有 sticky 的比例切換列,不留空位的話捲到定位會被它蓋住標題。
+    const bar = $(".ob-prompt-filter");
+    const pad = bar ? (parseFloat(getComputedStyle(bar).top) || 0) + bar.offsetHeight + 12 : 100;
+    target.style.scrollMarginTop = `${pad}px`;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 /* ── 歸檔 ─────────────────────────────────────────────── */

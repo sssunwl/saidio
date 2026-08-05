@@ -134,6 +134,9 @@ h1,h2,h3{letter-spacing:-.03em;margin:0}
 .group-head h3{font-size:17px;flex-shrink:0}
 .group-badge{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);flex-shrink:0}
 .group-title{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.group-name{color:var(--ink);font-weight:600}
+.group.ob-flash{animation:obflash 1.4s ease-out}
+@keyframes obflash{0%,55%{box-shadow:0 0 0 2px var(--obcar)}100%{box-shadow:0 0 0 2px transparent}}
 .group-count{margin-left:auto;font:10.5px "DM Mono",monospace;color:var(--faint);flex-shrink:0}
 .group-head .copy-btn{flex-shrink:0}
 .group-focus{color:var(--faint);font-size:12px;margin:10px 0 0}
@@ -292,8 +295,12 @@ h1,h2,h3{letter-spacing:-.03em;margin:0}
 .ob-table thead th{position:sticky;top:0;z-index:3;color:var(--obcar);font:500 10px "DM Mono",monospace;background:#11152a}
 .ob-table thead tr:nth-child(2) th{top:32px}
 .ob-table tbody th{position:sticky;left:0;z-index:2;min-width:210px;text-align:left;background:#101326}
-.ob-table tbody th strong,.ob-table tbody th small{display:block}
+.ob-table tbody th strong,.ob-table tbody th small,.ob-table tbody th .ob-jump{display:block}
 .ob-table tbody th strong{font-size:12px;color:var(--ink);margin:2px 0}
+.ob-jump{appearance:none;border:0;background:transparent;padding:0;margin:2px 0;width:100%;
+  text-align:left;font:600 12px "DM Sans",sans-serif;color:var(--ink);cursor:pointer}
+.ob-jump:hover,.ob-jump:focus-visible{color:var(--obcar);text-decoration:underline}
+.ob-jump-mark{margin-left:5px;font:9px "DM Mono",monospace;color:var(--obcar);opacity:.75}
 .ob-table tbody th small{font-size:9.5px;color:var(--faint);font-weight:400;white-space:normal}
 .ob-id{font:9px "DM Mono",monospace;color:var(--obcar)}
 .ob-status{display:grid;place-items:center;width:22px;height:22px;margin:auto;border-radius:50%;font:600 11px "DM Mono",monospace;border:1px solid var(--glass-line);color:var(--faint)}
@@ -339,13 +346,37 @@ footer{max-width:1240px;margin:auto;padding:20px 24px 40px;
   main{padding:20px 14px 60px}
   .hero{padding:22px}
   .group{padding:16px 14px}
-  .group-title,.shared-note{display:none}
+  .shared-note{display:none}
+  /* 手機:標題換到第二行整行顯示,不然 23 組 OBcar 每組都只寫「OBcar」分不出是哪台車 */
+  .group-head{flex-wrap:wrap;row-gap:3px}
+  .group-title{flex:0 0 100%;order:9;white-space:normal;font-size:12.5px;line-height:1.4}
+  .group-name{font-size:14px}
+  .group-sub{display:none}
   .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .pcell{height:156px}
-  .ob-prompt-filter{top:116px;align-items:flex-start;gap:8px;flex-wrap:wrap}
-  .ob-prompt-filter>div:first-child{width:100%}
+  /* 這條是 sticky 的,標題留著會吃掉三分之一個手機螢幕;切換鈕本身已經寫明是哪個比例 */
+  .ob-prompt-filter{top:116px;align-items:center;gap:10px;padding:9px 12px}
+  .ob-prompt-filter>div:first-child{display:none}
   .ob-prompt-filter .ob-ratio-control{margin-left:0;flex:1}
+  .ob-prompt-count{flex-shrink:0;font-size:11px}
   .ob-ratio-control>span{display:none}
   .ob-ratio-switch{width:100%}
   .ob-ratio-switch button{flex:1;padding:8px 7px}
+  /* 手機:原本車款欄佔 210px、表格硬撐 980px,螢幕上幾乎看不到車款後面的狀態欄。
+     這裡把整張表壓到一個螢幕內 —— 收起備註、縮字級與圓點,就不必左右捲。 */
+  .ob-tracker{padding:16px 12px}
+  /* 表格已經放得下,就不要再包一層會捲的框:手機上巢狀捲動難用,
+     而且這層 overflow 在 backdrop-filter 面板裡會整片不重繪(整個表身變空白)。 */
+  .ob-table-wrap{max-height:none;overflow:visible}
+  .ob-table{min-width:0;width:100%;font-size:10px;table-layout:fixed}
+  .ob-table th,.ob-table td{padding:7px 1px}
+  .ob-table thead th{position:static;font-size:9px;line-height:1.25;word-break:break-all}
+  /* table-layout:fixed 的欄寬由第一列決定,車款欄要在 thead 上指定才吃得到 */
+  .ob-table thead th:first-child{width:92px}
+  /* 整張表已經放得下,車款欄不必再 sticky;留著反而會在 backdrop-filter 面板裡出現不重繪的空白 */
+  .ob-table tbody th{position:static;min-width:0;padding:7px 6px}
+  .ob-table tbody th small{display:none}
+  .ob-table tbody th strong,.ob-jump{font-size:11px;line-height:1.3}
+  .ob-jump-mark{display:none}
+  .ob-status{width:19px;height:19px;font-size:10px}
 }

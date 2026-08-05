@@ -307,9 +307,11 @@ TASK_FIELDS = (
 ).split()
 DEFAULT_TASKS = {key: "todo" for key in TASK_FIELDS}
 
-# 已知進度：Freed 三代規格鎖定、實車照齊、16:9 定錨 v2 已批准；其餘 ready 車款規格已鎖，等實車照。
+# 已知進度：Freed 三代規格鎖定、實車照齊；其餘 ready 車款規格已鎖，等實車照。
+# 2026-08-05：A01 與海邊定格圖都要用新的玻璃反光＋環境寫實規則重生，所以 anchor169
+# 退回 doing。360° 三段是接在舊 A01 上的，新 A01 出來後也要一起重做。
 TASK_OVERRIDES = {
-    "13": {"spec": "done", "references": "done", "anchor169": "done", "orbitClips169": "doing"},
+    "13": {"spec": "done", "references": "done", "anchor169": "doing", "orbitClips169": "todo"},
     "01": {"spec": "done"}, "03": {"spec": "done"}, "09": {"spec": "done"},
     "10": {"spec": "done"}, "12": {"spec": "done"},
     # 2026-08-01 補鎖：主推五款到齊。這四台的世代由車名本身唯一指定，沒有前後期歧義，

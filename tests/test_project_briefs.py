@@ -34,7 +34,8 @@ class ProjectBriefsTest(unittest.TestCase):
         self.assertIn("coastStills916", tracker["defaultTasks"])
         self.assertEqual(tracker["vehicles"][12]["name"], "Honda Freed 三代")
         self.assertEqual(tracker["vehicles"][12]["tasks"]["references"], "done")
-        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor169"], "done")
+        # A01 曾經批准過,2026-08-05 因為改用玻璃反光＋環境寫實規則而退回重生。
+        self.assertEqual(tracker["vehicles"][12]["tasks"]["anchor169"], "doing")
 
     def test_obcar_gives_every_ready_vehicle_its_own_batch(self):
         briefs = obcar.build()["briefs"]

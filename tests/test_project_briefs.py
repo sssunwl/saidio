@@ -68,14 +68,43 @@ class ProjectBriefsTest(unittest.TestCase):
         later = [i for i in orbit if " P2 " in i["type"] or " P3 " in i["type"]]
         self.assertTrue(all("上一段的尾幀" in i["text"] for i in later))
 
+    def test_obcar_locks_japanese_drive_side_and_road_side(self):
+        # 2026-08-08：Freed 的海邊定格圖生出「車開在右車道」。右駕是全車隊共用的事實,
+        # 每一條都要帶;車道方向只有上路的鏡頭要,但一條都不能漏——上次就是漏在
+        # 「海邊定格圖跟停車圖共用同一條 negative」這個縫裡。
+        items = [i for b in obcar.build()["briefs"] for i in b["items"]]
+        for item in items:
+            self.assertIn(blocks.OBCAR_RHD_NEG, item["text"], item["type"])
+        road = [i for i in items if "R01" in i["type"] or "R02" in i["type"]]
+        self.assertEqual(len(road), 12 * len([v for v in obcar.VEHICLES if v["ready"]]))
+        for item in road:
+            self.assertIn(blocks.OBCAR_ROAD_SIDE_NEG, item["text"], item["type"])
+        # 正面敘述也要在:光靠 negative 擋不住,要寫死海在左、車在左車道。
+        for item in (i for i in road if "R01" in i["type"]):
+            self.assertIn("on the car's LEFT", item["text"], item["type"])
+            self.assertIn("left-hand lane", item["text"], item["type"])
+
+    def test_obcar_orbit_legs_pin_which_side_of_the_car_is_visible(self):
+        # 2026-08-08：Freed P1 實測第 6 秒起疊影淡出,換成一台車頭朝反方向的車。
+        # 只講攝影機怎麼動不夠,每段都要寫死畫面上看得到哪一側、車頭在哪一邊,
+        # 並且把單段的行程夾在四分之一圈內,它才不會為了填滿秒數繼續繞。
+        orbit = [i for b in obcar.build()["briefs"] for i in b["items"] if "360°環繞" in i["type"]]
+        for item in orbit:
+            self.assertIn("Frame check", item["text"], item["type"])
+            self.assertIn("quarter turn at most", item["text"], item["type"])
+        self.assertTrue(all("LEFT flank" in i["text"] for i in orbit if " P1 " in i["type"]))
+        self.assertTrue(all("RIGHT flank" in i["text"] for i in orbit if " P3 " in i["type"]))
+
     def test_obcar_prompts_stay_short_enough_to_scale_to_the_whole_fleet(self):
         # 舊版一條 5,200 字、一台車 130,000 字,23 台根本貼不完。
         # 最長的是 9:16 定錨圖(車款卡+場景+直式衍生規則)。
         # 2026-08-05 上修:玻璃反光、環境寫實、車頭車尾鎖定三段是實拍驗收出來的必要條件,
         # 不是裝飾;仍遠低於舊版 5,200,單條照樣一次貼得完。
+        # 2026-08-08 再上修:右駕（每條）＋左側通行幾何（上路鏡頭）＋環繞的 frame check,
+        # 每一條都是實際出過錯才加的。最長的 9:16 海邊定格圖約 4,100 字,還是一次貼得完。
         items = [i for b in obcar.build()["briefs"] for i in b["items"]]
-        self.assertTrue(max(len(i["text"]) for i in items) < 3800)
-        self.assertTrue(sum(len(i["text"]) for i in items) / len(items) < 2600)
+        self.assertTrue(max(len(i["text"]) for i in items) < 4300)
+        self.assertTrue(sum(len(i["text"]) for i in items) / len(items) < 3400)
 
     def test_obcar_stills_default_to_okinawa(self):
         images = [i for b in obcar.build()["briefs"] for i in b["items"] if "圖・" in i["type"]]
@@ -106,7 +135,7 @@ class ProjectBriefsTest(unittest.TestCase):
             "A01": blocks.OBCAR_STILL_NEGATIVE,
             "P1": blocks.OBCAR_ORBIT_NEGATIVE, "P2": blocks.OBCAR_ORBIT_NEGATIVE,
             "P3": blocks.OBCAR_ORBIT_NEGATIVE,
-            "R01": blocks.OBCAR_STILL_NEGATIVE, "R02": blocks.OBCAR_COAST_NEGATIVE,
+            "R01": blocks.OBCAR_COAST_STILL_NEGATIVE, "R02": blocks.OBCAR_COAST_NEGATIVE,
         }
         items = [i for b in obcar.build()["briefs"] for i in b["items"]]
         for item in items:

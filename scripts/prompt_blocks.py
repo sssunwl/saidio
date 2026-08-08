@@ -183,7 +183,8 @@ BROLL_NEGATIVE = (
     "exposure or shifting colour temperature. No speed ramp, no timelapse whip, no aspect-ratio change, "
     "no letterbox bars, no split screen, no zoom-in-and-out oscillation, no handheld shake, no drone "
     "orbit that reveals a stitched background. No frozen water, static foliage, or environment that "
-    "moves as one flat sheet."
+    "moves as one flat sheet. In any Japanese street or road shot: no right-hand traffic, no car "
+    "driving on the right-hand side of the road, no left-hand-drive car, no mirrored image."
 )
 
 BROLL_RULES = (
@@ -200,7 +201,9 @@ BROLL_RULES = (
     "7. Deliver 1080p or better at 24 or 30 fps, no added grain or LUT — colour grading happens in the "
     "edit, not in the generation.\n"
     "8. Log engine, credit cost, generation date and the focus package in the filename "
-    "(YYYYMMDD＋主題＋序號) before the file leaves R&D."
+    "(YYYYMMDD＋主題＋序號) before the file leaves R&D.\n"
+    "9. 只要畫面裡有路上的車：日本是左側通行、右駕。車靠左行駛、方向盤在右邊，"
+    "錯邊直接重下——不要用左右鏡像補救，招牌與車輛細節會一起反掉。"
 )
 
 CARD_NEGATIVE = (
@@ -327,6 +330,21 @@ VIDEO_RULES = (
 # v2 鐵則第 3 條：禁止詞只寫一次，放 negative 欄。正文只寫「要什麼」——擴散模型
 # 讀到 turntable / rotating 會先把那個概念帶進潛空間再嘗試壓抑，念越多次越容易招來它。
 # 所以這裡三條 negative 各自只有一行，不再依鏡頭疊加。
+#
+# 例外是「日本＝右駕＋左側通行」這兩件事：它們不屬於任何單一鏡頭，錯了就是整批素材
+# 報廢，所以抽成兩個共用片段接到每一條 negative 後面，不靠各條自己記得寫。
+# 右駕片段每條都要（停車與環繞一樣看得到駕駛座側）；車道片段只有上路的鏡頭要。
+OBCAR_RHD_NEG = (
+    "left-hand-drive car, steering wheel on the left, driver's seat on the left front, "
+    "mirrored image, horizontally flipped car, reversed badges"
+)
+
+OBCAR_ROAD_SIDE_NEG = (
+    "right-hand traffic, car on the right-hand side of the road, car in the right-hand lane, "
+    "car in the oncoming lane, centre line on the car's left, sea or seawall on the car's right, "
+    "American or European road markings"
+)
+
 OBCAR_STILL_NEGATIVE = (
     "text, signage, japanese characters, licence plate characters, watermark, caption, collage, "
     "multiple views, extra vehicles, people, wheel stop, pole in frame, fisheye, wide-angle stretching, "
@@ -334,8 +352,13 @@ OBCAR_STILL_NEGATIVE = (
     "lowered stance, car parked across two bays, wrong generation, wrong trim level, "
     "visible driver, visible passenger, clear see-through windscreen exposing empty seats, "
     "lit cabin interior, oversaturated water, uniform plastic-looking foliage, CG render look, "
-    "video-game lighting, HDR halo, airless over-clean background"
+    "video-game lighting, HDR halo, airless over-clean background, " + OBCAR_RHD_NEG
 )
+
+# 海邊定格圖（R01a-c）＝停車圖那組禁止項再加車道方向。之前它跟停車圖共用同一條
+# negative，而車道禁止項只寫在影片那條裡，所以圖這一關根本沒有守門員——右車道就是
+# 從這裡漏出去的。
+OBCAR_COAST_STILL_NEGATIVE = f"{OBCAR_STILL_NEGATIVE}, {OBCAR_ROAD_SIDE_NEG}"
 
 OBCAR_ORBIT_NEGATIVE = (
     "turntable, rotating car, car pivoting, wheels turning, car sliding, car drifting, frozen background, "
@@ -343,46 +366,65 @@ OBCAR_ORBIT_NEGATIVE = (
     "morphing bodywork, changing wheels, double exposure, ghosting, transparent overlapping car, "
     "two versions of the car blended together, car flipping to face the opposite direction mid-clip, "
     "front and rear of the car visible at the same time, instant viewpoint jump, viewpoint teleport, "
-    "car identity swap, redrawn car body, visible driver, visible passenger, "
+    "car identity swap, redrawn car body, dissolve, crossfade, cut to another angle, jump cut, "
+    "scene change, car rolling forward, car changing parking bay, visible driver, visible passenger, "
     "clear see-through windscreen exposing empty seats, oversaturated water, "
-    "uniform plastic-looking foliage, CG render look, HDR halo, text"
+    "uniform plastic-looking foliage, CG render look, HDR halo, text, " + OBCAR_RHD_NEG
 )
 
 OBCAR_COAST_NEGATIVE = (
     "car sliding sideways, drifting, changing lanes, sudden acceleration, wobbling horizon, digital zoom, "
     "orbiting a stationary car, turntable, morphing bodywork, changing wheels, changing colour, "
-    "right-side traffic, readable road signs, licence plate characters, captions, "
+    "readable road signs, licence plate characters, captions, "
     "drone overtaking the car, camera circling to the opposite end of the car, "
     "rear view turning into a front view, front view turning into a rear view, "
     "car flipping to face the opposite direction mid-clip, instant viewpoint jump, "
     "visible driver, visible passenger, clear see-through windscreen exposing empty seats, "
-    "oversaturated water, uniform plastic-looking foliage, CG render look, HDR halo"
+    "oversaturated water, uniform plastic-looking foliage, CG render look, HDR halo, "
+    + OBCAR_RHD_NEG + ", " + OBCAR_ROAD_SIDE_NEG
 )
 
 # 這一線的 RULES 是給操作者看的驗收步驟，不是給模型的指令：每條都停在「這關過了才往下」。
 OBCAR_RULES = {
     "anchor169": ("1. 每次都上傳同一組實車照，這是車款唯一真相。\n"
                   "2. 一次只生一張；先批准車款身分與停車幾何再往下。\n"
-                  "3. 批准後這張就是本車的場景主定錨，之後每個鏡頭都要附上它。"),
+                  "3. 看得到車內就順手確認方向盤在右邊（日規右駕）；左駕直接重下，"
+                  "不要用鏡像翻轉救——翻了徽標與車身細節會整台反過來。\n"
+                  "4. 批准後這張就是本車的場景主定錨，之後每個鏡頭都要附上它。"),
     "anchor916": ("1. 上傳「已批准的 16:9 A01」＋同一組實車照。\n"
                   "2. 原生重生 9:16，不要裁 16:9，也不要外擴。\n"
-                  "3. 全車、四輪、陰影、海平線都要落在中央 4:5 內才算過。"),
-    "orbit_first": ("1. 首幀＝已批准的 A01；只生 10 秒。\n"
-                    "2. 先驗三件事：車沒轉、輪胎沒滑、背景有真實視差。\n"
-                    "3. 這段過了才做 P2，不要三段一起生。\n"
-                    "4. 工具吐出來的長度要是 10 秒；如果它自己跳到 20 秒以上（代表工具把三段一次做完了），"
-                    "整段當失敗丟掉重下，不要剪短將就——一次要求鏡頭轉太大角度，模型最容易用「換一台朝別的方向的車」"
-                    "頂替真的繞過去，10 秒內的疊影瞬變通常就是這樣來的。"),
+                  "3. 全車、四輪、陰影、海平線都要落在中央 4:5 內才算過。\n"
+                  "4. 方向盤仍要在右邊：重生時模型很愛把場景左右對調，一併看。"),
+    "orbit_first": ("1. 首幀＝已批准的 A01，一次只生一段（Veo 3.1 出 8 秒是正常的，不必硬湊 10 秒；"
+                    "但長度自己跳到 20 秒以上代表它把三段一次做完了，整段丟掉重下）。\n"
+                    "2. **先看最後 2 秒**——崩都崩在這裡：有沒有疊影／淡出、車頭有沒有突然換到畫面另一邊、"
+                    "車有沒有自己往前挪或換格。任一項中就是失敗。\n"
+                    "3. 再驗三件事：車沒轉、輪胎沒滑、背景有真實視差。\n"
+                    "4. P1 全片只能看到車的左側、車頭一直在畫面左邊。看到車尾、或車頭跑到右邊，"
+                    "就是它用「換一台朝反方向的車」頂替真的繞過去。\n"
+                    "5. 尾段壞、前面乾淨時可以剪掉壞尾巴，用最後一張乾淨的幀當 P2 首幀（整組會短幾秒）；"
+                    "時間夠就直接重下比較划算。\n"
+                    "6. 同一台車連兩次都在尾段崩 → 改用 Flow「帧」模式綁死終點："
+                    "另外生一張「正左側」定格圖當尾幀、A01 當首幀，把中間的自由度收掉。\n"
+                    "7. 這段過了才做 P2，不要三段一起生。"),
     "orbit_next": ("1. 首幀＝上一段的尾幀（Flow 直接按「延伸」最穩）。\n"
-                   "2. 只生 10 秒，方向不可反轉，速度與高度要接得上。\n"
-                   "3. P1+P2+P3 直接剪接約 30 秒；要柔一點就加兩個 0.3 秒疊化。\n"
-                   "4. 同上：長度必須是 10 秒，跳太長直接重下。逐段生成、逐段驗收，"
-                   "是唯一能防住「頭尾疊影瞬變」的做法。"),
+                   "2. 方向不可反轉，速度與高度要接得上；長度 8–10 秒都可以，跳到 20 秒以上直接重下。\n"
+                   "3. 一樣先看最後 2 秒：疊影、淡出、車頭換邊、車自己挪位，任一項中就重下。\n"
+                   "4. P2 只能看到左側且車尾愈來愈正；P3 換到右側、車頭在畫面右邊。"
+                   "中途車頭車尾對調就是失敗。\n"
+                   "5. P1+P2+P3 直接剪接約 24–30 秒；要柔一點就加兩個 0.3 秒疊化。\n"
+                   "6. 逐段生成、逐段驗收，是唯一能防住「頭尾疊影瞬變」的做法。"),
     "coast_still": ("1. 上傳同一組實車照；三張定格圖要同一天光、同一段海岸。\n"
-                    "2. 一次只生一張，先批准車款與車道方向（左側通行）。\n"
-                    "3. 三張都批准後才開始動畫化。"),
+                    "2. 一次只生一張。收圖先做「錯邊三連檢」，任一條不過就重下：\n"
+                    "   ・海與護欄在車的左邊、山在右邊（從車後看＝海在畫面左）。\n"
+                    "   ・車在靠海那條左車道，中線在車的右側，車身沒壓線。\n"
+                    "   ・方向盤／駕駛座在右邊。\n"
+                    "3. 錯邊一律重下，不要把圖左右鏡像翻回來——翻了車頭徽標、車款細節"
+                    "與車道會一起反掉，反而更難救。\n"
+                    "4. 三張都批准後才開始動畫化。"),
     "coast_clip": ("1. 上傳對應的已批准定格圖，只生 10 秒。\n"
-                   "2. 車速穩定、不變換車道；靠近或拉遠必須是實體飛行，不是變焦。\n"
+                   "2. 車速穩定、不變換車道，全程留在靠海的左車道、不壓中線；"
+                   "靠近或拉遠必須是實體飛行，不是變焦。\n"
                    "3. 成片順序固定：高空接近 → 海側平行 → 低空拉遠。\n"
                    "4. 驗收先看車頭車尾：定格圖是車尾就整段都要是車尾。Flow 很愛自己繞到車頭，"
                    "看到轉向直接重下，不要將就。\n"
@@ -404,7 +446,7 @@ def obcar_blocks(item_type):
     if "P2" in label or "P3" in label:
         return OBCAR_ORBIT_NEGATIVE, OBCAR_RULES["orbit_next"]
     if "R01" in label:
-        return OBCAR_STILL_NEGATIVE, OBCAR_RULES["coast_still"]
+        return OBCAR_COAST_STILL_NEGATIVE, OBCAR_RULES["coast_still"]
     if "R02" in label:
         return OBCAR_COAST_NEGATIVE, OBCAR_RULES["coast_clip"]
     return None

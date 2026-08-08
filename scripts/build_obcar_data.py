@@ -162,6 +162,13 @@ VEHICLES = [
 GLASS = ("Glass: windscreen and front side windows carry a bright reflection of sky and coastline "
          "so the cabin is not legible; factory privacy glass behind the B-pillar. No occupant visible.")
 
+# 日本車一律右駕。這句放在 CAR CARD（每條 Prompt 都有），不是放海邊那段——
+# 只寫在行走鏡頭的話，停車定錨圖與 360° 一樣會生出左駕車，而 A01 是所有鏡頭的
+# 場景參考，錯一張整台車的素材全部跟著錯邊。Evoque 與 718 也是日規右駕，無例外。
+RHD = ("Right-hand drive Japanese-market car: steering wheel and driver's seat on the RIGHT, the left "
+       "front door is the passenger door. Never mirror the scene to get an angle — that reverses the "
+       "badges too.")
+
 
 def car_card(v):
     colour = f", in {v['colour']} paint" if v["colour"] else ", in its exact photographed colour"
@@ -171,6 +178,7 @@ def car_card(v):
         "The photographs override all model knowledge and all general knowledge of this "
         "nameplate. Keep its exact face, lights, grille, wheels, badges, ride height, body "
         f"length and door layout. Do not restyle it and do not upgrade the trim level.{note}\n"
+        f"{RHD}\n"
         f"{GLASS}"
     )
 
@@ -194,24 +202,33 @@ PARKING_CAM = ("front-left three-quarter, about 35 degrees left of the nose, 1.1
                "50–65mm equivalent. Whole car, all four tyres and its attached shadow visible, "
                "car about 50 percent of frame width, level horizon.")
 
+# 「left-hand traffic, in the correct lane」是一句抽象規則，模型讀不出幾何，2026-08-08
+# 的 Freed 海邊圖就直接開在右車道。改成寫死的空間關係：海在左、山在右、車貼左側邊線，
+# 再給一句「從車後看海在畫面左邊」當自檢。海與護欄放在車的左邊，車就永遠是靠海那條
+# 左車道，這條規則對 23 台車一視同仁，不必逐車再寫一次。
 COAST = """Photoreal automotive advertising drone photograph.
 
-The car drives along a coastal road in northern Okinawa — left-hand traffic, in the correct lane. Blue-green sea and a low seawall on one side, green subtropical hills on the other, clean Japanese asphalt, correct white road markings, bright afternoon light, sparse distant traffic."""
+The car drives along a two-lane coastal road in northern Okinawa under Japanese left-hand traffic.
+
+Road side, fixed for every coastal shot: the blue-green sea, the low concrete seawall and the solid white edge line are on the car's LEFT, the green subtropical hills on its RIGHT. The car holds the seaward left-hand lane — left wheels half a metre inside the edge line, the broken white centre line running along its right flank and never crossed. Seen from directly behind the car, the sea is on the left of frame.
+
+Clean Japanese asphalt, correct lane markings, bright afternoon light, no other vehicle in frame."""
 
 COAST = f"{COAST}\n\n{REALISM}"
 
 COAST_SHOTS = [
     ("a", "高空遠景",
-     "high aerial, about 60 metres above and behind the car on the ocean side, 24mm equivalent. "
-     "The coastline is the main subject and the car reads small but clearly identifiable.",
+     "high aerial, about 60 metres above and behind the car, offset out over the sea on its left, "
+     "24mm equivalent. The coastline is the main subject; the car reads small but clearly identifiable.",
      "The drone descends and closes in, ending in a medium rear three-quarter tracking view. The car grows because the drone physically flies closer, never by zooming."),
     ("b", "海側平行",
-     "about 8 metres above the road, flying parallel to the car on the ocean side, 50mm equivalent, "
-     "full side profile turning into a slight front three-quarter. The car is the main subject.",
-     "The drone holds parallel, then eases forward into an elevated front three-quarter tracking view, staying outside the driving lane."),
+     "about 8 metres above the seawall, out over the sea on the car's left, flying parallel to it, "
+     "50mm equivalent, full left-side profile easing into a slight front three-quarter. The car is the "
+     "main subject.",
+     "The drone holds parallel out over the water, then eases forward into an elevated front three-quarter tracking view, staying on the seaward side and never crossing the road."),
     ("c", "低空後方",
-     "about 1.8 metres above the road and 6 metres behind the car, 70mm equivalent, rear three-quarter, "
-     "compressed perspective, coastline beside the car.",
+     "about 1.8 metres above the road and 6 metres behind the car, 70mm equivalent, rear three-quarter "
+     "from the seaward side, compressed perspective, seawall and coastline down the left of frame.",
      "The drone climbs and drifts backwards, opening out to a wide coastal view while the car keeps its steady speed."),
 ]
 
@@ -242,15 +259,33 @@ Real parallax does all the work: the bay lines converge in a new direction, the 
 
 The car itself is one unchanging physical object for the whole clip — same body, same badges, same silhouette. It is never redrawn, replaced or shown from an impossible opposite angle partway through the move; whichever side is currently facing camera stays the only side visible, changing gradually and only as far as the camera's own travel explains.
 
+{frame}
+
+One continuous take: each frame directly continues the one before it, and this leg covers a quarter turn at most. If the camera reaches the end of that arc early it slows and drifts on along the same line, rather than carrying further round the car to fill the time.
+
 Photoreal Japanese car commercial, gimbal-smooth, one continuous direction, no zoom. Keep the camera moving through the last frame so the next clip can continue from it."""
 
+# 2026-08-08：Freed P1 實測，第 6 秒起疊影淡出，換成一台車頭朝反方向的車，車還自己
+# 挪了位置。原因是「slides leftwards … to the full left side」只講了攝影機的動作，
+# 沒講畫面上該長什麼樣——模型湊不滿 8 秒就繼續繞，繞不出車尾就用「換一台朝反向的車」
+# 頂替。所以每段多一句 frame check：這段只能看到哪一側、車頭在畫面哪一邊。
+# 幾何備忘：鏡頭在車的左側時車頭朝畫面左，在右側時車頭朝畫面右。
 ORBIT_LEGS = [
-    ("P1", "前左→正左", "travelling from the front-left three-quarter round to the full left side"),
-    ("P2", "正左→正後", "continuing that same leftward travel from the full left side round to the centred rear"),
-    ("P3", "正後→前右", "continuing that same travel from the centred rear round the right side to the front-right three-quarter"),
+    ("P1", "前左→正左", "travelling from the front-left three-quarter round to the full left side",
+     "Frame check, true of every frame: only the car's LEFT flank is visible, its nose stays in the left half "
+     "of frame, and the rear never comes into view. Opens on the front-left three-quarter, closes on the flat "
+     "left-side profile."),
+    ("P2", "正左→正後", "continuing that same leftward travel from the full left side round to the centred rear",
+     "Frame check, true of every frame: the camera works along the left flank towards the tail. The nose leaves "
+     "through the left edge and never returns; the tail grows until it is centred in the last frame."),
+    ("P3", "正後→前右", "continuing that same travel from the centred rear round the right side to the front-right three-quarter",
+     "Frame check, true of every frame: the camera is now on the car's RIGHT side — only the RIGHT flank is "
+     "visible, the nose stays in the right half of frame, and the left flank never reappears."),
 ]
 
 COAST_CLIP = """Animate this photograph. The car drives forward at a steady safe speed in the same lane: wheels rolling at the correct speed, tyres attached to the road, subtle suspension movement, body following the curve of the road.
+
+Japanese left-hand traffic throughout: the car keeps the seaward left-hand lane it already occupies, sea and seawall on its left, centre line on its right and never crossed.
 
 The drone keeps this photograph's framing and tracks the car through real space. Coastline, road markings and roadside poles pass naturally through frame. {move}
 
@@ -289,9 +324,9 @@ def vehicle_items(v, aspect):
     img_engine, vid_engine = "ChatGPT Images", "Google Flow Lite"
     out = [item(v, aspect, f"OBcar 圖・{aspect} A01 停車場定錨圖", img_engine,
                 still(v, aspect, PARKING, PARKING_CAM))]
-    for code, label, leg in ORBIT_LEGS:
+    for code, label, leg, frame in ORBIT_LEGS:
         out.append(item(v, aspect, f"OBcar 影片・{aspect} {code} 360°環繞 {label}", vid_engine,
-                        f"{ORBIT.format(leg=leg)}\n\n{clip_format(aspect)}"))
+                        f"{ORBIT.format(leg=leg, frame=frame)}\n\n{clip_format(aspect)}"))
     for key, label, cam, _ in COAST_SHOTS:
         out.append(item(v, aspect, f"OBcar 圖・{aspect} R01{key} 海邊定格圖 {label}", img_engine,
                         still(v, aspect, COAST, cam)))
@@ -356,7 +391,7 @@ def build():
     } for v in VEHICLES]
 
     return {
-        "updatedAt": "2026-08-01T21:00:00+09:00",
+        "updatedAt": "2026-08-08T14:30:00+09:00",
         "tracker": {"defaultTasks": DEFAULT_TASKS, "vehicles": tracker_vehicles},
         "briefs": briefs,
     }

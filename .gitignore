@@ -3,3 +3,18 @@ outputs/
 *-error.txt
 __pycache__/
 *.pyc
+
+# ── 以下 2026-08-31 新增：本機工作區的大型素材，不進 repo（合計約 480MB）──
+Project/
+geminimusic/
+resource/
+videosub/
+
+# subtrans 是打算獨立販售的工具，saidio 這個 repo 是 public，
+# 絕對不要把它的原始碼推上來。它需要自己的 private repo。
+tools/
+
+# 舊的網站快照，已被 repo 根目錄的版本取代（app.js / styles.css 都比線上舊）
+web_v2/
+
+.DS_Store

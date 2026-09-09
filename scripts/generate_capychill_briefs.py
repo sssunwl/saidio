@@ -261,13 +261,12 @@ def image_prompt(theme):
         f"physical motion opportunities clearly visible and spatially separated: {theme['base_motion']}; "
         f"{theme['primary_motion']}; {theme['secondary_motion']}. Calm original illustration, clean natural capybara "
         "anatomy. Each prop must have a clear resting position and must never compete with the capybara. "
-        "COMPOSE FOR DUAL FORMAT: the full 16:9 frame must work as a YouTube "
-        "video, and a narrow 9:16 portrait crop around the character must also work as a complete Shorts/Reels frame. "
-        f"The intended portrait crop spans approximately {theme['crop']} of the original width, centred near "
-        f"{theme['focus_x']}%. Inside that corridor keep the entire head, headphones, both front paws and the primary "
-        "paw action, main working surface, companion, one key prop and enough of today's environment to tell where the "
-        "scene takes place. Leave breathing room above the head and below the main action for vertical-platform UI "
-        "overlays."
+        "FORMAT: the 16:9 frame is the deliverable and the composition is judged on it alone — never distort the "
+        "wide frame to serve the vertical one. A 9:16 crop is a bonus: when it costs the wide composition nothing, "
+        "place the companion and one key moving prop inside a central corridor of roughly "
+        f"{theme['crop']} of the original width, centred near {theme['focus_x']}%, and leave breathing room above "
+        "the head and below the main action for vertical-platform UI overlays. On days where that corridor would come "
+        "out empty, the day ships wide-only and no Shorts cut is made."
     )
     return bundle(prompt, IMAGE_NEGATIVE, IMAGE_RULES)
 

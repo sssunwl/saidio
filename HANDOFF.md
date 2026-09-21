@@ -186,7 +186,7 @@ SS:「不要寫太單一的輪播圖 Prompt,我想做出很多不同款又好看
 
 ## 2026-07-26(晚):Canva 連接器實測 —— 端到端跑完 7/26 商業教練那組
 
-SS 已授權 Canva 連接器(可用;帳號下有 4 個 brand kit:OkinawaSunDays / TT / Seasee / OKIPLAYGROUND,
+SS 已授權 Canva 連接器(可用;帳號下有 4 個 brand kit:OkinawaSunDays(=OkiDayz,Canva 內待改名) / TT / Seasee / OKIPLAYGROUND,
 本次**刻意不套**,因為這是要賣的模板,必須品牌中性)。
 
 **成品**:9 張 1080×1440 的「商業教練｜品牌定位｜列表款 × 靜謐拱窗編輯誌」。
@@ -335,3 +335,45 @@ SS 兩個回饋都是對的,而且指向同一個結論:
 publish-brand-template 之後,原本的工作 design 就讀不到了)。下次要接著改,
 先用 `create-design-from-brand-template(最新模板id)` 生一份新副本再開始,
 不要嘗試回頭改舊的 design id。
+
+---
+
+## 2026-08-30：新增工具模組 `tools/subtrans`
+
+把「日文字幕燒死在畫面上」的影片，換成繁體中文字幕。與每日 prompt 工廠那三條線無關，
+是 SAIDIO 底下的**獨立工具**，**設計成自足模組**（SS 說將來可能單獨拿出去賣），
+所以不要讓它依賴 SAIDIO 其他資料夾。
+
+- 位置：`saidio/tools/subtrans/`，規則見該目錄的 `CLAUDE.md`，用法見 `README.md`
+- 技術路線：macOS 內建 **Vision 框架**做 OCR、**CoreText** 畫字幕板，
+  時間碼靠**幀差偵測**量出來（不是 OCR 猜的）。零第三方相依、零 API 費用。
+- 兩條輸出：`burn` 用 ffmpeg 全自動出成品；`capcut` 出 srt + 全畫面遮罩 PNG。
+- 合成測試片實測：8/8 段、時間碼零誤差、忽略空格字元準確率 100%。
+  回歸測試 `tests/run_regression.sh`。
+- ⚠️ 翻譯步驟需要 `claude` CLI 已登入。**SS 這台機的獨立 claude CLI 尚未登入**
+  （回報 `Not logged in`），要跑自動翻譯得先在自己的終端機執行一次 `claude login`；
+  在那之前會自動退回「產出提示詞檔、貼給任何 AI」的模式。
+- `projects/` 是各支影片的工作目錄，跟 `resource/` 一樣**不進 Git**。
+
+### 2026-08-30 補充：subtrans 加入 scan 法、支援多文字區
+
+用 SS 的真實影片（`saidio/videosub/ref/k0oooo0kiref.mp4`，豎屏滑雪 Reels）實測後改的。
+那支片推翻了原本兩個假設：**字幕不在底部**（在上方 y≈130–460），
+而且**同時有三處文字**（長駐標題／逐招變的標籤／開場大標）；
+背景是雪地，一片全白，原本的亮度幀差法直接失效。
+
+- 新增 `scan` 法（現為預設）：每 0.25 秒密集辨識，看文字變化切句，
+  自動把畫面分成幾個「文字區」，各區獨立換句。原 `diff` 法保留給乾淨字幕帶。
+- 輸出改為每區一個 srt + 一張遮罩，CapCut 那條路一區匯一軌。
+- 回歸測試現在兩種方法都跑，門檻收緊到起訖誤差 ≤0.06 秒。
+
+### 2026-08-30 每日整理驗證
+
+- 重新執行 `tools/subtrans/tests/run_regression.sh` 時，腳本在自動 `band` 階段即回報「畫面下半找不到穩定的日文文字」；手動指定合成片實際字幕區後，scan／diff 仍都切得到流程但 Vision OCR 沒有辨識出字幕。因此目前不能把「兩種方法回歸皆通過」視為可重現狀態。
+- 下一步：先檢查今日重編的 `bin/subtrans-mac` 與 Vision OCR 輸入／語言參數，再修正 regression fixture 的自動字幕帶定位；修完後重新確認 8/8 段、起訖誤差 ≤0.06 秒及字元準確率門檻。這不影響已完成的工具設計與真實影片探索結論，但會阻擋把此版本視為可交付成品。
+
+## 2026-09-09：CapyChill 母圖與影片 Prompt 規則收緊
+
+已提交 `5bbbd28`：在 CapyChill brief 生成器與資料規則補上幾何隔離、明度分離、移動物件獨立路徑、首尾一致，以及以裁邊放大取代 `delogo` 的浮水印處理。今天亦用更新後的海邊黃昏 brief 產生一張 16:9 storybook 參考圖，但該圖只存在對話輸出，尚未歸檔到 `CapyChill/DailyPrompt/20260723/`，也未完成人手檢查前掌解剖、9:16 裁切安全區或 image-to-video 動態測試。
+
+下一步先把選定母圖歸檔並逐項驗收，再決定是否進入影片生成；第一支成片仍應優先完成真人聽接歌、手部形變檢查與設為不公開上傳，不因新母圖而開始第二個場景。
